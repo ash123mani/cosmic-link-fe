@@ -1,0 +1,40 @@
+@import '@common/theme/style';
+
+.cosmic-btn {
+  font-size: 1.6rem;
+  padding: 12px 24px;
+  background: transparent;
+  border: 1px solid $black-light;
+  border-radius: $border-radius-default;
+  color: $primary;
+
+  &--fluid {
+    width: 100%;
+  }
+
+  &:hover {
+    border-color: $black-medium;
+    color: $black-medium;
+  }
+
+  &--filled {
+    background: $black-medium;
+    color: $black-light;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+
+  &--disabled {
+    background-color: $black-light;
+    color: $gray;
+    cursor: not-allowed;
+
+    &:hover {
+      background-color: $black-light;
+      color: $gray;
+      border: 1px solid $black-light;
+    }
+  }
+}

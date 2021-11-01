@@ -1,0 +1,125 @@
+@import 'typography';
+@import 'colors';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+::selection {
+  background-color: $primary;
+}
+
+html {
+  font-size: 10px;
+  line-height: 1.15;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  @include typography-base;
+  // @include typography;
+  color: $black-medium;
+}
+
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+ul, ol {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style: none;
+}
+
+b, strong {
+  font-weight: bold;
+}
+
+img {
+  border: 0
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}
+
+button,
+input, select,
+textarea {
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  margin: 0;
+  touch-action: manipulation;
+}
+
+select {
+  -webkit-appearance: none;
+  -webkit-border-radius: 0;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+  height: auto;
+}
+
+[type="number"] {
+  -moz-appearance: textfield;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active  {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+button, input[type="button"] {
+  cursor: pointer;
+  overflow: visible
+}
+
+input {
+  line-height: normal;
+
+  &::-ms-clear {
+    display: none;
+  }
+  &::placeholder {
+    color: $black-medium;
+  }
+}
+
+pre {
+  margin: 0;
+}
+
+[tabindex="-1"]:focus {
+  outline: 0 !important;
+}
+
+[role=button],a,area,button,input,label,select,summary,textarea {
+  -ms-touch-action: manipulation;
+  touch-action: manipulation
+}
+
+textarea {
+  resize: vertical;
+}

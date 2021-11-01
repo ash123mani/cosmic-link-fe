@@ -1,0 +1,73 @@
+{
+  "extends": [
+    "airbnb",
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
+  "plugins": [
+    "react"
+  ],
+  "parser": "@babel/eslint-parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true,
+    "jest": true
+  },
+  "rules": {
+    // plugin: eslint
+    "arrow-body-style": ["error", "as-needed"],
+    "brace-style": ["error", "1tbs"],
+    "class-methods-use-this": 0,
+    "curly": ["error", "all"],
+    "comma-dangle": [2, "always-multiline"],
+    "eqeqeq": [2, "smart"],
+    "filenames/match-exported": 0,
+    "quotes": ["error", "single"],
+    "jsx-quotes": ["error", "prefer-double"],
+    "keyword-spacing": ["error", { "after": true }],
+    "max-len": ["error", 180, {"ignoreComments": true, "ignoreRegExpLiterals": true}],
+    "no-case-declarations": 0,
+    "no-invalid-this":0,
+    "no-nested-ternary": "error",
+    "no-shadow": 0,
+    "no-trailing-spaces": ["error", { "ignoreComments": true }],
+    "object-curly-spacing": ["error", "always"],
+    "arrow-spacing": ["error", { "before": true, "after": true }],
+    "prefer-destructuring": 0,
+    "semi": ["error", "never"],
+    "space-infix-ops": "error",
+    "object-property-newline": "error",
+    "indent": ["error", 2],
+    "eol-last": ["error", "always"],
+    // plugin: import
+    "import/extensions": ["error", "never", { "svg": "always" }],
+    "import/no-extraneous-dependencies":0,
+    "import/no-named-as-default": 0,
+    "import/no-unresolved": 0,
+    "import/prefer-default-export": 0,
+
+    // plugin: react
+    "react/display-name":0,
+    "react/jsx-filename-extension": [1, { "extensions": [".js"] }],
+    "react/jsx-key":0,
+    "react/no-multi-comp": 0,
+    "react/sort-comp":0,
+    "react/jsx-indent-props": 0,
+    "react/jsx-fragments": 0,
+
+    // plugin: jsx-a11y
+    "jsx-a11y/label-has-associated-control": 0,
+    "jsx-a11y/label-has-for": 0,
+    "jsx-a11y/anchor-is-valid": [ "error", {
+      "components": [ "Link" ],
+      "specialLink": [ "clickHandler" ]
+    }],
+    "jsx-a11y/aria-role": 0
+  }
+}
