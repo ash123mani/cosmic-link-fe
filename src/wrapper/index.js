@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 
-import { Button } from '@common'
+import Header from '@local/header'
 
 import './_style.scss'
 
@@ -11,7 +11,7 @@ const Wrapper = () => (
   <Fragment>
     <FontFace />
     <Layout>
-      <Button>Submit</Button>
+      <Header />
     </Layout>
   </Fragment>
 )

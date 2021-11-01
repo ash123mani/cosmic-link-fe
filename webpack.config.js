@@ -36,6 +36,7 @@ module.exports = {
     alias: {
       '@common': resolve(__dirname, 'src/common/'),
       '@helpers': resolve(__dirname, 'src/helpers/'),
+      '@local': resolve(__dirname, 'src/components/'),
     },
   },
   devServer: {

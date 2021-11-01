@@ -1,7 +1,7 @@
 /* eslint-disable react/button-has-type */
 import React from 'react'
 import {
-  node, oneOf, string, bool,
+  node, oneOf, string, bool, func,
 } from 'prop-types'
 
 import { classNames } from '@common/helpers'
@@ -11,7 +11,7 @@ import './_style.scss'
 const blk = 'cosmic-btn'
 
 const Button = ({
-  children, type, className, category, disabled, fluid,
+  children, type, className, category, disabled, fluid, onClick,
 }) => {
   const eltClassName = classNames({
     blk,
@@ -24,7 +24,11 @@ const Button = ({
   })
 
   return (
-    <button className={eltClassName} type={type}>
+    <button
+      className={eltClassName}
+      type={type}
+      onClick={onClick}
+    >
       {children}
     </button>
   )
@@ -37,6 +41,7 @@ Button.propTypes = {
   className: string,
   disabled: bool,
   fluid: bool,
+  onClick: func,
 }
 
 Button.defaultProps = {
@@ -45,6 +50,7 @@ Button.defaultProps = {
   category: 'plain',
   disabled: false,
   fluid: false,
+  onClick() {},
 }
 
 export default Button
