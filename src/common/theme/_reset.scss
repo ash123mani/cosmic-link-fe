@@ -29,6 +29,7 @@ body {
   @include typography-base;
   // @include typography;
   color: $black-medium;
+  background-color: $body-bg;
 }
 
 table {

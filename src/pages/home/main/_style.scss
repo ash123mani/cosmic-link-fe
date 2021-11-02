@@ -1,0 +1,25 @@
+@import '~@common/theme/style';
+
+.home-page {
+  &__landing {
+    padding: 22rem 0;
+  }
+
+  &__title {
+    font-size: 4.8rem;
+    line-height: 5.6rem;
+    text-align: center;
+    font-weight: 600;
+  }
+
+  &__subtitle {
+    font-size: 3.2rem;
+    line-height: 4.2rem;
+    text-align: center;
+    padding: 16px 8px;
+    border-radius: $border-radius-default;
+    margin-top: 16px;
+    color: $black-light;
+    background: $primary-medium;
+  }
+}

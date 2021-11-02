@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 
 import Header from '@local/header'
+import Home from '@pages/home'
 
 import './_style.scss'
 
@@ -12,6 +13,7 @@ const Wrapper = () => (
     <FontFace />
     <Layout>
       <Header />
+      <Home />
     </Layout>
   </Fragment>
 )
