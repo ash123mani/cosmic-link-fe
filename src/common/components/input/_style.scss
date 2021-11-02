@@ -3,12 +3,15 @@
 .cosmic-input {
   display: inline-flex;
   flex-direction: column;
+  width: 100%;
   
   &__box {
     padding: 12px 16px;
     border: 1px solid $black-medium;
     border-radius: $border-radius-default;
     font-size: 1.6rem;
+    background: transparent;
+    margin: 0;
 
     &:focus {
       outline: none;
@@ -22,7 +25,7 @@
   }
 
   &__label {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     margin-bottom: 4px;
   }
 

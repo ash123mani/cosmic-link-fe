@@ -1,10 +1,13 @@
 import React, { Fragment } from 'react'
+import { BrowserRouter } from 'react-router-dom'
 
 import Wrapper from './wrapper'
 
 const App = () => (
   <Fragment>
-    <Wrapper />
+    <BrowserRouter>
+      <Wrapper />
+    </BrowserRouter>
   </Fragment>
 )
 

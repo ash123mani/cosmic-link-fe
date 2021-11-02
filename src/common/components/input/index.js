@@ -8,7 +8,7 @@ import './_style.scss'
 const blk = 'cosmic-input'
 
 const Input = ({
-  className, placeholder, id, label, errorMessage,
+  className, placeholder, id, label, errorMessage, type,
 }) => {
   const eltClassName = classNames({
     blk,
@@ -30,6 +30,7 @@ const Input = ({
       <input
         className={eltClassName}
         placeholder={placeholder}
+        type={type}
         id={id}
       />
       {errorMessage && (
@@ -47,6 +48,7 @@ Input.propTypes = {
   id: string.isRequired,
   label: string,
   errorMessage: string,
+  type: string,
 }
 
 Input.defaultProps = {
@@ -54,6 +56,7 @@ Input.defaultProps = {
   placeholder: '',
   label: '',
   errorMessage: '',
+  type: 'text',
 }
 
 export default Input

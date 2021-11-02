@@ -1,7 +1,18 @@
+@import '~@common/theme/style';
+
 .cosmic-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  &__link {
+    color: $black-medium;
+    
+    &:active, 
+    &:hover {
+      color: $primary;
+    }
+  }
 
   &__logo {
     font-size: 32px;

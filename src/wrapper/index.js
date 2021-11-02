@@ -1,19 +1,18 @@
 import React, { Fragment } from 'react'
 
 import Header from '@local/header'
-import Home from '@pages/home'
 
-import './_style.scss'
-
+import Routes from './routes'
 import FontFace from './font-face'
 import Layout from './layout'
+import './_style.scss'
 
 const Wrapper = () => (
   <Fragment>
     <FontFace />
     <Layout>
       <Header />
-      <Home />
+      <Routes />
     </Layout>
   </Fragment>
 )
