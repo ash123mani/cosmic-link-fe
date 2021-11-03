@@ -1,14 +1,13 @@
 @import '@common/theme/style';
 
 .cosmic-btn {
-  font-size: 1.6rem;
   padding: 12px 24px;
   background: transparent;
   border: 1px solid $black-light;
   border-radius: $border-radius-default;
   color: $primary;
   text-decoration: none;
-  font-weight: 500;
+  @include typography(m, semi-bold);
 
   &--fluid {
     width: 100%;

@@ -15,8 +15,7 @@
   }
 
   &__logo {
-    font-size: 32px;
-    font-weight: 600;
+    @include typography(xl, bold);
   }
 
   &__navs {

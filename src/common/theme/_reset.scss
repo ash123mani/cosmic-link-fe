@@ -27,7 +27,7 @@ body {
   margin: 0;
   padding: 0;
   @include typography-base;
-  // @include typography;
+  @include typography;
   color: $black-medium;
   background-color: $body-bg;
 }

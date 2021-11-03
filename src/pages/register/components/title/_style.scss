@@ -1,6 +1,6 @@
 @import '~@common/theme/style';
 
 .title {
-  font-size: 24px;
+  @include typography(l, bold);
   color: $primary;
 }

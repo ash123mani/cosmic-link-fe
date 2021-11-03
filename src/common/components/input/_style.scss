@@ -9,9 +9,9 @@
     padding: 12px 16px;
     border: 1px solid $black-medium;
     border-radius: $border-radius-default;
-    font-size: 1.6rem;
     background: transparent;
     margin: 0;
+    @include typography(m);
 
     &:focus {
       outline: none;
@@ -25,12 +25,12 @@
   }
 
   &__label {
-    font-size: 1.4rem;
+    @include typography(s);
     margin-bottom: 4px;
   }
 
   &__error {
-    font-size: 1.2rem;
+    @include typography(s);
     margin-top: 4px;
     color: $error;
   }

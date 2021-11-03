@@ -6,19 +6,15 @@
   }
 
   &__title {
-    font-size: 4.8rem;
-    line-height: 5.6rem;
+    @include typography(xxxl, bold);
     text-align: center;
-    font-weight: 600;
   }
 
   &__subtitle {
-    font-size: 3.2rem;
-    line-height: 4.2rem;
+    @include typography(xxl, bold);
     text-align: center;
     padding: 16px 8px;
     border-radius: $border-radius-default;
-    margin-top: 8px;
     color: $primary-medium;
   }
 }
