@@ -38,6 +38,8 @@ module.exports = {
       '@helpers': resolve(__dirname, 'src/helpers/'),
       '@local': resolve(__dirname, 'src/components/'),
       '@pages': resolve(__dirname, 'src/pages/'),
+      '@store': resolve(__dirname, 'src/store/'),
+      '@state': resolve(__dirname, 'src/state/'),
     },
   },
   devServer: {
