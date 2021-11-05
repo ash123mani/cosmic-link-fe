@@ -20,6 +20,9 @@ const LoginForm = () => (
       placeholder="Password for your cosmos"
       label="Password"
     />
+    <div className={classNames({ blk, elt: 'forgot' })}>
+      Forgot Password
+    </div>
     <Button fluid>Submit</Button>
   </form>
 )

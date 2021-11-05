@@ -1,8 +1,19 @@
+@import '~@common/theme/style';
+
 .login-form {
   margin: 4rem 0rem;
 
   &__email,
   &__password {
     margin-bottom: 1.6rem;
+  }
+
+  &__forgot {
+    @include typography(s, semi-bold);
+    color: $primary;
+    margin: 1.6rem 0;
+    text-align: right;
+    text-decoration: underline;
+    cursor: pointer;
   }
 }

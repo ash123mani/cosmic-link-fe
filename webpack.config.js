@@ -40,6 +40,8 @@ module.exports = {
       '@pages': resolve(__dirname, 'src/pages/'),
       '@store': resolve(__dirname, 'src/store/'),
       '@state': resolve(__dirname, 'src/state/'),
+      '@api': resolve(__dirname, 'src/api/'),
+      '@util': resolve(__dirname, 'src/util/'),
     },
   },
   devServer: {

@@ -10,8 +10,8 @@ import './_style.scss'
 const Wrapper = () => (
   <Fragment>
     <FontFace />
+    <Header />
     <Layout>
-      <Header />
       <Routes />
     </Layout>
   </Fragment>

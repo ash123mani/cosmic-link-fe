@@ -12,13 +12,12 @@ const Input = ({
 }) => {
   const eltClassName = classNames({
     blk,
-    elt: 'box',
     className,
     mods: [errorMessage && 'error'],
   })
 
   return (
-    <div className={classNames({ blk })}>
+    <div className={eltClassName}>
       {label && (
         <label
           htmlFor={id}
@@ -28,7 +27,7 @@ const Input = ({
         </label>
       )}
       <input
-        className={eltClassName}
+        className={classNames({ blk, elt: 'box' })}
         placeholder={placeholder}
         type={type}
         id={id}
