@@ -1,7 +1,7 @@
 import log from '@util/log'
 import config from './config'
 
-const baseUrl = 'http"//localhost:5001'
+const baseUrl = 'http://localhost:5001'
 
 const api = (name, options) => {
   const {

@@ -1,5 +1,5 @@
 /* eslint-disable react/button-has-type */
-import React from 'react'
+import React, { memo } from 'react'
 import { NavLink } from 'react-router-dom'
 import {
   node, oneOf, string, bool, func,
@@ -70,4 +70,4 @@ Button.defaultProps = {
   asNav: false,
 }
 
-export default Button
+export default memo(Button)

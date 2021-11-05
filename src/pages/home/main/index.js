@@ -7,7 +7,7 @@ import './_style.scss'
 const blk = 'home-page'
 
 const Main = () => (
-  <main classNam={classNames({ blk })}>
+  <main className={classNames({ blk })}>
     <div className={classNames({ blk, elt: 'landing' })}>
       <h1 className={classNames({ blk, elt: 'title' })}>
         One place for all your Links.

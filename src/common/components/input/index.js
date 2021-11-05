@@ -1,5 +1,5 @@
-import React from 'react'
-import { string } from 'prop-types'
+import React, { memo } from 'react'
+import { string, func } from 'prop-types'
 
 import { classNames } from '@common/helpers'
 
@@ -8,7 +8,7 @@ import './_style.scss'
 const blk = 'cosmic-input'
 
 const Input = ({
-  className, placeholder, id, label, errorMessage, type,
+  className, placeholder, label, errorMessage, type, onChange, name,
 }) => {
   const eltClassName = classNames({
     blk,
@@ -20,7 +20,7 @@ const Input = ({
     <div className={eltClassName}>
       {label && (
         <label
-          htmlFor={id}
+          htmlFor={name}
           className={classNames({ blk, elt: 'label' })}
         >
           {label}
@@ -29,11 +29,14 @@ const Input = ({
       <input
         className={classNames({ blk, elt: 'box' })}
         placeholder={placeholder}
+        onChange={onChange}
         type={type}
-        id={id}
+        name={name}
       />
       {errorMessage && (
-        <div className={classNames({ blk, elt: 'error' })}>
+        <div
+          className={classNames({ blk, elt: 'error' })}
+        >
           {errorMessage}
         </div>
       )}
@@ -44,10 +47,11 @@ const Input = ({
 Input.propTypes = {
   className: string,
   placeholder: string,
-  id: string.isRequired,
+  name: string.isRequired,
   label: string,
   errorMessage: string,
   type: string,
+  onChange: func,
 }
 
 Input.defaultProps = {
@@ -56,6 +60,7 @@ Input.defaultProps = {
   label: '',
   errorMessage: '',
   type: 'text',
+  onChange: () => {},
 }
 
-export default Input
+export default memo(Input)

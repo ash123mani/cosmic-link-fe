@@ -8,8 +8,9 @@ const isDevelopment = process.env.NODE_ENV !== 'production'
 // TODO: add chaching
 module.exports = {
   mode: isDevelopment ? 'development' : 'production',
+  context: resolve('src'),
   entry: {
-    main: './src/index.js',
+    app: ['./polyfills', './index.js'],
   },
   module: {
     rules: [
@@ -46,5 +47,6 @@ module.exports = {
   },
   devServer: {
     hot: true,
+    historyApiFallback: true,
   },
 }
