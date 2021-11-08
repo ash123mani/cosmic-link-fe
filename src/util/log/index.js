@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-const log = (message, type) => {
+const log = (message, type = 'log') => {
   console[type](message)
 }
 

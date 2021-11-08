@@ -1,0 +1,77 @@
+@import '~@common/theme/style';
+
+@keyframes rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.cosmic-spinner {
+    width: 40px;
+    height: 40px;
+    border: 2px solid $primary;
+    border-radius: 50%;
+    border-right: 2px solid $primary;
+    animation-name: rotate;
+    animation-duration: 0.8s;
+    animation-iteration-count: infinite;
+    animation-fill-mode: forwards;
+    animation-timing-function: linear;
+    border-top-color: transparent;
+
+    &__container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      &--inline {
+        flex-direction: row;
+      }
+    }
+
+    &__text {
+      @include typography(m, semi-bold);
+      color: $primary;
+      margin: 20px 0px;
+      
+      &--inline {
+        margin: 0px;
+      }
+    }
+
+    &--center {
+      margin: 0 auto;
+    }
+
+    &--inline {
+      margin: 0 8px 0 0;
+    }
+
+    &--large {
+      width: 60px;
+      height: 60px;
+    }
+
+    &--small {
+      width: 20px;
+      height: 20px;
+    }
+
+    &--primary-medium {
+      border-color: $primary-medium;
+    }
+
+    &--primary-light {
+      border-color: $primary-light;
+    }
+
+    &--gray {
+      border-color: $gray;
+    }
+
+    &--black {
+      border-color: $black;
+    }
+}
+
+

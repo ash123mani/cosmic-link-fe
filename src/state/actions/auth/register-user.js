@@ -1,12 +1,13 @@
 import { api } from '@api'
+import log from '@util/log'
 
 const registerUser = (body) => async (dispatch) => {
   try {
-    const response = await api('registerUser', body)
+    const response = await api('registerUser', { body })
     dispatch({ type: 'DONE' })
-    console.log('response', response)
+    log(response)
   } catch (error) {
-    console.log('error', error)
+    log(error)
   }
 }
 

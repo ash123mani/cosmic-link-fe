@@ -6,13 +6,14 @@ import {
 } from 'prop-types'
 
 import { classNames } from '@common/helpers'
+import Spinner from '../spinner'
 
 import './_style.scss'
 
 const blk = 'cosmic-btn'
 
 const Button = ({
-  children, type, className, category, disabled, fluid, onClick, asNav, to,
+  children, type, className, category, disabled, fluid, onClick, asNav, to, loading, loader,
 }) => {
   const eltClassName = classNames({
     blk,
@@ -42,7 +43,7 @@ const Button = ({
       type={type}
       onClick={onClick}
     >
-      {children}
+      {loading ? loader : children}
     </button>
   )
 }
@@ -57,6 +58,8 @@ Button.propTypes = {
   onClick: func,
   to: string,
   asNav: bool,
+  loader: node,
+  loading: bool,
 }
 
 Button.defaultProps = {
@@ -68,6 +71,8 @@ Button.defaultProps = {
   onClick() {},
   to: '',
   asNav: false,
+  loader: <Spinner size="small" inline />,
+  loading: false,
 }
 
 export default memo(Button)
