@@ -43,11 +43,14 @@ const api = (name, options) => {
   return fetch(url, requestOptions)
     .then((response) => response.json())
     .then((response) => {
-      const { success, ...rest } = response
-      return {
-        success,
-        data: rest,
+      const { success, error, ...rest } = response
+      if (success) {
+        return {
+          success,
+          data: rest,
+        }
       }
+      throw new Error(error)
     })
 }
 

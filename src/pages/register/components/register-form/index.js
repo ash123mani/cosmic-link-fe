@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { func } from 'prop-types'
 
-import { Input, Button } from '@common'
+import { Input, Button, Spinner } from '@common'
 import { classNames } from '@common/helpers'
 
 import { actions } from './index.connect'
@@ -11,6 +11,7 @@ import './_style.scss'
 const blk = 'register-form'
 
 const RegisterForm = ({ registerUser }) => {
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [formData, setFormData] = useState({})
 
   const handleChange = ({ target: { name, value } }) => {
@@ -21,7 +22,9 @@ const RegisterForm = ({ registerUser }) => {
   }
 
   const handleSubmit = () => {
+    setIsSubmitting(true)
     registerUser(formData)
+      .finally(() => setIsSubmitting(false))
   }
 
   return (
@@ -48,7 +51,14 @@ const RegisterForm = ({ registerUser }) => {
         name="password"
         onChange={handleChange}
       />
-      <Button fluid onClick={handleSubmit}>Submit</Button>
+      <Button
+        fluid
+        onClick={handleSubmit}
+        loading={isSubmitting}
+        loader={<Spinner size="small" text="Submiting..." inline />}
+      >
+        Submit
+      </Button>
     </form>
   )
 }
