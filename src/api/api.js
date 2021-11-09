@@ -50,7 +50,10 @@ const api = (name, options) => {
           data: rest,
         }
       }
-      throw new Error(error)
+      return {
+        success,
+        data: { error },
+      }
     })
 }
 

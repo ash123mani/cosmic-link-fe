@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { func } from 'prop-types'
+import { useHistory } from 'react-router-dom'
 
 import { Input, Button, Spinner } from '@common'
 import { classNames } from '@common/helpers'
@@ -11,6 +12,8 @@ import './_style.scss'
 const blk = 'register-form'
 
 const RegisterForm = ({ registerUser }) => {
+  const history = useHistory()
+
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [formData, setFormData] = useState({})
 
@@ -23,7 +26,11 @@ const RegisterForm = ({ registerUser }) => {
 
   const handleSubmit = () => {
     setIsSubmitting(true)
-    registerUser(formData)
+    registerUser(formData).then(({ data }) => {
+      if (data.token) {
+        history.push('/links')
+      }
+    })
       .finally(() => setIsSubmitting(false))
   }
 

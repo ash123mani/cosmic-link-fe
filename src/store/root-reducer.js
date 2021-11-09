@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 
-import reducer from '../state'
+import authReducer from '../state/reducers/auth'
 
 export default combineReducers({
-  test: reducer,
+  auth: authReducer,
 })

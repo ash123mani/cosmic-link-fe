@@ -43,6 +43,7 @@ module.exports = {
       '@state': resolve(__dirname, 'src/state/'),
       '@api': resolve(__dirname, 'src/api/'),
       '@util': resolve(__dirname, 'src/util/'),
+      '@hooks': resolve(__dirname, 'src/hooks/'),
     },
   },
   devServer: {

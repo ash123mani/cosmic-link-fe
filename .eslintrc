@@ -21,6 +21,7 @@
   },
   "rules": {
     // plugin: eslint
+    "consistent-return": "off",
     "arrow-body-style": ["error", "as-needed"],
     "brace-style": ["error", "1tbs"],
     "class-methods-use-this": 0,
