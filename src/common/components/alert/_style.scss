@@ -1,0 +1,57 @@
+@import '~@common/theme/style';
+
+.cosmic-alert {
+  padding: 24px 32px;
+  display: flex;
+  justify-content: space-between;
+
+  &__message {
+    @include typography(m, semi-bold);
+    margin-right: 20px;
+  }
+
+  &--info {
+    background-color: $black-light;
+  }
+
+  &--error {
+    color: $white;
+    background-color: $error;
+  }
+
+  &--warning {
+    background-color: $warning;
+  }
+
+  &--center {
+    justify-content: center;
+  }
+
+  @keyframes fade-in-down {
+    0% {
+      transform: translateY(-50px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+
+  &--animate-down {
+    animation: fade-in-down 0.8s linear;
+  }
+
+  @keyframes fade-in-up {
+    0% {
+      transform: translateY(0px);
+    }
+    100% {
+      transform: translateY(-50px);
+    }
+  }
+
+  &--animate-up {
+    animation: fade-in-up 0.8s linear;
+  }
+}
+
+

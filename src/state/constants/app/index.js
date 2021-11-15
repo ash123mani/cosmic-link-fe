@@ -1,0 +1,2 @@
+export const SET_APP_BANNER = 'SET_APP_BANNER'
+export const REMOVE_APP_BANNER = 'REMOVE_APP_BANNER'

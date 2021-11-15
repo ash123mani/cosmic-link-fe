@@ -1,4 +1,7 @@
 import log from '@util/log'
+import store from '@store'
+import { setAppBanner } from '@state/actions/app'
+
 import config from './config'
 
 const baseUrl = 'http://localhost:5001'
@@ -54,6 +57,16 @@ const api = (name, options) => {
         success,
         data: { error },
       }
+    })
+    .catch((error) => {
+      const message = error.message || 'It \'s fine, some network problem!'
+
+      store.dispatch(setAppBanner({
+        type: 'error',
+        message,
+      }))
+
+      throw new Error(message)
     })
 }
 

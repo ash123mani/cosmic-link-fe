@@ -1,3 +1,5 @@
+@import '~@common/theme/style';
+
 .layout {
-  padding: 0rem 32rem;
+  padding: 0rem $layout-x-padding-desktop;
 }

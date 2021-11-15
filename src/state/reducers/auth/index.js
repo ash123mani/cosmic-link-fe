@@ -7,14 +7,14 @@ const intialState = {
 }
 
 const authReducer = (state = intialState, action) => {
-  const { data, type } = action
+  const { payload, type } = action
 
   switch (type) {
   case REGISTER_USER_SUCCESS:
     return {
       ...state,
       token: getStorageItem('local', 'token'),
-      user: data.user,
+      user: payload.user,
     }
   default:
     return intialState
