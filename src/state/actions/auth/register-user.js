@@ -10,7 +10,7 @@ const registerUserRequest = (payload) => ({
 
 const registerUserSuccess = (payload) => ({
   type: REGISTER_USER_SUCCESS,
-  ...payload,
+  payload,
 })
 
 const registerUserFailure = (payload, dispatch) => {
@@ -39,7 +39,7 @@ const registerUser = (form = {}) => async (dispatch) => {
 
     if (success) {
       setStorageItem('local', 'token', data.token)
-      dispatch(registerUserSuccess(response))
+      dispatch(registerUserSuccess(data))
     } else {
       dispatch(registerUserFailure(data.error, dispatch))
     }

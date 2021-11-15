@@ -1,6 +1,18 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
-const Links = () => <NavLink to="/profile">Profile</NavLink>
+import { Button } from '@common'
+import { removeStorageItem } from '@util/storage'
+
+const Links = () => {
+  const history = useHistory()
+
+  const handleLogout = () => {
+    removeStorageItem('local', 'token')
+    history.replace('/')
+  }
+
+  return <Button onClick={handleLogout}>Logout</Button>
+}
 
 export default Links
