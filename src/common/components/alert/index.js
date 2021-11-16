@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import {
-  string, oneOf, bool, func,
+  string, oneOf, bool, func, number,
 } from 'prop-types'
 
 import { classNames } from '@common/helpers'
@@ -10,7 +10,7 @@ import './_style.scss'
 const blk = 'cosmic-alert'
 
 const Alert = ({
-  type, message, center, autoClose, onClose,
+  type, message, center, autoClose, onClose, duration,
 }) => {
   const [animateDown, setAnimateDown] = useState(false)
   const [animateUp, setAnimateUp] = useState(false)
@@ -40,7 +40,7 @@ const Alert = ({
         setAnimateUp(true)
         closeAlert()
         clearTimeout(closeTimer)
-      }, 2000)
+      }, duration)
     }
 
     return () => timer && clearTimeout(timer)
@@ -60,6 +60,7 @@ Alert.propTypes = {
   center: bool,
   autoClose: bool,
   onClose: func,
+  duration: number,
 }
 
 Alert.defaultProps = {
@@ -67,6 +68,7 @@ Alert.defaultProps = {
   center: false,
   autoClose: false,
   onClose() {},
+  duration: 2000,
 }
 
 export default Alert

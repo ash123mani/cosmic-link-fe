@@ -4,6 +4,8 @@ const intialState = {
   banner: {
     type: '',
     message: '',
+    autoClose: true,
+    duration: 5000,
   },
 }
 
@@ -16,8 +18,7 @@ const appReducer = (state = intialState, action) => {
       ...state,
       banner: {
         ...state.banner,
-        type: payload.type,
-        message: payload.message,
+        ...payload,
       },
     }
   case REMOVE_APP_BANNER:
@@ -26,6 +27,8 @@ const appReducer = (state = intialState, action) => {
       banner: {
         type: '',
         message: '',
+        autoClose: true,
+        duration: 2000,
       },
     }
   default:

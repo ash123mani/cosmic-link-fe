@@ -7,7 +7,9 @@ import { Alert } from '@common'
 import { mapStateToProps, actions } from './index.connect'
 
 const AppBanner = ({ banner, removeAppBanner }) => {
-  const { type, message } = banner
+  const {
+    type, message, duration, autoClose,
+  } = banner
 
   if (!banner.message) {
     return null
@@ -15,10 +17,11 @@ const AppBanner = ({ banner, removeAppBanner }) => {
 
   return (
     <Alert
-      autoClose
+      autoClose={autoClose}
       type={type}
       message={message}
       onClose={removeAppBanner}
+      duration={duration}
     />
   )
 }

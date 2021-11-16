@@ -1,5 +1,5 @@
-import { loginUser } from '@state/actions/auth'
+import { loginUser, forgotPassword } from '@state/actions/auth'
 
-const actions = { loginUser }
+const actions = { loginUser, forgotPassword }
 
 export { actions }

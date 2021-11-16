@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { func } from 'prop-types'
+import { func, bool } from 'prop-types'
 
 import { Input, Button, Spinner } from '@common'
 import { classNames } from '@common/helpers'
@@ -11,7 +11,9 @@ import './_style.scss'
 
 const blk = 'login-form'
 
-const LoginForm = ({ loginUser }) => {
+const LoginForm = ({
+  loginUser, forgotPassword, onForgotPasswordClick, showForgotPassword,
+}) => {
   const history = useHistory()
 
   const [formData, setFormData] = useState({})
@@ -34,6 +36,10 @@ const LoginForm = ({ loginUser }) => {
       .finally(() => setIsSubmitting(false))
   }
 
+  const handleForgotPasswordSubmit = () => {
+    forgotPassword(formData.email || '')
+  }
+
   return (
     <form className={classNames({ blk })}>
       <Input
@@ -44,22 +50,29 @@ const LoginForm = ({ loginUser }) => {
         onChange={handleChange}
 
       />
-      <Input
-        className={classNames({ blk, elt: 'password' })}
-        type="password"
-        placeholder="Password for your cosmos"
-        label="Password"
-        name="password"
-        onChange={handleChange}
-
-      />
-      <div className={classNames({ blk, elt: 'forgot' })}>
-        Forgot Password
+      {!showForgotPassword && (
+        <Input
+          className={classNames({ blk, elt: 'password' })}
+          type="password"
+          placeholder="Password for your cosmos"
+          label="Password"
+          name="password"
+          onChange={handleChange}
+        />
+      )}
+      <div
+        role="button"
+        className={classNames({ blk, elt: 'forgot' })}
+        onClick={onForgotPasswordClick}
+        onKeyDown={onForgotPasswordClick}
+        tabIndex={0}
+      >
+        {showForgotPassword ? 'Go Back to login' : 'Forgot Password'}
       </div>
       <Button
         loader={<Spinner size="small" text="Submiting..." inline />}
         fluid
-        onClick={handleSubmit}
+        onClick={showForgotPassword ? handleForgotPasswordSubmit : handleSubmit}
         loading={isSubmitting}
       >
         Submit
@@ -71,6 +84,13 @@ const LoginForm = ({ loginUser }) => {
 
 LoginForm.propTypes = {
   loginUser: func.isRequired,
+  onForgotPasswordClick: func.isRequired,
+  showForgotPassword: bool,
+  forgotPassword: func.isRequired,
+}
+
+LoginForm.defaultProps = {
+  showForgotPassword: false,
 }
 
 const LoginFormWithConnect = connect(
