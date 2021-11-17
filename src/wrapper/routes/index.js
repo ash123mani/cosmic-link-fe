@@ -7,6 +7,7 @@ import Register from '@pages/register'
 import Login from '@pages/login'
 import Links from '@pages/links'
 import Profile from '@pages/profile'
+import ResetPassword from '@pages/reset-password'
 
 const Routes = () => (
   <Switch>
@@ -18,6 +19,9 @@ const Routes = () => (
     </Route>
     <Route path="/login">
       <Login />
+    </Route>
+    <Route path="/resetpassword/:resetToken">
+      <ResetPassword />
     </Route>
     <PrivateRoute path="/links">
       <Links />

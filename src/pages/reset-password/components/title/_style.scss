@@ -1,0 +1,6 @@
+@import '~@common/theme/style';
+
+.title {
+  @include typography(l, bold);
+  color: $primary;
+}

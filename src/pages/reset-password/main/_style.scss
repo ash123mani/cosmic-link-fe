@@ -1,0 +1,12 @@
+@import "~@common/theme/style";
+
+.reset-password-page {
+  @include flex(column);
+
+  &__content {
+    height: calc(100vh - 130px);
+    width: 420px;
+    margin: 0 auto;
+    @include flex(column, center);
+  }
+}
