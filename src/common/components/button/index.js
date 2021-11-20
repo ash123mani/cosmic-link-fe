@@ -13,7 +13,7 @@ import './_style.scss'
 const blk = 'cosmic-btn'
 
 const Button = ({
-  children, type, className, category, disabled, fluid, onClick, asNav, to, loading, loader,
+  children, type, className, category, disabled, fluid, onClick, asNav, to, loading, loader, name,
 }) => {
   const eltClassName = classNames({
     blk,
@@ -31,6 +31,7 @@ const Button = ({
         to={to}
         className={eltClassName}
         onClick={onClick}
+        name={name}
       >
         {children}
       </NavLink>
@@ -42,6 +43,7 @@ const Button = ({
       className={eltClassName}
       type={type}
       onClick={onClick}
+      name={name}
     >
       {loading ? loader : children}
     </button>
@@ -51,7 +53,7 @@ const Button = ({
 Button.propTypes = {
   children: node.isRequired,
   type: oneOf(['reset', 'submit', 'button']),
-  category: oneOf(['plain', 'filled']),
+  category: oneOf(['plain', 'filled', 'vacant']),
   className: string,
   disabled: bool,
   fluid: bool,
@@ -60,6 +62,7 @@ Button.propTypes = {
   asNav: bool,
   loader: node,
   loading: bool,
+  name: string,
 }
 
 Button.defaultProps = {
@@ -73,6 +76,7 @@ Button.defaultProps = {
   asNav: false,
   loader: <Spinner size="small" inline />,
   loading: false,
+  name: '',
 }
 
 export default memo(Button)

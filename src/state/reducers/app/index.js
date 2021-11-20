@@ -2,7 +2,7 @@ import { SET_APP_BANNER, REMOVE_APP_BANNER } from '@state/constants/app'
 
 const intialState = {
   banner: {
-    type: '',
+    type: 'error',
     message: '',
     autoClose: true,
     duration: 5000,

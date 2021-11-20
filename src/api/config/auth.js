@@ -15,6 +15,11 @@ const auth = {
     endPoint: '/api/v1/auth/resetpassword',
     method: 'PUT',
   },
+  getUserData: {
+    endPoint: '/api/v1/user',
+    method: 'GET',
+    auth: true,
+  },
 }
 
 export default auth

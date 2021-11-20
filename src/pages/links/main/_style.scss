@@ -1,0 +1,18 @@
+.links-page {
+  &__title-wrapper {
+    margin: 4rem 0px;
+  }
+
+  &__types-wrapper {
+    width: 240px;
+    height: calc(100vh - 262px);
+    margin: 4rem 0px;
+    overflow: auto;
+    border-radius: 8px;
+
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}

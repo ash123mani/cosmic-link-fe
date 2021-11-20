@@ -1,0 +1,68 @@
+@import '~@common/theme/style';
+
+.cosmic-tabs {
+  display: flex;
+  overflow: auto;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  height: fit-content;
+
+  &--vertical {
+    flex-direction: column;
+    overflow: auto;
+    height: 100%;
+  }
+
+  &--top {
+    border-top: 1px solid $black-light;
+  }
+
+  &--bottom {
+    border-bottom: 1px solid $black-light;
+  }
+
+  &--left {
+    border-left: 1px solid $black-light;
+  }
+
+  &--right {
+    border-right: 1px solid $black-light;
+  }
+  
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &__label {
+    padding: 4px 16px;
+    color: $black-medium;
+    position: relative;
+    @include font-weight(semi-bold);
+
+    &:hover {
+      color: $primary;
+    }
+
+    &--active {
+      color: $primary;
+
+      &::after {
+        content: '';
+        position: absolute;
+        height: 1px;
+        width: 100%;
+        background-color: $primary;
+        left: 0;
+        bottom: 0px;
+      }
+      
+    }
+
+    &--vertical {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+    }
+  }
+}

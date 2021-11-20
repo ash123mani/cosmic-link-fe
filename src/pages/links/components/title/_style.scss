@@ -1,0 +1,12 @@
+@import '~@common/theme/style';
+
+.links-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__title {
+    @include typography(l, bold);
+    color: $primary;
+  }
+}

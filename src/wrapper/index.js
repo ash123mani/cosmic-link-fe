@@ -6,6 +6,7 @@ import AppBanner from '@local/app-banner'
 import Routes from './routes'
 import FontFace from './font-face'
 import Layout from './layout'
+// import LoadIntialData from './load-initial-data'
 import './_style.scss'
 
 const Wrapper = () => (
@@ -18,6 +19,7 @@ const Wrapper = () => (
         <Routes />
       </Layout>
     </div>
+    {/* <LoadIntialData /> */}
   </Fragment>
 )
 

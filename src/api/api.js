@@ -1,12 +1,13 @@
 import log from '@util/log'
 import store from '@store'
 import { setAppBanner } from '@state/actions/app'
+import { getStorageItem } from '@util/storage'
 
 import config from './config'
 
 const baseUrl = 'http://localhost:5001'
 
-const api = (name, options) => {
+const api = (name, options = {}) => {
   const {
     appendPath = '', body, headers, params,
   } = options
@@ -16,18 +17,26 @@ const api = (name, options) => {
     log('No config is found inside \'@api/config\'', 'error')
   }
 
-  const { endPoint, ...rest } = requestConfig
+  const { endPoint, auth = false, ...rest } = requestConfig
   const url = new URL(baseUrl + endPoint + appendPath)
 
   if (params) {
     Object.keys(params).forEach((key) => url.searchParams.append(key, params[key]))
   }
 
-  const requestHeaders = {
+  let requestHeaders = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
     ...headers,
     ...requestConfig.headers || {},
+  }
+
+  if (auth) {
+    const token = getStorageItem('local', 'token')
+    requestHeaders = {
+      ...requestHeaders,
+      Authorization: `Bearer ${token}`,
+    }
   }
 
   let requestOptions = {
