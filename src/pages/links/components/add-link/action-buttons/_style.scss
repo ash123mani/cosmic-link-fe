@@ -1,0 +1,13 @@
+.action-buttons {
+  display: flex;
+  margin-top: 20px;
+
+  &__cancel {
+    flex: 1;
+    margin-right: 20px;
+  }
+
+  &__submit {
+    flex: 1;
+  }
+}

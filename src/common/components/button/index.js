@@ -53,7 +53,7 @@ const Button = ({
 Button.propTypes = {
   children: node.isRequired,
   type: oneOf(['reset', 'submit', 'button']),
-  category: oneOf(['plain', 'filled', 'vacant']),
+  category: oneOf(['plain', 'filled', 'vacant', 'light']),
   className: string,
   disabled: bool,
   fluid: bool,

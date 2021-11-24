@@ -42,4 +42,14 @@
   &--vacant {
     border: unset;
   }
+
+  &--light {
+    border-color: $gray;
+    color: $gray;
+
+    &:hover {
+      border-color: $white;
+      color: $white;
+    }
+  }
 }

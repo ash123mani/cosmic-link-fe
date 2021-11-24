@@ -12,13 +12,12 @@ import './_style.scss'
 const Wrapper = () => (
   <Fragment>
     <FontFace />
-    <div id="app-wrapper">
-      <AppBanner />
-      <Header />
-      <Layout>
-        <Routes />
-      </Layout>
-    </div>
+    <div id="modal" />
+    <AppBanner />
+    <Header />
+    <Layout>
+      <Routes />
+    </Layout>
     {/* <LoadIntialData /> */}
   </Fragment>
 )

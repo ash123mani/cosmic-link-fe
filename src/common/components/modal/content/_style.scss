@@ -1,0 +1,9 @@
+@import '~@common/theme/style';
+
+.cosmic-modal-content {
+  margin-top: 24px;
+  margin-bottom: 24px;
+  color: $white;
+  display: flex;
+  flex-direction: column;
+}

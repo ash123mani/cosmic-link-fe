@@ -37,6 +37,22 @@
       &--inline {
         margin: 0px;
       }
+
+      &--primary-medium {
+        color: $primary-medium;
+      }
+  
+      &--primary-light {
+        color: $primary-light;
+      }
+  
+      &--gray {
+        color: $gray;
+      }
+  
+      &--black {
+        color: $black;
+      }
     }
 
     &--center {

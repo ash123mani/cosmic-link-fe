@@ -3,8 +3,9 @@ import { connect } from 'react-redux'
 import { func } from 'prop-types'
 import { useHistory } from 'react-router-dom'
 
-import { Input, Button, Spinner } from '@common'
+import { Input, Button } from '@common'
 import { classNames } from '@common/helpers'
+import InlineSpinner from '@local/inline-spinner'
 
 import { actions } from './index.connect'
 import './_style.scss'
@@ -62,7 +63,7 @@ const RegisterForm = ({ registerUser }) => {
         fluid
         onClick={handleSubmit}
         loading={isSubmitting}
-        loader={<Spinner size="small" text="Submiting..." inline />}
+        loader={<InlineSpinner />}
       >
         Submit
       </Button>

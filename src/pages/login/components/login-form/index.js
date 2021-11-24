@@ -3,8 +3,9 @@ import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { func, bool } from 'prop-types'
 
-import { Input, Button, Spinner } from '@common'
+import { Input, Button } from '@common'
 import { classNames } from '@common/helpers'
+import InlineSpinner from '@local/inline-spinner'
 
 import { actions } from './index.connect'
 import './_style.scss'
@@ -70,7 +71,7 @@ const LoginForm = ({
         {showForgotPassword ? 'Go Back to login' : 'Forgot Password'}
       </div>
       <Button
-        loader={<Spinner size="small" text="Submiting..." inline />}
+        loader={<InlineSpinner />}
         fluid
         onClick={showForgotPassword ? handleForgotPasswordSubmit : handleSubmit}
         loading={isSubmitting}

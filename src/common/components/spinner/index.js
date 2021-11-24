@@ -34,7 +34,10 @@ const Spinner = ({
         <p className={classNames({
           blk,
           elt: 'text',
-          mods: [inline && 'inline'],
+          mods: [
+            inline && 'inline',
+            category,
+          ],
         })}
         >
           {text}

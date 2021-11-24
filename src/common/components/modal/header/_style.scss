@@ -1,0 +1,30 @@
+@import '~@common/theme/style';
+
+.cosmic-modal-header {
+  @include typography(l, bold);
+  margin-bottom: 16px;
+  color: $white;
+  position: relative;
+  
+  &--closeable {
+    &::after {
+      position: absolute;
+      height: 28px;
+      width: 2px;
+      background-color: $white;
+      content: '';
+      right: 0;
+      transform: rotate(45deg);
+    }
+  
+    &::before {
+      position: absolute;
+      height: 28px;
+      width: 2px;
+      background-color: $white;
+      content: '';
+      right: 0;
+      transform: rotate(135deg);
+    }
+  }
+}
