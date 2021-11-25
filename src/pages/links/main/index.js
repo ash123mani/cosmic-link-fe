@@ -18,7 +18,7 @@ const Main = () => {
   }
 
   return (
-    <div className={classNames({ blk })}>
+    <main className={classNames({ blk })}>
       <div className={classNames({ blk, elt: 'title-wrapper' })}>
         <Title toggleAddLinkModal={toggleAddLinkModal} />
       </div>
@@ -26,7 +26,7 @@ const Main = () => {
         <LinkTypes />
       </div>
       {showAddLinkModal && <AddLinkModal toggleAddLinkModal={toggleAddLinkModal} /> }
-    </div>
+    </main>
   )
 }
 
