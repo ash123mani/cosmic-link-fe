@@ -11,7 +11,7 @@ import { actions } from './index.connect'
 
 const blk = 'add-link-modal'
 
-const AddLink = ({ toggleAddLinkModal, getLinkMeta }) => {
+const AddLinkModal = ({ toggleAddLinkModal, getLinkMeta }) => {
   const [url, setUrl] = useState('')
   const [isFetchingMeta, setIsFetchingMeta] = useState(false)
   const [isFetchedMeta, setIsFetchedMeta] = useState(false)
@@ -38,16 +38,21 @@ const AddLink = ({ toggleAddLinkModal, getLinkMeta }) => {
         Link Details
       </Modal.Header>
       <Modal.Content>
-        <Input
-          placeholder="Href"
-          category="light"
-          label="Link Url"
-          as="textarea"
-          rows="2"
-          onChange={handleChange}
-          name="url"
-        />
-        {isFetchedMeta && <LinkMeta meta={meta} /> }
+        {
+          !isFetchedMeta
+            ? <LinkMeta meta={meta} />
+            : (
+              <Input
+                placeholder="Href"
+                category="light"
+                label="Link Url"
+                as="textarea"
+                rows="2"
+                onChange={handleChange}
+                name="url"
+              />
+            )
+        }
         <ActionButtons
           handleCancel={toggleAddLinkModal}
           handleSubmit={handleSubmit}
@@ -58,13 +63,13 @@ const AddLink = ({ toggleAddLinkModal, getLinkMeta }) => {
   )
 }
 
-AddLink.propTypes = {
+AddLinkModal.propTypes = {
   toggleAddLinkModal: func.isRequired,
   getLinkMeta: func.isRequired,
 }
 
-const AddLinkWithConnect = connect(
+const AddLinkModalWithConnect = connect(
   null, actions,
-)(AddLink)
+)(AddLinkModal)
 
-export default AddLinkWithConnect
+export default AddLinkModalWithConnect

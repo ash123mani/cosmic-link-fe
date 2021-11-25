@@ -43,7 +43,7 @@ const Tabs = ({
             category="vacant"
             onClick={handleTabClick}
           >
-            {tab.label}
+            {tab.value}
           </Button>
         )
       })}
@@ -55,7 +55,7 @@ Tabs.propTypes = {
   borderAlight: oneOf(['right', 'left', 'top', 'bottom']),
   direction: oneOf(['vertical', 'horizontal']),
   tabs: arrayOf(shape({
-    label: string,
+    value: string,
     key: string,
   })),
   defaultSelected: string,

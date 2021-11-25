@@ -1,9 +1,12 @@
 import React from 'react'
-import { shape, string } from 'prop-types'
+import { shape, string, arrayOf } from 'prop-types'
+import { connect } from 'react-redux'
 
-import { Input } from '@common'
+import { Input, DropDown } from '@common'
 
-const LinkMeta = ({ meta }) => {
+import { mapStateToProps } from './index.connect'
+
+const LinkMeta = ({ meta, allCategories }) => {
   const { title, description } = meta
 
   return (
@@ -26,6 +29,10 @@ const LinkMeta = ({ meta }) => {
         name="description"
         value={description}
       />
+      <DropDown
+        category="light"
+        list={allCategories}
+      />
     </div>
   )
 }
@@ -38,10 +45,17 @@ LinkMeta.propTypes = {
     url: string,
     imageUrl: string,
   }),
+  allCategories: arrayOf(shape({
+    value: string,
+    key: string,
+  })),
 }
 
 LinkMeta.defaultProps = {
   meta: {},
+  allCategories: [],
 }
 
-export default LinkMeta
+const LinkMetaWithConnect = connect(mapStateToProps)(LinkMeta)
+
+export default LinkMetaWithConnect

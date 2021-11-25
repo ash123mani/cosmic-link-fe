@@ -4,7 +4,7 @@ import { classNames } from '@common/helpers'
 
 import LinkTypes from '../components/link-types'
 import Title from '../components/title'
-import AddLink from '../components/add-link'
+import AddLinkModal from '../components/add-link-modal'
 
 import './_style.scss'
 
@@ -25,7 +25,7 @@ const Main = () => {
       <div className={classNames({ blk, elt: 'types-wrapper' })}>
         <LinkTypes />
       </div>
-      {showAddLinkModal && <AddLink toggleAddLinkModal={toggleAddLinkModal} /> }
+      {showAddLinkModal && <AddLinkModal toggleAddLinkModal={toggleAddLinkModal} /> }
     </div>
   )
 }

@@ -1,3 +1,3 @@
-const linkCategories = (state) => state.auth.user.categories || []
+const linkCategories = (state) => state.links.categories || []
 
 export default linkCategories
