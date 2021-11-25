@@ -26,9 +26,10 @@
 
     &--light {
       border-color: $gray;
+      color: $gray;
 
       &:focus {
-        color: $gray;
+        color: $white;
         border-color: $white;
       }
     }

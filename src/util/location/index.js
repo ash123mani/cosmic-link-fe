@@ -1,5 +1,9 @@
-export const isLoginPage = (pathname = document.location.pathname) => /\/login$/.test(pathname)
+import { isLoginPage, isRegisterPage, isHomePage } from './page-checks'
+import history from './history'
 
-export const isRegisterPage = (pathname = document.location.pathname) => /\/register$/.test(pathname)
-
-export const isHomePage = (pathname = document.location.pathname) => /^\/$/.test(pathname)
+export {
+  isLoginPage,
+  isRegisterPage,
+  isHomePage,
+  history,
+}

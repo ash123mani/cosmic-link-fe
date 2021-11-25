@@ -6,6 +6,7 @@ import { Modal, Input } from '@common'
 import { classNames } from '@common/helpers'
 
 import ActionButtons from './action-buttons'
+import LinkMeta from './link-meta'
 import { actions } from './index.connect'
 
 const blk = 'add-link-modal'
@@ -13,6 +14,7 @@ const blk = 'add-link-modal'
 const AddLink = ({ toggleAddLinkModal, getLinkMeta }) => {
   const [url, setUrl] = useState('')
   const [isFetchingMeta, setIsFetchingMeta] = useState(false)
+  const [isFetchedMeta, setIsFetchedMeta] = useState(false)
   const [meta, setMeta] = useState({})
 
   const handleChange = ({ target: { value } }) => {
@@ -24,8 +26,9 @@ const AddLink = ({ toggleAddLinkModal, getLinkMeta }) => {
     const { data, success } = await getLinkMeta(url)
 
     setIsFetchingMeta(false)
+    setIsFetchedMeta(true)
     if (success) {
-      setMeta(data)
+      setMeta(data.meta)
     }
   }
 
@@ -40,15 +43,15 @@ const AddLink = ({ toggleAddLinkModal, getLinkMeta }) => {
           category="light"
           label="Link Url"
           as="textarea"
-          rows="4"
+          rows="2"
           onChange={handleChange}
           name="url"
         />
+        {isFetchedMeta && <LinkMeta meta={meta} /> }
         <ActionButtons
           handleCancel={toggleAddLinkModal}
           handleSubmit={handleSubmit}
           isLoading={isFetchingMeta}
-          meta={meta}
         />
       </Modal.Content>
     </Modal.Wrapper>

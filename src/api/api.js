@@ -3,6 +3,7 @@ import store from '@store'
 import { setAppBanner } from '@state/actions/app'
 import { getStorageItem } from '@util/storage'
 
+import handleAuthError from './handle-auth-error'
 import config from './config'
 
 const baseUrl = 'http://localhost:5001'
@@ -55,7 +56,9 @@ const api = (name, options = {}) => {
   return fetch(url, requestOptions)
     .then((response) => response.json())
     .then((response) => {
-      const { success, error, ...rest } = response
+      const {
+        success, error, statusCode = 200, ...rest
+      } = response
       if (success) {
         return {
           success,
@@ -64,9 +67,10 @@ const api = (name, options = {}) => {
       }
       return {
         success,
-        data: { error },
+        data: { error, statusCode },
       }
     })
+    .then(handleAuthError)
     .catch((error) => {
       const message = error.message || 'It \'s fine, some network problem!'
 

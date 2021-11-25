@@ -13,9 +13,12 @@ const getUserDataSuccess = (payload) => ({
 })
 
 const getUserDataFailure = (payload, dispatch) => {
-  dispatch(setAppBanner({
-    message: payload.message,
-  }))
+  if (![401].includes(payload.statusCode)) {
+    dispatch(setAppBanner({
+      type: 'error',
+      message: payload.error,
+    }))
+  }
 
   return {
     type: GET_USER_DATA_FAILURE,
@@ -33,7 +36,7 @@ const getUserData = () => async (dispatch) => {
     if (success) {
       dispatch(getUserDataSuccess(data))
     } else {
-      dispatch(getUserDataFailure(data.error, dispatch))
+      dispatch(getUserDataFailure(data, dispatch))
     }
 
     return response
