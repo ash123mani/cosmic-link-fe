@@ -11,25 +11,61 @@ import { actions } from './index.connect'
 
 const blk = 'add-link-modal'
 
-const AddLinkModal = ({ toggleAddLinkModal, getLinkMeta }) => {
-  const [url, setUrl] = useState('')
+const AddLinkModal = ({ toggleAddLinkModal, getLinkMeta, addLink }) => {
+  const [linkUrl, setLinkUrl] = useState('')
   const [isFetchingMeta, setIsFetchingMeta] = useState(false)
   const [isFetchedMeta, setIsFetchedMeta] = useState(false)
-  const [meta, setMeta] = useState({})
+  const [linkMeta, setLinkMeta] = useState({
+    title: '',
+    description: '',
+    linkUrl: '',
+    category: {},
+    imageUrl: '',
+    siteName: '',
+  })
 
   const handleChange = ({ target: { value } }) => {
-    setUrl(value)
+    setLinkUrl(value)
+  }
+
+  const getMetaData = async () => {
+    setIsFetchingMeta(true)
+    const { data, success } = await getLinkMeta(linkUrl)
+
+    setIsFetchingMeta(false)
+
+    if (success) {
+      setIsFetchedMeta(true)
+      setLinkMeta({
+        ...linkMeta,
+        ...data.meta,
+      })
+    }
   }
 
   const handleSubmit = async () => {
-    setIsFetchingMeta(true)
-    const { data, success } = await getLinkMeta(url)
-
-    setIsFetchingMeta(false)
-    setIsFetchedMeta(true)
-    if (success) {
-      setMeta(data.meta)
+    if (!isFetchedMeta) {
+      getMetaData()
+    } else {
+      addLink(linkMeta)
     }
+  }
+
+  const handleCategoryChange = ({ key, value }) => {
+    setLinkMeta({
+      ...linkMeta,
+      category: {
+        id: key,
+        name: value,
+      },
+    })
+  }
+
+  const handleMetaChange = ({ target: { name, value } }) => {
+    setLinkMeta({
+      ...linkMeta,
+      [name]: value,
+    })
   }
 
   return (
@@ -39,8 +75,14 @@ const AddLinkModal = ({ toggleAddLinkModal, getLinkMeta }) => {
       </Modal.Header>
       <Modal.Content>
         {
-          !isFetchedMeta
-            ? <LinkMeta meta={meta} />
+          isFetchedMeta
+            ? (
+              <LinkMeta
+                meta={linkMeta}
+                handleCategoryChange={handleCategoryChange}
+                handleMetaChange={handleMetaChange}
+              />
+            )
             : (
               <Input
                 placeholder="Href"
@@ -57,6 +99,7 @@ const AddLinkModal = ({ toggleAddLinkModal, getLinkMeta }) => {
           handleCancel={toggleAddLinkModal}
           handleSubmit={handleSubmit}
           isLoading={isFetchingMeta}
+          isFetchedMeta={isFetchedMeta}
         />
       </Modal.Content>
     </Modal.Wrapper>
@@ -66,6 +109,7 @@ const AddLinkModal = ({ toggleAddLinkModal, getLinkMeta }) => {
 AddLinkModal.propTypes = {
   toggleAddLinkModal: func.isRequired,
   getLinkMeta: func.isRequired,
+  addLink: func.isRequired,
 }
 
 const AddLinkModalWithConnect = connect(

@@ -1,7 +1,8 @@
-import { getLinkMeta } from '@state/actions/links'
+import { getLinkMeta, addLink } from '@state/actions/links'
 
 const actions = {
   getLinkMeta,
+  addLink,
 }
 
 export {

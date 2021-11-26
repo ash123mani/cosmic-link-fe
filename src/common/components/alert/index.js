@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, memo } from 'react'
 import {
   string, oneOf, bool, func, number,
 } from 'prop-types'
@@ -71,4 +71,4 @@ Alert.defaultProps = {
   duration: 2000,
 }
 
-export default Alert
+export default memo(Alert)

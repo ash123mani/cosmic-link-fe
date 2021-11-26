@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/interactive-supports-focus */
-import React, { useState } from 'react'
+import React, { useState, memo } from 'react'
 import {
-  oneOf, string, shape, arrayOf,
+  oneOf, string, shape, arrayOf, func,
 } from 'prop-types'
 
 import { classNames } from '@common/helpers'
@@ -11,7 +11,7 @@ import './_style.scss'
 const blk = 'cosmic-dropdown'
 
 const DropDown = ({
-  category, className, defaultSelected, list, label,
+  category, className, defaultSelected, list, label, handleChange,
 }) => {
   const [showDropDown, setShowDropDown] = useState(false)
   const [selected, setSelected] = useState(defaultSelected)
@@ -29,6 +29,7 @@ const DropDown = ({
   const handleSelectedItemChange = (item) => {
     setSelected(item)
     handleDropDownClick()
+    handleChange(item)
   }
 
   if (!list.length) {
@@ -36,12 +37,12 @@ const DropDown = ({
   }
 
   return (
-    <div className={eltClassName}>
+    <div className={eltClassName} onBlur={handleDropDownClick}>
       {label && (
         <div
           className={classNames({ blk, elt: 'label', mods: [category] })}
         >
-          Select a category:
+          {label}
         </div>
       )}
 
@@ -85,6 +86,7 @@ DropDown.propTypes = {
     key: string,
   })),
   label: string,
+  handleChange: func.isRequired,
 }
 
 DropDown.defaultProps = {
@@ -95,4 +97,4 @@ DropDown.defaultProps = {
   list: [],
 }
 
-export default DropDown
+export default memo(DropDown)

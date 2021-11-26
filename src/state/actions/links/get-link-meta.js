@@ -24,11 +24,11 @@ const getLinkMetaFailure = (payload, dispatch) => {
   }
 }
 
-const getLinkMeta = (url) => async (dispatch) => {
-  dispatch(getLinkMetaRequest(url))
+const getLinkMeta = (linkUrl) => async (dispatch) => {
+  dispatch(getLinkMetaRequest(linkUrl))
 
   try {
-    const body = { url }
+    const body = { linkUrl }
     const response = await api('getLinkMeta', { body })
     const { success, data } = response
 

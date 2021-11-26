@@ -9,7 +9,9 @@ import './_style.scss'
 
 const blk = 'action-buttons'
 
-const ActionButtons = ({ handleCancel, handleSubmit, isLoading }) => (
+const ActionButtons = ({
+  isFetchedMeta, handleCancel, handleSubmit, isLoading,
+}) => (
   <div className={classNames({ blk })}>
     <Button
       onClick={handleCancel}
@@ -25,7 +27,7 @@ const ActionButtons = ({ handleCancel, handleSubmit, isLoading }) => (
       loading={isLoading}
       loader={<InlineSpinner text="Getting..." category="gray" />}
     >
-      Add Link
+      {isFetchedMeta ? 'Add this Link' : 'Get Link Meta'}
     </Button>
   </div>
 )
@@ -34,10 +36,12 @@ ActionButtons.propTypes = {
   handleCancel: func.isRequired,
   handleSubmit: func.isRequired,
   isLoading: bool,
+  isFetchedMeta: bool,
 }
 
 ActionButtons.defaultProps = {
   isLoading: false,
+  isFetchedMeta: false,
 }
 
 export default ActionButtons
