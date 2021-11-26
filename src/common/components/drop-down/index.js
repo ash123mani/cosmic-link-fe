@@ -1,10 +1,11 @@
 /* eslint-disable jsx-a11y/interactive-supports-focus */
-import React, { useState, memo } from 'react'
+import React, { useState, memo, useRef } from 'react'
 import {
   oneOf, string, shape, arrayOf, func,
 } from 'prop-types'
 
 import { classNames } from '@common/helpers'
+import { useOutsideClick } from '@hooks'
 
 import './_style.scss'
 
@@ -15,12 +16,22 @@ const DropDown = ({
 }) => {
   const [showDropDown, setShowDropDown] = useState(false)
   const [selected, setSelected] = useState(defaultSelected)
+  const ref = useRef(null)
 
+  const categoryMod = { mods: [category] }
   const eltClassName = classNames({
     blk,
     className,
-    mods: [category],
+    ...categoryMod,
   })
+
+  const outSideClickHandler = () => {
+    if (showDropDown) {
+      setShowDropDown(false)
+    }
+  }
+
+  useOutsideClick(ref, outSideClickHandler)
 
   const handleDropDownClick = () => {
     setShowDropDown(!showDropDown)
@@ -37,17 +48,21 @@ const DropDown = ({
   }
 
   return (
-    <div className={eltClassName} onBlur={handleDropDownClick}>
+    <div
+      className={eltClassName}
+      onBlur={handleDropDownClick}
+      ref={ref}
+    >
       {label && (
         <div
-          className={classNames({ blk, elt: 'label', mods: [category] })}
+          className={classNames({ blk, elt: 'label', ...categoryMod })}
         >
           {label}
         </div>
       )}
 
       <div
-        className={classNames({ blk, elt: 'selected', mods: [category] })}
+        className={classNames({ blk, elt: 'selected', ...categoryMod })}
         onClick={handleDropDownClick}
         onKeyDown={handleDropDownClick}
         role="button"
@@ -55,15 +70,16 @@ const DropDown = ({
         {selected.value || 'Select'}
       </div>
 
-      <div className={classNames({
-        blk,
-        elt: 'content',
-        mods: [category, showDropDown && 'show'],
-      })}
+      <div
+        className={classNames({
+          blk,
+          elt: 'content',
+          mods: [category, showDropDown && 'show'],
+        })}
       >
         {list.map((item) => (
           <div
-            className={classNames({ blk, elt: 'item', mods: [category] })}
+            className={classNames({ blk, elt: 'item', ...categoryMod })}
             key={item.key}
             onClick={(e) => handleSelectedItemChange(item, e)}
             onKeyDown={(e) => handleSelectedItemChange(item, e)}
