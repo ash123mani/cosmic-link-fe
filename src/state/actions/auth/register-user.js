@@ -25,14 +25,14 @@ const registerUserFailure = (payload, dispatch) => {
   }
 }
 
-const registerUser = (form = {}) => async (dispatch) => {
+const registerUser = (payload = {}) => async (dispatch) => {
   try {
-    dispatch(registerUserRequest(form))
+    dispatch(registerUserRequest(payload))
 
     const body = {
-      password: form.password,
-      email: form.email,
-      username: form.name,
+      password: payload.password,
+      email: payload.email,
+      username: payload.name,
     }
     const response = await api('registerUser', { body })
     const { success, data } = response

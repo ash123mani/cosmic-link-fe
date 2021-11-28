@@ -14,7 +14,7 @@ const getUserDataSuccess = (payload) => ({
 })
 
 const getUserDataFailure = (payload, dispatch) => {
-  if (![401].includes(payload.statusCode)) {
+  if (![401, 404].includes(payload.statusCode)) {
     dispatch(setAppBanner({
       type: 'error',
       message: payload.error,

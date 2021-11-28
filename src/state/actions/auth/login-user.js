@@ -25,13 +25,13 @@ const loginUserFailure = (payload, dispatch) => {
   }
 }
 
-const loginUser = (form = {}) => async (dispatch) => {
+const loginUser = (payload = {}) => async (dispatch) => {
   try {
-    dispatch(loginUserRequest(form))
+    dispatch(loginUserRequest(payload))
 
     const body = {
-      password: form.password,
-      email: form.email,
+      password: payload.password,
+      email: payload.email,
     }
     const response = await api('loginUser', { body })
     const { success, data } = response
