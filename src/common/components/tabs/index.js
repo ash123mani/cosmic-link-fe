@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { classNames } from '@common/helpers'
 import {
-  arrayOf, shape, string, oneOf,
+  arrayOf, shape, string, oneOf, func,
 } from 'prop-types'
 
 import { Button } from '@common'
@@ -11,7 +11,7 @@ import './_style.scss'
 const blk = 'cosmic-tabs'
 
 const Tabs = ({
-  borderAlight, direction, tabs, defaultSelected,
+  borderAlight, direction, tabs, defaultSelected, className, handleTabChange,
 }) => {
   const [activeTab, setActiveTab] = useState(defaultSelected)
 
@@ -21,10 +21,17 @@ const Tabs = ({
 
   const handleTabClick = ({ target: { name } }) => {
     setActiveTab(name)
+    handleTabChange(name)
   }
 
+  const eltClassName = classNames({
+    blk,
+    className,
+    mods: [direction, borderAlight],
+  })
+
   return (
-    <div className={classNames({ blk, mods: [direction, borderAlight] })}>
+    <div className={eltClassName}>
       {tabs.map((tab) => {
         const isActive = activeTab === tab.key
 
@@ -59,6 +66,8 @@ Tabs.propTypes = {
     key: string,
   })),
   defaultSelected: string,
+  className: string,
+  handleTabChange: func.isRequired,
 }
 
 Tabs.defaultProps = {
@@ -66,6 +75,7 @@ Tabs.defaultProps = {
   direction: 'horizontal',
   tabs: [],
   defaultSelected: '',
+  className: '',
 }
 
 export default Tabs

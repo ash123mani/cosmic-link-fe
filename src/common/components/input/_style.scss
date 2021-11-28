@@ -25,12 +25,12 @@
     }
 
     &--light {
-      border-color: $gray;
-      color: $gray;
+      border-color: $white;
+      color: $white;
 
       &:focus {
-        color: $white;
-        border-color: $white;
+        color: $gray;
+        border-color: $gray;
       }
     }
   }
@@ -40,7 +40,7 @@
     margin-bottom: 4px;
 
     &--light {
-      color: $gray;
+      color: $white;
     }
   }
 

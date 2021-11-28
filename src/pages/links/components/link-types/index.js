@@ -1,16 +1,26 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { arrayOf, shape, string } from 'prop-types'
+import {
+  arrayOf, shape, string, func,
+} from 'prop-types'
 
 import { Tabs } from '@common'
+import { classNames } from '@common/helpers'
 
 import { mapStateToProps } from './index.connect'
+import './_style.scss'
 
-const LinkTypes = ({ allCategories }) => (
+const blk = 'link-types'
+
+const LinkTypes = ({
+  allCategories, handleTabChange, selectedCategory,
+}) => (
   <Tabs
     direction="vertical"
     tabs={allCategories}
-    defaultSelected={(allCategories[0] || {}).key}
+    defaultSelected={selectedCategory}
+    className={classNames({ blk })}
+    handleTabChange={handleTabChange}
   />
 )
 
@@ -19,10 +29,13 @@ LinkTypes.propTypes = {
     label: string,
     key: string,
   })),
+  handleTabChange: func.isRequired,
+  selectedCategory: string,
 }
 
 LinkTypes.defaultProps = {
   allCategories: [],
+  selectedCategory: '',
 }
 
 const LinkTypesWithConnect = connect(

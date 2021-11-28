@@ -3,12 +3,12 @@ import { setAppBanner } from '@state/actions/app'
 import { logOutUser } from '@state/actions/auth'
 
 const handleAuthError = (response = {}) => {
-  const authCodes = [401]
+  const authCodes = [401, 404]
 
   if (authCodes.includes(response.data.statusCode)) {
     store.dispatch(setAppBanner({
       type: 'error',
-      message: 'Your session got expired, so logging you out',
+      message: 'Please login again, your session got expired',
       duration: 3000,
     }))
 

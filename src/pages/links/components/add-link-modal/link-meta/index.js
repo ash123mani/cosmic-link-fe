@@ -2,11 +2,8 @@ import React, { memo } from 'react'
 import {
   shape, string, arrayOf, func,
 } from 'prop-types'
-import { connect } from 'react-redux'
 
 import { Input, DropDown } from '@common'
-
-import { mapStateToProps } from './index.connect'
 
 const LinkMeta = ({
   meta, allCategories, handleCategoryChange, handleMetaChange,
@@ -30,7 +27,7 @@ const LinkMeta = ({
         category="light"
         label="Description"
         as="textarea"
-        rows="3"
+        rows="5"
         name="description"
         value={description}
         onChange={handleMetaChange}
@@ -40,6 +37,7 @@ const LinkMeta = ({
         list={allCategories}
         label="Category for you link"
         handleChange={handleCategoryChange}
+        defaultSelected={allCategories[allCategories.length - 1]}
       />
     </div>
   )
@@ -66,6 +64,4 @@ LinkMeta.defaultProps = {
   allCategories: [],
 }
 
-const LinkMetaWithConnect = connect(mapStateToProps)(LinkMeta)
-
-export default memo(LinkMetaWithConnect)
+export default memo(LinkMeta)

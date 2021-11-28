@@ -1,5 +1,7 @@
 /* eslint-disable jsx-a11y/interactive-supports-focus */
-import React, { useState, memo, useRef } from 'react'
+import React, {
+  useState, memo, useRef, useEffect,
+} from 'react'
 import {
   oneOf, string, shape, arrayOf, func,
 } from 'prop-types'
@@ -42,6 +44,10 @@ const DropDown = ({
     handleDropDownClick()
     handleChange(item)
   }
+
+  useEffect(() => {
+    setSelected(defaultSelected)
+  }, [defaultSelected])
 
   if (!list.length) {
     return null
@@ -96,7 +102,10 @@ const DropDown = ({
 DropDown.propTypes = {
   category: oneOf(['dark', 'light']),
   className: string,
-  defaultSelected: string,
+  defaultSelected: shape({
+    key: string,
+    value: string,
+  }),
   list: arrayOf(shape({
     value: string,
     key: string,

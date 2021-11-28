@@ -1,0 +1,26 @@
+@import '~@common/theme/style';
+
+.link-card {
+  width: 380px;
+  border-radius: 4px;
+  padding: 12px;
+  border: 1px solid $black-light;
+
+  &__image {
+    object-fit: cover;
+    height: 200px;
+    border-radius: 4px;
+    width: 100%;
+  }
+
+  &__title {
+    margin: 12px 0px;
+    @include typography(l, bold);
+    word-wrap: break-word;
+    color: $primary-medium;
+  }
+
+  &__description {
+    margin: 12px 0px;
+  }
+}

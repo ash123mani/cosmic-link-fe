@@ -44,12 +44,12 @@
   }
 
   &--light {
-    border-color: $gray;
-    color: $gray;
+    border-color: $white;
+    color: $white;
 
     &:hover {
-      border-color: $white;
-      color: $white;
+      border-color: $gray;
+      color: $gray;
     }
   }
 }

@@ -1,5 +1,6 @@
 import { api } from '@api'
 import { ADD_LINK_REQUEST, ADD_LINK_SUCCESS, ADD_LINK_FAILURE } from '@state/constants/links'
+import { setAppBanner } from '@state/actions/app'
 
 const addLinkRequest = (payload) => ({
   type: ADD_LINK_REQUEST,
@@ -11,10 +12,17 @@ const addLinkSuccess = (payload) => ({
   payload,
 })
 
-const addLinkFailure = (payload) => ({
-  type: ADD_LINK_FAILURE,
-  payload,
-})
+const addLinkFailure = (payload, dispatch) => {
+  dispatch(setAppBanner({
+    type: 'error',
+    payload,
+  }))
+
+  return {
+    type: ADD_LINK_FAILURE,
+    payload,
+  }
+}
 
 const addLink = (payload) => async (dispatch) => {
   try {
@@ -26,7 +34,7 @@ const addLink = (payload) => async (dispatch) => {
     if (success) {
       dispatch(addLinkSuccess(data))
     } else {
-      dispatch(addLinkFailure(data.error))
+      dispatch(addLinkFailure(data.error, dispatch))
     }
 
     return response

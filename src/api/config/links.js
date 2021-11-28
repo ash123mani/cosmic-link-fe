@@ -8,6 +8,11 @@ const links = {
     method: 'POST',
     auth: true,
   },
+  getLinks: {
+    endPoint: '/api/v1/link',
+    method: 'GET',
+    auth: true,
+  },
 }
 
 export default links
