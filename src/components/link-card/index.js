@@ -2,6 +2,7 @@ import React from 'react'
 import { string } from 'prop-types'
 
 import { classNames } from '@common/helpers'
+import cosmicLinkLogo from '@images/cosmic-link-logo.svg'
 
 import './_style.scss'
 
@@ -16,11 +17,13 @@ const LinkCard = ({
 
   return (
     <div className={classNames({ blk })}>
-      <img
-        src={imageUrl}
-        alt={siteName}
-        className={classNames({ blk, elt: 'image' })}
-      />
+      <div className={classNames({ blk, elt: 'image' })}>
+        <img
+          src={imageUrl}
+          alt={siteName}
+          className={classNames({ blk, elt: 'image' })}
+        />
+      </div>
 
       {title && (
         <div className={classNames({ blk, elt: 'title' })}>
@@ -46,7 +49,7 @@ LinkCard.propTypes = {
 }
 
 LinkCard.defaultProps = {
-  imageUrl: '',
+  imageUrl: cosmicLinkLogo,
   title: '',
   description: '',
   siteName: '',

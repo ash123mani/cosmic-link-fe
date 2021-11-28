@@ -28,5 +28,9 @@
     display: flex;
     flex-direction: column;
     animation: expand 0.2s linear;
+
+    &--backdrop {
+      box-shadow: 0 0 0 50vmax $primary-light;
+    }
   }
 }

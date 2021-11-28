@@ -40,7 +40,6 @@ const AddLinkModal = ({
   const getMetaData = async () => {
     setIsFetchingMeta(true)
     const { data, success } = await getLinkMeta(linkUrl)
-
     setIsFetchingMeta(false)
 
     if (success) {

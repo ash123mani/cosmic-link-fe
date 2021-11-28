@@ -5,6 +5,12 @@
   display: flex;
   justify-content: space-between;
 
+  &--banner {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
   &__message {
     @include typography(m, semi-bold);
     margin-right: 20px;

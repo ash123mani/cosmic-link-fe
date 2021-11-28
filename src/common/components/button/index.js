@@ -44,6 +44,7 @@ const Button = ({
       type={type}
       onClick={onClick}
       name={name}
+      disabled={loading || disabled}
     >
       {loading ? loader : children}
     </button>

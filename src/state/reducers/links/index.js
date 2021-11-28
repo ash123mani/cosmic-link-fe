@@ -26,8 +26,8 @@ const linksReducer = (state = initialState, action) => {
         [payload.categoryId]: {
           ...state.collection[payload.categoryId],
           links: [
-            ...(state.collection[payload.categoryId].links || []),
             payload.link,
+            ...(state.collection[payload.categoryId].links || []),
           ],
         },
       },

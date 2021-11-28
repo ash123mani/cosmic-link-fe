@@ -16,6 +16,7 @@ const LinkCards = ({ categoryLinks }) => (
       const {
         title, description, imageUrl, siteName,
       } = link
+
       return (
         <LinkCard
           title={title}

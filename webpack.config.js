@@ -23,6 +23,10 @@ module.exports = {
         include: join(__dirname, 'src'),
         use: ['babel-loader'],
       },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif|webp)$/,
+        type: 'asset/resource',
+      },
     ],
   },
   plugins: [
@@ -44,6 +48,7 @@ module.exports = {
       '@api': resolve(__dirname, 'src/api/'),
       '@util': resolve(__dirname, 'src/util/'),
       '@hooks': resolve(__dirname, 'src/hooks/'),
+      '@images': resolve(__dirname, 'src/images/'),
     },
   },
   devServer: {

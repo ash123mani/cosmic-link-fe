@@ -9,9 +9,9 @@ import './_style.scss'
 
 const blk = 'cosmic-modal'
 
-const Wrapper = ({ children, className }) => createPortal(
+const Wrapper = ({ children, className, backdrop = true }) => createPortal(
   <div className={classNames({ blk, className })}>
-    <div className={classNames({ blk, elt: 'wrapper' })}>
+    <div className={classNames({ blk, elt: 'wrapper', mods: [backdrop && 'backdrop'] })}>
       {children}
     </div>
   </div>,

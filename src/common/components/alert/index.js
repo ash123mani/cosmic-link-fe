@@ -10,7 +10,7 @@ import './_style.scss'
 const blk = 'cosmic-alert'
 
 const Alert = ({
-  type, message, center, autoClose, onClose, duration,
+  type, message, center, autoClose, onClose, duration, banner,
 }) => {
   const [animateDown, setAnimateDown] = useState(false)
   const [animateUp, setAnimateUp] = useState(false)
@@ -22,6 +22,7 @@ const Alert = ({
       center && 'center',
       animateDown && 'animate-down',
       animateUp && 'animate-up',
+      banner && 'banner',
     ],
   })
 
@@ -61,6 +62,7 @@ Alert.propTypes = {
   autoClose: bool,
   onClose: func,
   duration: number,
+  banner: bool,
 }
 
 Alert.defaultProps = {
@@ -69,6 +71,7 @@ Alert.defaultProps = {
   autoClose: false,
   onClose() {},
   duration: 2000,
+  banner: true,
 }
 
 export default memo(Alert)

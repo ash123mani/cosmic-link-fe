@@ -31,8 +31,8 @@ const ResetPasswordForm = ({ resetPassword }) => {
     resetPassword({
       password: formData.password,
       resetToken,
-    }).then(({ data }) => {
-      if (!data.error) {
+    }).then(({ success }) => {
+      if (success) {
         history.push('/login')
       }
     })
