@@ -5,13 +5,9 @@
   border-radius: 4px;
   padding: 12px;
   border: 1px solid $black-light;
-
-  &__image {
-    object-fit: cover;
-    height: 200px;
-    border-radius: 4px;
-    width: 100%;
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   &__title {
     margin: 12px 0px;
@@ -20,7 +16,24 @@
     color: $primary-medium;
   }
 
+  &__site-name {
+    height: 200px;
+    width: 380px;
+    @include flex-center;
+    @include typography(l, bold);
+  }
+
   &__description {
     margin: 12px 0px;
+  }
+
+  &__bottom {
+    padding: 12px 12px 0px;
+    border-top: 1px solid $black-light;
+    @include typography(m, semi-bold);
+  }
+
+  &__link {
+    color: $primary-medium;
   }
 }

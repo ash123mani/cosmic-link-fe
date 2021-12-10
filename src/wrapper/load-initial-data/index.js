@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { func, bool } from 'prop-types'
 
-import { Spinner } from '@common'
+// import { Spinner } from '@common'
 
 import { actions, mapStateToProps } from './index.connect'
 
@@ -22,7 +22,7 @@ const LoadInitialData = ({ getUserData, isUserLoggedIn }) => {
   }, [isUserLoggedIn])
 
   if (isLoading) {
-    return <Spinner />
+    return null
   }
 
   return null

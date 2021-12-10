@@ -2,14 +2,14 @@ import React from 'react'
 import { string } from 'prop-types'
 
 import { classNames } from '@common/helpers'
-import cosmicLinkLogo from '@images/cosmic-link-logo.svg'
+import Image from '@local/image'
 
 import './_style.scss'
 
 const blk = 'link-card'
 
 const LinkCard = ({
-  imageUrl, title, description, siteName,
+  imageUrl, title, description, siteName, linkUrl,
 }) => {
   if (!title && !description) {
     return null
@@ -17,26 +17,44 @@ const LinkCard = ({
 
   return (
     <div className={classNames({ blk })}>
-      <div className={classNames({ blk, elt: 'image' })}>
-        <img
-          src={imageUrl}
-          alt={siteName}
-          className={classNames({ blk, elt: 'image' })}
-        />
+      <div>
+        {
+          imageUrl ? (
+            <Image
+              imageUrl={imageUrl}
+              alt={siteName}
+              height="200px"
+            />
+          ) : (
+            <div className={classNames({ blk, elt: 'site-name' })}>
+              {siteName}
+            </div>
+          )
+        }
+
+        {title && (
+          <div className={classNames({ blk, elt: 'title' })}>
+            {title}
+          </div>
+        )}
+
+        {description && (
+          <div className={classNames({ blk, elt: 'description' })}>
+            {description}
+          </div>
+        )}
       </div>
 
-      {title && (
-        <div className={classNames({ blk, elt: 'title' })}>
-          {title}
-        </div>
-      )}
-
-      {description && (
-        <div className={classNames({ blk, elt: 'description' })}>
-          {description}
-        </div>
-      )}
-
+      <div className={classNames({ blk, elt: 'bottom' })}>
+        <a
+          href={linkUrl}
+          target="_blank"
+          rel="noreferrer"
+          className={classNames({ blk, elt: 'link' })}
+        >
+          Open Link 🔗
+        </a>
+      </div>
     </div>
   )
 }
@@ -46,10 +64,11 @@ LinkCard.propTypes = {
   title: string,
   description: string,
   siteName: string,
+  linkUrl: string.isRequired,
 }
 
 LinkCard.defaultProps = {
-  imageUrl: cosmicLinkLogo,
+  imageUrl: '',
   title: '',
   description: '',
   siteName: '',

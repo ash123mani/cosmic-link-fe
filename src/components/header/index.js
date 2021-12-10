@@ -28,7 +28,7 @@ const Header = ({ isUserLoggedIn }) => {
         className={classNames({ blk, elt: 'link' })}
       >
         <div className={classNames({ blk, elt: 'logo' })}>
-          CosmicLink
+          C🪐smicLink
         </div>
       </NavLink>
 

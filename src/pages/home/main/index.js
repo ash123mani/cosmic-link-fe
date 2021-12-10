@@ -13,7 +13,7 @@ const Main = () => (
         One place for all your Links.
       </h1>
       <h2 className={classNames({ blk, elt: 'subtitle' })}>
-        Build your cosmos of links by keeping your links inside CosmicLink
+        Build your cosmos of links by keeping your links inside C🪐smicLink
       </h2>
     </div>
   </main>

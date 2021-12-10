@@ -14,7 +14,7 @@ const LinkCards = ({ categoryLinks }) => (
   <div className={classNames({ blk })}>
     {categoryLinks.map((link) => {
       const {
-        title, description, imageUrl, siteName,
+        title, description, imageUrl, siteName, linkUrl,
       } = link
 
       return (
@@ -23,6 +23,7 @@ const LinkCards = ({ categoryLinks }) => (
           imageUrl={imageUrl}
           description={description}
           siteName={siteName}
+          linkUrl={linkUrl}
         />
       )
     })}

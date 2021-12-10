@@ -30,7 +30,7 @@ const Main = ({
     setIsFetchingLinks(false)
   }
 
-  const handleTabChange = async (category) => {
+  const handleTabChange = (category) => {
     setSelectedCategory(category)
   }
 
@@ -55,7 +55,7 @@ const Main = ({
         <AddLinkModal
           toggleAddLinkModal={toggleAddLinkModal}
         />
-      ) }
+      )}
     </main>
   )
 }
