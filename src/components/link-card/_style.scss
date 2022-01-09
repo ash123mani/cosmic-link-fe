@@ -31,9 +31,34 @@
     padding: 12px 12px 0px;
     border-top: 1px solid $black-light;
     @include typography(m, semi-bold);
+    display: flex;
+    justify-content: space-around;
   }
 
   &__link {
     color: $primary-medium;
+
+    &-image {
+      height: 24px;
+      width: 24px;
+    }
+
+    &-copy {
+      height: 24px;
+      width: 24px;
+      cursor: pointer;
+    }
+
+    &-share {
+      height: 24px;
+      width: 24px;
+      cursor: pointer;
+    }
+
+    &-delete {
+      height: 24px;
+      width: 24px;
+      cursor: pointer;
+    }
   }
 }

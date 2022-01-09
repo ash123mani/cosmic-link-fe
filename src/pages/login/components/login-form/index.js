@@ -68,7 +68,7 @@ const LoginForm = ({
         onKeyDown={onForgotPasswordClick}
         tabIndex={0}
       >
-        {showForgotPassword ? 'Go Back to login' : 'Forgot Password'}
+        {showForgotPassword ? '< Go Back to login' : 'Forgot Password >'}
       </div>
       <Button
         loader={<InlineSpinner />}

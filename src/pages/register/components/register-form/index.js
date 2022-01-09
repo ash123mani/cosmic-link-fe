@@ -27,8 +27,8 @@ const RegisterForm = ({ registerUser }) => {
 
   const handleSubmit = () => {
     setIsSubmitting(true)
-    registerUser(formData).then(({ data }) => {
-      if (data.token) {
+    registerUser(formData).then(({ success }) => {
+      if (success) {
         history.push('/links')
       }
     })

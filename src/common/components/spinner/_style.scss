@@ -16,7 +16,7 @@
     animation-iteration-count: infinite;
     animation-fill-mode: forwards;
     animation-timing-function: linear;
-    border-top-color: transparent;
+    border-top-color: transparent !important;
 
     &__container {
       display: flex;
@@ -53,6 +53,10 @@
       &--black {
         color: $black;
       }
+
+      &--red {
+        color: $error;
+      }
     }
 
     &--center {
@@ -87,6 +91,10 @@
 
     &--black {
       border-color: $black;
+    }
+
+    &--red {
+      border-color: $error;
     }
 }
 

@@ -1,5 +1,5 @@
 import {
-  UPDATE_LINK_CATEGORIES, GET_LINKS_SUCCESS, SET_SELECTED_CATEGORY, ADD_LINK_SUCCESS,
+  UPDATE_LINK_CATEGORIES, GET_LINKS_SUCCESS, SET_SELECTED_CATEGORY, ADD_LINK_SUCCESS, DELETE_LINK_SUCCESS,
 } from '@state/constants/links'
 
 const initialState = {
@@ -40,6 +40,20 @@ const linksReducer = (state = initialState, action) => {
         [payload.categoryId]: {
           links: payload.links,
           isFetched: true,
+        },
+      },
+    }
+  case DELETE_LINK_SUCCESS:
+    const deletedLinkCategory = payload.link.category
+    const newLinksList = state.collection[deletedLinkCategory.id].links
+      .filter((link) => link.id !== payload.link.id)
+    return {
+      ...state,
+      collection: {
+        ...state.collection,
+        [deletedLinkCategory.id]: {
+          ...state.collection[deletedLinkCategory.id],
+          links: newLinksList,
         },
       },
     }

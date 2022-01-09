@@ -1,5 +1,6 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React from 'react'
-import { string, bool } from 'prop-types'
+import { string, bool, func } from 'prop-types'
 
 import cosmicLinkLogo from '@images/cosmic-link-logo.svg'
 import { classNames } from '@common/helpers'
@@ -7,7 +8,7 @@ import { classNames } from '@common/helpers'
 const blk = 'cosmic-image'
 
 const Image = ({
-  imageUrl, alt, className, lazy, height, width,
+  imageUrl, alt, className, lazy, height, width, onClick, ...rest
 }) => {
   const eltClassName = classNames({
     blk,
@@ -15,6 +16,7 @@ const Image = ({
   })
 
   return (
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
     <img
       className={eltClassName}
       src={imageUrl}
@@ -22,6 +24,9 @@ const Image = ({
       height={height}
       width={width}
       loading={lazy ? 'lazy' : 'eager'}
+      onClick={onClick}
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...rest}
     />
   )
 }
@@ -33,6 +38,7 @@ Image.propTypes = {
   lazy: bool,
   height: string,
   width: string,
+  onClick: func,
 }
 
 Image.defaultProps = {
@@ -41,6 +47,7 @@ Image.defaultProps = {
   width: '100%',
   height: '100%',
   imageUrl: cosmicLinkLogo,
+  onClick() {},
 }
 
 export default Image

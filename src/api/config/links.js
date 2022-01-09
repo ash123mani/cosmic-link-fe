@@ -13,6 +13,11 @@ const links = {
     method: 'GET',
     auth: true,
   },
+  deleteLink: {
+    endPoint: '/api/v1/link',
+    method: 'DELETE',
+    auth: true,
+  },
 }
 
 export default links

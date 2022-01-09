@@ -49,7 +49,7 @@ const Spinner = ({
 
 Spinner.propTypes = {
   className: string,
-  category: oneOf(['primary', 'primary-light', 'primary-medium', 'gray', 'black']),
+  category: oneOf(['primary', 'primary-light', 'primary-medium', 'gray', 'black', 'red']),
   size: oneOf(['large', 'medium', 'small']),
   center: bool,
   text: string,
