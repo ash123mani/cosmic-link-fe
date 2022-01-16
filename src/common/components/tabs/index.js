@@ -47,7 +47,7 @@ const Tabs = ({
               ],
             })}
             name={tab.key}
-            category="vacant"
+            category="plain"
             onClick={handleTabClick}
           >
             {tab.value}

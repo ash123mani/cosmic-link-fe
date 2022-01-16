@@ -7,7 +7,7 @@ import {
 import { classNames } from '@common/helpers'
 import LinkCard from '@local/link-card'
 
-import { mapStateToProps, actions } from './index.connect'
+import { actions } from './index.connect'
 import './_style.scss'
 
 const blk = 'link-cards'
@@ -77,7 +77,7 @@ LinkCards.defaultProps = {
 }
 
 const LinkCardsWithConnect = connect(
-  mapStateToProps, actions,
+  null, actions,
 )(LinkCards)
 
 export default LinkCardsWithConnect

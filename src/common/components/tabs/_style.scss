@@ -18,7 +18,7 @@
   }
 
   &--bottom {
-    border-bottom: 1px solid $black-light;
+    border: 1px solid $black-light;
   }
 
   &--left {
@@ -46,23 +46,17 @@
 
     &--active {
       color: $primary;
-
-      &::after {
-        content: '';
-        position: absolute;
-        height: 1px;
-        width: 100%;
-        background-color: $primary;
-        left: 0;
-        bottom: 0px;
-      }
-      
+      border: 2px solid $primary;
     }
 
     &--vertical {
       padding-top: 12px;
       padding-bottom: 12px;
       text-align: left;
+    }
+
+    &--horizontal {
+      width: 100%;
     }
   }
 }

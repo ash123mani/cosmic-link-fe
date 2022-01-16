@@ -84,13 +84,13 @@ const LinkCard = ({
         <Image
           imageUrl={fileCopyIcon}
           className={classNames({ blk, elt: 'link-copy' })}
-          role="button"
+          asButton
           onClick={handleCopy}
         />
 
         <Image
           imageUrl={shareIcon}
-          role="button"
+          asButton
           className={classNames({ blk, elt: 'link-share' })}
           onClick={handleShare}
         />
@@ -98,7 +98,7 @@ const LinkCard = ({
         {isDeleting ? <Spinner size="small" category="red" /> : (
           <Image
             imageUrl={deleteIcon}
-            role="button"
+            asButton
             className={classNames({ blk, elt: 'link-delete' })}
             onClick={handleDelete}
           />

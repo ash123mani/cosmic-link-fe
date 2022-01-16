@@ -16,4 +16,16 @@
       display: none;
     }
   }
+
+  &__empty-message-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-direction: column;
+  }
+
+  &__add-link-button {
+    margin-top: 20px;
+  }
 }

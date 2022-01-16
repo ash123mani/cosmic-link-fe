@@ -1,5 +1,7 @@
 import React from 'react'
-import { bool } from 'prop-types'
+import {
+  bool, string, arrayOf, shape,
+} from 'prop-types'
 
 import { classNames } from '@common/helpers'
 import { Spinner } from '@common'
@@ -10,7 +12,7 @@ import './_style.scss'
 
 const blk = 'links-list'
 
-const LinksList = ({ isFetchingLinks }) => {
+const LinksList = ({ isFetchingLinks, categoryLinks }) => {
   const renderContent = () => {
     if (isFetchingLinks) {
       return (
@@ -21,7 +23,7 @@ const LinksList = ({ isFetchingLinks }) => {
       )
     }
 
-    return <LinkCards />
+    return <LinkCards categoryLinks={categoryLinks} />
   }
 
   return (
@@ -32,10 +34,21 @@ const LinksList = ({ isFetchingLinks }) => {
 }
 LinksList.propTypes = {
   isFetchingLinks: bool,
+  categoryLinks: arrayOf(shape({
+    title: string,
+    description: string,
+    siteName: string,
+    imageUrl: string,
+    category: shape({
+      id: string,
+      name: string,
+    }),
+  })),
 }
 
 LinksList.defaultProps = {
   isFetchingLinks: false,
+  categoryLinks: [],
 }
 
 export default LinksList

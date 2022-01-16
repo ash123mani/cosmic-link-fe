@@ -4,11 +4,15 @@
   padding: 24px 32px;
   display: flex;
   justify-content: space-between;
+  border-radius: 4px;
 
   &--banner {
-    position: sticky;
-    top: 0;
+    position: fixed;
+    top: 40px;
     z-index: 10;
+    width: fit-content;
+    right: 40px;
+    min-width: 480px;
   }
 
   &__message {

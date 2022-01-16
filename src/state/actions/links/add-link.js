@@ -15,7 +15,7 @@ const addLinkSuccess = (payload) => ({
 const addLinkFailure = (payload, dispatch) => {
   dispatch(setAppBanner({
     type: 'error',
-    payload,
+    message: payload,
   }))
 
   return {

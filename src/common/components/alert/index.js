@@ -50,7 +50,7 @@ const Alert = ({
   return (
     <div className={eltClassName}>
       <div className={classNames({ blk, elt: 'message' })}>{message}</div>
-      <div>Close</div>
+      {/* <div>Close</div> */}
     </div>
   )
 }

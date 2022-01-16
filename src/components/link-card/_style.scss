@@ -4,14 +4,14 @@
   width: 380px;
   border-radius: 4px;
   padding: 12px;
-  border: 1px solid $black-light;
+  border: 2px solid $primary-medium;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 
   &__title {
     margin: 12px 0px;
-    @include typography(l, bold);
+    @include typography(xl, bold);
     word-wrap: break-word;
     color: $primary-medium;
   }
@@ -25,11 +25,13 @@
 
   &__description {
     margin: 12px 0px;
+    @include typography(l, semi-bold);
+    word-wrap: break-word;
   }
 
   &__bottom {
     padding: 12px 12px 0px;
-    border-top: 1px solid $black-light;
+    border-top: 2px solid $primary-medium;
     @include typography(m, semi-bold);
     display: flex;
     justify-content: space-around;

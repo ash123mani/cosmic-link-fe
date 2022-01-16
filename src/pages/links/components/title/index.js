@@ -11,7 +11,7 @@ const blk = 'links-title'
 const Title = ({ toggleAddLinkModal }) => (
   <div className={classNames({ blk })}>
     <div className={classNames({ blk, elt: 'title' })}>Link categories</div>
-    <Button category="plain" onClick={toggleAddLinkModal}>
+    <Button category="filled" onClick={toggleAddLinkModal}>
       + Add a Link
     </Button>
   </div>

@@ -1,0 +1,14 @@
+@import '~@common/theme/style';
+
+.empty-message {
+  text-align: center;
+
+  &__link-image {
+    height: 72px;
+    width: 72px;
+  }
+
+  &__text {
+    @include typography(xxl, bold);
+  }
+}
