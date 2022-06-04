@@ -12,16 +12,16 @@ const blk = 'cosmic-alert'
 const Alert = ({
   type, message, center, autoClose, onClose, duration, banner,
 }) => {
-  const [animateDown, setAnimateDown] = useState(false)
-  const [animateUp, setAnimateUp] = useState(false)
+  const [fadeDown, setfadeDown] = useState(false)
+  const [fadeUp, setfadeUp] = useState(false)
 
   const eltClassName = classNames({
     blk,
     mods: [
       type && type,
       center && 'center',
-      animateDown && 'animate-down',
-      animateUp && 'animate-up',
+      fadeDown && 'fade-down',
+      fadeUp && 'fade-up',
       banner && 'banner',
     ],
   })
@@ -29,7 +29,7 @@ const Alert = ({
   const closeAlert = () => setTimeout(() => onClose(), 799)
 
   useEffect(() => {
-    setAnimateDown(true)
+    setfadeDown(true)
   }, [])
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const Alert = ({
 
     if (autoClose) {
       timer = setTimeout(() => {
-        setAnimateUp(true)
+        setfadeUp(true)
         closeAlert()
         clearTimeout(closeTimer)
       }, duration)

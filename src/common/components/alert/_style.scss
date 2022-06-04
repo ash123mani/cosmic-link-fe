@@ -1,5 +1,8 @@
 @import '~@common/theme/style';
 
+@include fade-in-down (fade-in-down);
+@include fade-in-up (fade-in-up);
+
 .cosmic-alert {
   padding: 24px 32px;
   display: flex;
@@ -38,29 +41,11 @@
     justify-content: center;
   }
 
-  @keyframes fade-in-down {
-    0% {
-      transform: translateY(-50px);
-    }
-    100% {
-      transform: translateY(0px);
-    }
-  }
-
-  &--animate-down {
+  &--fade-down {
     animation: fade-in-down 0.8s linear;
   }
 
-  @keyframes fade-in-up {
-    0% {
-      transform: translateY(0px);
-    }
-    100% {
-      transform: translateY(-50px);
-    }
-  }
-
-  &--animate-up {
+  &--fade-up {
     animation: fade-in-up 0.8s linear;
   }
 }

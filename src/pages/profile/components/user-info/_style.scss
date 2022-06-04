@@ -1,0 +1,8 @@
+@import '@common/theme/style';
+
+.user-info {
+  &__section-heading {
+    margin-bottom: 24px;
+    color: $primary;
+  }
+}

@@ -26,4 +26,20 @@
   &__sign-up {
     margin-left: 24px;
   }
+
+  &__profile-link {
+    // border: 2px solid $black-medium;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+  }
+
+  &__profile-text {
+    color: $black-medium;
+  }
+
+  &__profile-image {
+    width: 40px;
+    height: 40px;
+  }
 }

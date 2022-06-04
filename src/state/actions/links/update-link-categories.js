@@ -1,8 +1,8 @@
 import { UPDATE_LINK_CATEGORIES } from '@state/constants/links'
 
-const updateLinkCategories = (payload) => ({
+const updateuserLinkCategories = (payload) => ({
   type: UPDATE_LINK_CATEGORIES,
   payload,
 })
 
-export default updateLinkCategories
+export default updateuserLinkCategories

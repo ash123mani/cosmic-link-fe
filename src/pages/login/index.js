@@ -10,7 +10,10 @@ const Login = () => {
 
   return (
     <Fragment>
-      <SeoMeta displayName="Login" content="Login to CosmicLink" />
+      <SeoMeta
+        displayName="Login"
+        content="Login to CosmicLink"
+      />
       <Main />
     </Fragment>
   )

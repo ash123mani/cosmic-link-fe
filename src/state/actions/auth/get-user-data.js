@@ -1,7 +1,7 @@
 import { api } from '@api'
 import { GET_USER_DATA_REQUEST, GET_USER_DATA_SUCCESS, GET_USER_DATA_FAILURE } from '@state/constants/auth'
 import { setAppBanner } from '@state/actions/app'
-import { updateLinkCategories, setSelectedCategory } from '@state/actions/links'
+import { updateuserLinkCategories, setSelectedCategory } from '@state/actions/links'
 
 const getUserDataRequest = (payload) => ({
   type: GET_USER_DATA_REQUEST,
@@ -36,7 +36,7 @@ const getUserData = () => async (dispatch) => {
 
     if (success) {
       dispatch(getUserDataSuccess(data))
-      dispatch(updateLinkCategories(data.user.categories))
+      dispatch(updateuserLinkCategories(data.user.categories))
       dispatch(setSelectedCategory(data.user.categories[0].id))
     } else {
       dispatch(getUserDataFailure(data, dispatch))

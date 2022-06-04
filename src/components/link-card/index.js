@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { string, func } from 'prop-types'
+import { string, func, bool } from 'prop-types'
 
 import { classNames } from '@common/helpers'
 import Image from '@local/image'
@@ -14,7 +14,7 @@ import './_style.scss'
 const blk = 'link-card'
 
 const LinkCard = ({
-  imageUrl, title, description, siteName, linkUrl, onLinkCopy, onLinkDelete, linkId,
+  imageUrl, title, description, siteName, linkUrl, onLinkCopy, onLinkDelete, linkId, fadeDown, fadeUp,
 }) => {
   const [isDeleting, setIsDeleting] = useState(false)
 
@@ -37,8 +37,16 @@ const LinkCard = ({
     setIsDeleting(false)
   }
 
+  const wrapperClassName = classNames({
+    blk,
+    mods: [
+      fadeDown && 'fade-down',
+      fadeUp && 'fade-up',
+    ],
+  })
+
   return (
-    <div className={classNames({ blk })}>
+    <div className={wrapperClassName}>
       <div>
         {
           imageUrl ? (
@@ -118,6 +126,8 @@ LinkCard.propTypes = {
   onLinkCopy: func,
   onLinkDelete: func.isRequired,
   linkId: string.isRequired,
+  fadeDown: bool,
+  fadeUp: bool,
 }
 
 LinkCard.defaultProps = {
@@ -126,6 +136,8 @@ LinkCard.defaultProps = {
   description: '',
   siteName: '',
   onLinkCopy() {},
+  fadeDown: false,
+  fadeUp: false,
 }
 
 export default LinkCard

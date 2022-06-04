@@ -3,10 +3,12 @@ import { useLocation, NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bool } from 'prop-types'
 
-import { isLoginPage, isRegisterPage, isHomePage } from '@util/location'
-
 import { classNames } from '@common/helpers'
 import { Button } from '@common'
+
+import {
+  isLoginPage, isRegisterPage, isHomePage, isProfilePage,
+} from '@util/location'
 
 import { mapStateToProps } from './index.connect'
 import './_style.scss'
@@ -20,9 +22,10 @@ const Header = ({ isUserLoggedIn }) => {
   const isHome = isHomePage(pathname)
   const isRegister = isRegisterPage(pathname)
   const isLogin = isLoginPage(pathname)
+  const isProfile = isProfilePage(pathname)
 
   return (
-    <div className={classNames({ blk })}>
+    <nav className={classNames({ blk })}>
       <NavLink
         to={isUserLoggedIn ? '/links' : '/'}
         className={classNames({ blk, elt: 'link' })}
@@ -32,29 +35,41 @@ const Header = ({ isUserLoggedIn }) => {
         </div>
       </NavLink>
 
-      <nav className={classNames({ blk, elt: 'navs' })}>
-        {(isHome || isRegister) && (
-          <Button
-            asNav
-            to="/login"
-            className={classNames({ blk, elt: 'sign-in' })}
-          >
-            Sign In
-          </Button>
-        )}
-        {(isLogin || isHome) && (
-          <Button
-            asNav
-            to="/register"
-            category="filled"
-            className={classNames({ blk, elt: 'sign-up' })}
-          >
-            Sign Up
-          </Button>
-        )}
+      {isUserLoggedIn && !isProfile && (
+        <Button
+          asNav
+          to="/profile"
+        >
+          Your Profile
+        </Button>
+      )}
 
-      </nav>
-    </div>
+      {!isUserLoggedIn && (
+        <div className={classNames({ blk, elt: 'navs' })}>
+          {(isHome || isRegister) && (
+            <Button
+              asNav
+              to="/login"
+              className={classNames({ blk, elt: 'sign-in' })}
+            >
+              Sign In
+            </Button>
+          )}
+          {(isLogin || isHome) && (
+            <Button
+              asNav
+              to="/register"
+              category="filled"
+              className={classNames({ blk, elt: 'sign-up' })}
+            >
+              Sign Up
+            </Button>
+          )}
+
+        </div>
+      )}
+
+    </nav>
   )
 }
 

@@ -7,6 +7,7 @@ import {
 import { classNames } from '@common/helpers'
 import { Button } from '@common'
 
+import AddCategoryModal from '@local/add-category-modal'
 import LinkTypes from '../components/link-types'
 import Title from '../components/title'
 import AddLinkModal from '../components/add-link-modal'
@@ -21,11 +22,16 @@ const blk = 'links-page'
 const Main = ({
   getLinks, setSelectedCategory, selectedCategory, isCategoryFetchedAlready, categoryLinks,
 }) => {
+  const [showAddCategoryModal, setShowAddCategoryModal] = useState(false)
   const [showAddLinkModal, setShowAddLinkModal] = useState(false)
   const [isFetchingLinks, setIsFetchingLinks] = useState(false)
 
   const toggleAddLinkModal = () => {
     setShowAddLinkModal(!showAddLinkModal)
+  }
+
+  const toggleAddCategoryModal = () => {
+    setShowAddCategoryModal(!showAddCategoryModal)
   }
 
   const getCategotyLinks = async (category) => {
@@ -49,6 +55,7 @@ const Main = ({
       <div className={classNames({ blk, elt: 'title-wrapper' })}>
         <Title
           toggleAddLinkModal={toggleAddLinkModal}
+          toggleAddCategoryModal={toggleAddCategoryModal}
         />
       </div>
 
@@ -81,6 +88,13 @@ const Main = ({
       {showAddLinkModal && (
         <AddLinkModal
           toggleAddLinkModal={toggleAddLinkModal}
+        />
+      )}
+
+      {showAddCategoryModal && (
+        <AddCategoryModal
+          toggleAddCategoryModal={toggleAddCategoryModal}
+          handleCancel={toggleAddCategoryModal}
         />
       )}
     </main>
