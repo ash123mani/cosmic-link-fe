@@ -8,17 +8,25 @@ import './_style.scss'
 
 const blk = 'links-title'
 
-const Title = ({ toggleAddLinkModal }) => (
+const Title = ({ toggleAddLinkModal, toggleAddCategoryModal }) => (
   <div className={classNames({ blk })}>
     <div className={classNames({ blk, elt: 'title' })}>Link categories</div>
-    <Button category="filled" onClick={toggleAddLinkModal}>
-      + Add a Link
-    </Button>
+    <div>
+      <Button category="vacant" onClick={toggleAddCategoryModal}>
+        + Category
+      </Button>
+      <Button category="plain" onClick={toggleAddLinkModal}>
+        + Link
+      </Button>
+
+    </div>
+
   </div>
 )
 
 Title.propTypes = {
   toggleAddLinkModal: func.isRequired,
+  toggleAddCategoryModal: func.isRequired,
 }
 
 export default Title

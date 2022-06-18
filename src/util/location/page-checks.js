@@ -4,8 +4,11 @@ const isRegisterPage = (pathname = document.location.pathname) => /\/register$/.
 
 const isHomePage = (pathname = document.location.pathname) => /^\/$/.test(pathname)
 
+const isProfilePage = (pathname = document.location.pathname) => /\/profile$/.test(pathname)
+
 export {
   isLoginPage,
   isRegisterPage,
   isHomePage,
+  isProfilePage,
 }

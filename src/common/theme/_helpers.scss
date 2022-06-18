@@ -12,3 +12,31 @@ $layout-x-padding-desktop: 12rem;
 @mixin flex-center ($direction: row, $display: flex) {
   @include flex($direction, center, center, $display);
 }
+
+
+@mixin fade-in-down ($name, $from: -100%, $to: 0%) {
+  @keyframes #{$name} {
+    0% {
+      transform: translateY($from);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY($to);
+      opacity: 1;
+    }
+  }
+}
+
+@mixin fade-in-up ($name, $from: 0%, $to: -100%) {
+  @keyframes #{$name} {
+    0% {
+      transform: translateY($from);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY($to);
+      opacity: 0;
+    }
+  }
+}
+

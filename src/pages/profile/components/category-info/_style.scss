@@ -1,0 +1,12 @@
+@import '@common/theme/style';
+
+.category-info {
+  &__section-heading {
+    color: $primary;
+    margin-bottom: 24px;
+  }
+
+  &__category {
+    margin-bottom: 8px;
+  }
+}

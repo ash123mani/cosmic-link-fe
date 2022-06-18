@@ -7,9 +7,11 @@ import { connect } from 'react-redux'
 import { Modal, Input } from '@common'
 import { classNames } from '@common/helpers'
 
-import ActionButtons from './action-buttons'
+import ConfirmationButtons from '@local/confirmation-buttons'
+
 import LinkMeta from './link-meta'
 import { actions, mapStateToProps } from './index.connect'
+import './_style.scss'
 
 const blk = 'add-link-modal'
 
@@ -117,14 +119,18 @@ const AddLinkModal = ({
                 rows="2"
                 onChange={handleChange}
                 name="url"
+                className={classNames(
+                  { blk, elt: 'link-url' },
+                )}
               />
             )
         }
-        <ActionButtons
+        <ConfirmationButtons
           handleCancel={toggleAddLinkModal}
           handleSubmit={handleSubmit}
-          isLoading={isFetchingMeta}
+          isSubmitting={isFetchingMeta}
           isFetchedMeta={isFetchedMeta}
+          confirmText={isFetchedMeta ? 'Add this Link' : 'Get Link Meta'}
         />
       </Modal.Content>
     </Modal.Wrapper>

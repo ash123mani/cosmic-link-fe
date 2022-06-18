@@ -1,5 +1,5 @@
 import React from 'react'
-import { bool, func } from 'prop-types'
+import { bool, func, string } from 'prop-types'
 
 import { Button } from '@common'
 import { classNames } from '@common/helpers'
@@ -9,8 +9,8 @@ import './_style.scss'
 
 const blk = 'action-buttons'
 
-const ActionButtons = ({
-  isFetchedMeta, handleCancel, handleSubmit, isLoading,
+const ConfirmationButtons = ({
+  handleCancel, handleSubmit, isSubmitting, confirmText, cancelText,
 }) => (
   <div className={classNames({ blk })}>
     <Button
@@ -18,30 +18,32 @@ const ActionButtons = ({
       category="light"
       className={classNames({ blk, elt: 'cancel' })}
     >
-      Cancel
+      {cancelText}
     </Button>
     <Button
       onClick={handleSubmit}
       category="light"
       className={classNames({ blk, elt: 'submit' })}
-      loading={isLoading}
-      loader={<InlineSpinner text="Getting..." category="gray" />}
+      loading={isSubmitting}
+      loader={<InlineSpinner text="In Progress..." category="gray" />}
     >
-      {isFetchedMeta ? 'Add this Link' : 'Get Link Meta'}
+      {confirmText}
     </Button>
   </div>
 )
 
-ActionButtons.propTypes = {
+ConfirmationButtons.propTypes = {
   handleCancel: func.isRequired,
   handleSubmit: func.isRequired,
-  isLoading: bool,
-  isFetchedMeta: bool,
+  isSubmitting: bool,
+  confirmText: string,
+  cancelText: string,
 }
 
-ActionButtons.defaultProps = {
-  isLoading: false,
-  isFetchedMeta: false,
+ConfirmationButtons.defaultProps = {
+  isSubmitting: false,
+  confirmText: 'Confirm',
+  cancelText: 'Cancel',
 }
 
-export default ActionButtons
+export default ConfirmationButtons

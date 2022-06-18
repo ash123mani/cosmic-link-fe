@@ -1,4 +1,6 @@
-import { isLoginPage, isRegisterPage, isHomePage } from './page-checks'
+import {
+  isLoginPage, isRegisterPage, isHomePage, isProfilePage,
+} from './page-checks'
 import history from './history'
 
 export {
@@ -6,4 +8,5 @@ export {
   isRegisterPage,
   isHomePage,
   history,
+  isProfilePage,
 }
