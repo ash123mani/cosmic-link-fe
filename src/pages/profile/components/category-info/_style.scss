@@ -1,6 +1,11 @@
 @import '@common/theme/style';
 
 .category-info {
+  &__types {
+    display: flex;
+    flex-direction: column;
+  }
+
   &__section-heading {
     color: $primary;
     margin-bottom: 24px;
