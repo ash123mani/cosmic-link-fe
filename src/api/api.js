@@ -6,7 +6,7 @@ import { getStorageItem } from '@util/storage'
 import handleAuthError from './handle-auth-error'
 import config from './config'
 
-const baseUrl = 'http://localhost:5001'
+const baseUrl = 'http://localhost:5000'
 
 const api = (name, options = {}) => {
   const {

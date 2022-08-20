@@ -6,6 +6,11 @@
     margin-bottom: 24px;
   }
 
+  &__categories {
+    display: flex;
+    flex-direction: column;
+  }
+
   &__category {
     margin-bottom: 8px;
   }

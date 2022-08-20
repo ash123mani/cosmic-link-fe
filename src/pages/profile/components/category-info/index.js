@@ -14,7 +14,7 @@ const CategoryInfo = ({ categories }) => (
     <h2 className={classNames({ blk, elt: 'section-heading' })}>
       Category Info
     </h2>
-    <div>
+    <div className={classNames({ blk, elt: 'categories' })}>
       {categories.map((category) => {
         const { name, id } = category
         return (

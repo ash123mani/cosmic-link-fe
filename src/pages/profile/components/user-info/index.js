@@ -25,7 +25,7 @@ const UserInfo = ({ user }) => {
       />
       <Input
         label="Your Password"
-        value="It'a screte for you to remember 😛"
+        value="It'a screte for you to remember 😛. You can reset it."
         disabled
       />
     </div>

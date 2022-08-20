@@ -52,7 +52,7 @@ const Header = ({ isUserLoggedIn }) => {
               to="/login"
               className={classNames({ blk, elt: 'sign-in' })}
             >
-              Sign In
+              Log In
             </Button>
           )}
           {(isLogin || isHome) && (
@@ -62,7 +62,7 @@ const Header = ({ isUserLoggedIn }) => {
               category="filled"
               className={classNames({ blk, elt: 'sign-up' })}
             >
-              Sign Up
+              Register
             </Button>
           )}
 

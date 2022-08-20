@@ -1,6 +1,7 @@
 .profile-page {
   display: flex;
-  // flex-direction: column;
+  flex-direction: column;
   // justify-content: center;
   justify-content: space-between;
+  gap: 40px;
 }
