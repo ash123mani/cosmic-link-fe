@@ -6,7 +6,8 @@ import { getStorageItem } from '@util/storage'
 import handleAuthError from './handle-auth-error'
 import config from './config'
 
-const baseUrl = process.env.BE_BASE_URL
+const isDevelopment = process.env.NODE_ENV !== 'production'
+const baseUrl = isDevelopment ? 'http://localhost:5000' : 'https://cosmic-link-be.fly.dev'
 
 const api = (name, options = {}) => {
   const {
