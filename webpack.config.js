@@ -54,5 +54,6 @@ module.exports = {
   devServer: {
     hot: true,
     historyApiFallback: true,
+    allowedHosts: 'all', // remove this later
   },
 }
