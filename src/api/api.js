@@ -6,7 +6,7 @@ import { getStorageItem } from '@util/storage'
 import handleAuthError from './handle-auth-error'
 import config from './config'
 
-const baseUrl = 'http://localhost:5000'
+const baseUrl = process.env.BE_BASE_URL
 
 const api = (name, options = {}) => {
   const {
