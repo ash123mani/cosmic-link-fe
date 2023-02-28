@@ -21,7 +21,16 @@ module.exports = {
       {
         test: /\.jsx?$/,
         include: join(__dirname, 'src'),
-        use: ['babel-loader'],
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              plugins: [
+                isDevelopment && require.resolve('react-refresh/babel'),
+              ].filter(Boolean),
+            },
+          },
+        ],
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif|webp)$/,
