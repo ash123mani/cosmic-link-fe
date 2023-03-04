@@ -1,5 +1,14 @@
 @import '~@common/theme/style';
 
 .layout {
+  height: 100%;
   padding: 0rem $layout-x-padding-desktop;
+
+  @include medium-down {
+    padding: 0rem $layout-x-padding-tablet;
+  }
+
+  // @include desktop {
+  //   padding: 0rem $layout-x-padding-desktop;
+  // }
 }

@@ -4,13 +4,14 @@
 @include fade-in-up (fade-in-up);
 
 .link-card {
-  width: 380px;
   border-radius: 4px;
   padding: 12px 16px;
   border: 2px solid $primary-medium;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  min-width: 30vh;
+  max-width: 40vh;
 
   &--fade-down {
     animation: fade-in-down 0.3s linear;

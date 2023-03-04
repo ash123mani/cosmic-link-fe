@@ -3,9 +3,11 @@ import { connect } from 'react-redux'
 import {
   arrayOf, shape, string, func,
 } from 'prop-types'
+import { useMediaQuery } from 'react-responsive'
 
 import { Tabs } from '@common'
 import { classNames } from '@common/helpers'
+import mediaQueries from '@common/media-queries'
 
 import { mapStateToProps } from './index.connect'
 import './_style.scss'
@@ -14,15 +16,18 @@ const blk = 'link-types'
 
 const LinkTypes = ({
   allCategories, handleTabChange, selectedCategory,
-}) => (
-  <Tabs
-    direction="vertical"
-    tabs={allCategories}
-    defaultSelected={selectedCategory}
-    className={classNames({ blk })}
-    handleTabChange={handleTabChange}
-  />
-)
+}) => {
+  const isMediumDown = useMediaQuery(mediaQueries.mediumDown)
+  return (
+    <Tabs
+      direction={isMediumDown ? 'horizontal' : 'vertical'}
+      tabs={allCategories}
+      defaultSelected={selectedCategory}
+      className={classNames({ blk })}
+      handleTabChange={handleTabChange}
+    />
+  )
+}
 
 LinkTypes.propTypes = {
   allCategories: arrayOf(shape({

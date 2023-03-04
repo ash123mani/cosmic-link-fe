@@ -11,7 +11,7 @@ import './_style.scss'
 const blk = 'cosmic-tabs'
 
 const Tabs = ({
-  borderAlight, direction, tabs, defaultSelected, className, handleTabChange,
+  direction, tabs, defaultSelected, className, handleTabChange,
 }) => {
   const [activeTab, setActiveTab] = useState(defaultSelected)
 
@@ -27,7 +27,7 @@ const Tabs = ({
   const eltClassName = classNames({
     blk,
     className,
-    mods: [direction, borderAlight],
+    mods: [direction],
   })
 
   return (
@@ -43,7 +43,6 @@ const Tabs = ({
               mods: [
                 isActive && 'active',
                 direction,
-                borderAlight,
               ],
             })}
             name={tab.key}
@@ -59,7 +58,6 @@ const Tabs = ({
 }
 
 Tabs.propTypes = {
-  borderAlight: oneOf(['right', 'left', 'top', 'bottom']),
   direction: oneOf(['vertical', 'horizontal']),
   tabs: arrayOf(shape({
     value: string,
@@ -71,7 +69,6 @@ Tabs.propTypes = {
 }
 
 Tabs.defaultProps = {
-  borderAlight: 'bottom',
   direction: 'horizontal',
   tabs: [],
   defaultSelected: '',

@@ -25,7 +25,9 @@ const RegisterForm = ({ registerUser }) => {
     }))
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault()
+
     setIsSubmitting(true)
     registerUser(formData).then(({ success }) => {
       if (success) {
@@ -36,7 +38,7 @@ const RegisterForm = ({ registerUser }) => {
   }
 
   return (
-    <form className={classNames({ blk })}>
+    <form className={classNames({ blk })} onSubmit={handleSubmit}>
       <Input
         className={classNames({ blk, elt: 'name' })}
         placeholder="Name of owner of cosmos"
@@ -61,7 +63,7 @@ const RegisterForm = ({ registerUser }) => {
       />
       <Button
         fluid
-        onClick={handleSubmit}
+        type="sublit"
         loading={isSubmitting}
         loader={<InlineSpinner />}
       >

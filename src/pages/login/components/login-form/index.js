@@ -27,7 +27,8 @@ const LoginForm = ({
     }))
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault()
     setIsSubmitting(true)
     loginUser(formData).then(({ data }) => {
       if (data.token) {
@@ -37,12 +38,13 @@ const LoginForm = ({
       .finally(() => setIsSubmitting(false))
   }
 
-  const handleForgotPasswordSubmit = () => {
+  const handleForgotPasswordSubmit = (e) => {
+    e.preventDefault()
     forgotPassword(formData.email || '')
   }
 
   return (
-    <form className={classNames({ blk })}>
+    <form className={classNames({ blk })} onSubmit={showForgotPassword ? handleForgotPasswordSubmit : handleSubmit}>
       <Input
         className={classNames({ blk, elt: 'email' })}
         placeholder="Email for your cosmos"
@@ -73,8 +75,8 @@ const LoginForm = ({
       <Button
         loader={<InlineSpinner />}
         fluid
-        onClick={showForgotPassword ? handleForgotPasswordSubmit : handleSubmit}
         loading={isSubmitting}
+        type="submit"
       >
         Submit
 

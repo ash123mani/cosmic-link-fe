@@ -1,6 +1,7 @@
 $border-radius-default: 4px;
 
 $layout-x-padding-desktop: 12rem;
+$layout-x-padding-tablet: 6rem;
 
 @mixin flex ($direction: row, $justify: unset, $align: unset, $display: flex) {
   display: $display;

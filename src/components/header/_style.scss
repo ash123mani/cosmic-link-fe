@@ -4,8 +4,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 4rem $layout-x-padding-desktop;
+  padding: 8rem $layout-x-padding-desktop;
 
+  @include medium-down {
+    padding: 2rem $layout-x-padding-tablet;
+  };
+  
   &__link {
     color: $black-medium;
     

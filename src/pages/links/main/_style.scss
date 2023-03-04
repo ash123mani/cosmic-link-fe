@@ -1,3 +1,5 @@
+@import '~@common/theme/style';
+
 .links-page {
   &__title-wrapper {
     margin: 2rem 0px;
@@ -11,9 +13,14 @@
     border-radius: 8px;
     display: flex;
     width: 100%;
+    flex-direction: row;
 
     &::-webkit-scrollbar {
       display: none;
+    }
+
+    @include medium-down {
+      flex-direction: column;
     }
   }
 
@@ -23,6 +30,7 @@
     align-items: center;
     width: 100%;
     flex-direction: column;
+    height: 100%;
   }
 
   &__add-link-button {

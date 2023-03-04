@@ -8,14 +8,14 @@ const blk = 'home-page'
 
 const Main = () => (
   <main className={classNames({ blk })}>
-    <div className={classNames({ blk, elt: 'landing' })}>
-      <h1 className={classNames({ blk, elt: 'title' })}>
-        One place for all your Links.
-      </h1>
-      <h2 className={classNames({ blk, elt: 'subtitle' })}>
-        Build your cosmos of links by keeping your links inside C🪐smicLink
-      </h2>
-    </div>
+    {/* <div className={classNames({ blk, elt: 'landing' })}> */}
+    <h1 className={classNames({ blk, elt: 'title' })}>
+      One place for all your Links.
+    </h1>
+    <h2 className={classNames({ blk, elt: 'subtitle' })}>
+      Build your cosmos of links by keeping your links inside C🪐smicLink
+    </h2>
+    {/* </div> */}
   </main>
 )
 
