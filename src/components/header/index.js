@@ -40,7 +40,7 @@ const Header = ({ isUserLoggedIn }) => {
           asNav
           to="/profile"
         >
-          Your Profile
+          Profile
         </Button>
       )}
 

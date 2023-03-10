@@ -2,13 +2,16 @@
 
 .layout {
   height: 100%;
-  padding: 0rem $layout-x-padding-desktop;
 
-  @include medium-down {
+  @include small-only {
+    padding: 0rem $layout-x-padding-mobile;
+  }
+
+  @include medium-only {
     padding: 0rem $layout-x-padding-tablet;
   }
 
-  // @include desktop {
-  //   padding: 0rem $layout-x-padding-desktop;
-  // }
+  @include large-up {
+    padding: 0rem $layout-x-padding-desktop;
+  }
 }

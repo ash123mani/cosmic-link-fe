@@ -4,11 +4,18 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8rem $layout-x-padding-desktop;
 
-  @include medium-down {
+  @include small-only {
+    padding: 2rem $layout-x-padding-mobile;
+  }
+
+  @include medium-only {
     padding: 2rem $layout-x-padding-tablet;
   };
+
+  @include large-up {
+    padding: 8rem $layout-x-padding-desktop;
+  }
   
   &__link {
     color: $black-medium;
@@ -21,14 +28,27 @@
 
   &__logo {
     @include typography(xl, bold);
+
+    @include small-only {
+      @include typography(m, bold);
+    }
+
+    @include medium-only {
+      @include typography(l, bold);
+    }
   }
 
   &__navs {
     display: flex;
   }
 
+  &__sign-in {
+    width: max-content;
+  }
+
   &__sign-up {
     margin-left: 24px;
+    width: max-content;
   }
 
   &__profile-link {

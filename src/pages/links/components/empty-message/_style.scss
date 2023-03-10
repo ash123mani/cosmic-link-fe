@@ -9,6 +9,16 @@
   }
 
   &__text {
-    @include typography(xxl, bold);
+    @include small-only {
+      @include typography(l, bold);
+    }
+
+    @include medium-only {
+      @include typography(xl, bold);
+    }
+
+    @include large-up {
+      @include typography(xxl, bold);
+    }
   }
 }

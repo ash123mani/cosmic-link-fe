@@ -7,20 +7,38 @@
   align-items: center;
   justify-content: center;
 
-  // &__landing {
-  //   padding: 22rem 0;
-  // }
-
   &__title {
-    @include typography(xxxl, bold);
     text-align: center;
+
+    @include small-only {
+      @include typography(xl, bold);
+    }
+
+    @include medium-only {
+      @include typography(xxl, bold);
+    }
+
+    @include large-up {
+      @include typography(xxxl, bold);
+    }
   }
 
   &__subtitle {
-    @include typography(xxl, bold);
     text-align: center;
     padding: 16px 8px;
     border-radius: $border-radius-default;
     color: $primary-medium;
+
+    @include small-only {
+      @include typography(l, bold);
+    }
+
+    @include medium-only {
+      @include typography(xl, bold);
+    }
+
+    @include large-up {
+      @include typography(xxl, bold);
+    }
   }
 }

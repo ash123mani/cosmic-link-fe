@@ -52,12 +52,10 @@ const Main = ({
 
   return (
     <main className={classNames({ blk })}>
-      <div className={classNames({ blk, elt: 'title-wrapper' })}>
-        <Title
-          toggleAddLinkModal={toggleAddLinkModal}
-          toggleAddCategoryModal={toggleAddCategoryModal}
-        />
-      </div>
+      <Title
+        toggleAddLinkModal={toggleAddLinkModal}
+        toggleAddCategoryModal={toggleAddCategoryModal}
+      />
 
       <div className={classNames({ blk, elt: 'types-wrapper' })}>
         <LinkTypes

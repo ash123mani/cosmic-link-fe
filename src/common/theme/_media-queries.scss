@@ -5,7 +5,7 @@
   }
   
   @mixin small-only {
-    @media (min-width: #{$small-width}) and (max-width: #{$medium-width}) {
+    @media (min-width: #{$small-width}) and (max-width: #{$medium-width - 1px}) {
       @content;
     }
   }

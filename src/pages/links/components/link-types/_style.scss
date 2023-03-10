@@ -1,3 +1,6 @@
 .link-types {
-  // width: 200px;
+  > .cosmic-btn {
+    height: unset;
+    width: fit-content;
+  }
 }

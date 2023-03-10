@@ -6,7 +6,28 @@
   align-items: center;
 
   &__title {
-    @include typography(l, bold);
     color: $primary;
+
+
+    @include small-only {
+      @include typography(s, bold);
+    }
+
+    @include medium-only {
+      @include typography(m, bold);
+    }
+
+    @include large-up {
+      @include typography(l, bold);
+    }
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: space-between;
+
+    @include medium-down {
+      width: 100%;
+    }
   }
 }
