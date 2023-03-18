@@ -43,6 +43,7 @@ module.exports = {
     isDevelopment && new ReactRefreshPlugin(),
     new HtmlWebpackPlugin({
       template: resolve(__dirname, 'src', 'index.html'),
+      manifest: resolve(__dirname, 'public', 'manifest.json'),
     }),
   ].filter(Boolean),
   resolve: {
@@ -64,5 +65,6 @@ module.exports = {
     hot: true,
     historyApiFallback: true,
     allowedHosts: 'all', // remove this later
+    static: [{ directory: resolve(__dirname, 'public') }],
   },
 }
