@@ -11,14 +11,12 @@
 
   @include small-only {
     padding: 8px 16px;
-    height: 40px;
     @include typography(s, semi-bold);
   }
 
   @include medium-only {
     @include typography(m, semi-bold);
     padding: 12px 20px;
-    height: 60px;
   }
 
   @include large-up {

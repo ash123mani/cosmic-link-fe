@@ -1,8 +1,8 @@
 @import '~@common/theme/style';
 
 .layout {
-  height: 100%;
-
+  height: calc(100vh - 128px);
+  
   @include small-only {
     padding: 0rem $layout-x-padding-mobile;
   }
