@@ -3,6 +3,7 @@
     "name": "C🪐smicLink, a place for all your urls",
     "description": "Store all your links on C🪐smicLink",
     "start_url": "/",
+    "display": "standalone",
     "icons": [
         {
            "src": "./cosmic-link-logo.svg",

@@ -2,6 +2,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { join, resolve } = require('path')
 const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 const ESLintPlugin = require('eslint-webpack-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
@@ -45,6 +46,11 @@ module.exports = {
       template: resolve(__dirname, 'src', 'index.html'),
       manifest: resolve(__dirname, 'public', 'manifest.json'),
     }),
+    new CopyPlugin({
+      patterns: [
+        { from: resolve(__dirname, 'public') },
+      ],
+    }),
   ].filter(Boolean),
   resolve: {
     extensions: ['.js', '.jsx'],
@@ -66,5 +72,8 @@ module.exports = {
     historyApiFallback: true,
     allowedHosts: 'all', // remove this later
     static: [{ directory: resolve(__dirname, 'public') }],
+    devMiddleware: {
+      writeToDisk: true,
+    },
   },
 }
