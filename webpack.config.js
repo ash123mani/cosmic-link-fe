@@ -3,6 +3,7 @@ const { join, resolve } = require('path')
 const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 const ESLintPlugin = require('eslint-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
+const { GenerateSW } = require('workbox-webpack-plugin')
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
@@ -50,6 +51,11 @@ module.exports = {
       patterns: [
         { from: resolve(__dirname, 'public') },
       ],
+    }),
+    new GenerateSW({
+      clientsClaim: true,
+      skipWaiting: true,
+      swDest: 'sw.js',
     }),
   ].filter(Boolean),
   resolve: {

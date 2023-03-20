@@ -39,7 +39,7 @@ const Tabs = ({
           <Button
             className={classNames({
               blk,
-              elt: 'label',
+              elt: 'btn',
               mods: [
                 isActive && 'active',
                 direction,
@@ -49,7 +49,17 @@ const Tabs = ({
             category="plain"
             onClick={handleTabClick}
           >
-            {tab.value}
+            <span className={classNames({
+              blk,
+              elt: 'label',
+              mods: [
+                direction,
+              ],
+            })}
+            >
+              {tab.value}
+
+            </span>
           </Button>
         )
       })}

@@ -24,6 +24,21 @@ const Header = ({ isUserLoggedIn }) => {
   const isLogin = isLoginPage(pathname)
   const isProfile = isProfilePage(pathname)
 
+  // const handleInstall = (event) => {
+  //   const srcElement = event.target
+  //   window.deferredPrompt.prompt()
+  //   srcElement.classList.add('hidden')
+  //   window.deferredPrompt.userChoice.then((choice) => {
+  //     if (choice.outcome === 'accepted') {
+  //       console.log('User accepted the install prompt', choice)
+  //     } else {
+  //       srcElement.classList.remove('hidden')
+  //       console.log('User dismissed the install prompt', choice)
+  //     }
+  //     window.deferredPrompt = null
+  //   })
+  // }
+
   return (
     <nav className={classNames({ blk })}>
       <NavLink
@@ -35,14 +50,25 @@ const Header = ({ isUserLoggedIn }) => {
         </div>
       </NavLink>
 
-      {isUserLoggedIn && !isProfile && (
-        <Button
-          asNav
-          to="/profile"
-        >
-          Profile
-        </Button>
-      )}
+      <div className={classNames({ blk, elt: 'navs' })}>
+        {isUserLoggedIn && !isProfile && (
+          <Button
+            asNav
+            to="/profile"
+          >
+            Profile
+          </Button>
+        )}
+        {/* {isUserLoggedIn && (
+          <Button
+            category="filled"
+            className={classNames({ blk, elt: 'install-btn' })}
+            onClick={handleInstall}
+          >
+            Install
+          </Button>
+        ) } */}
+      </div>
 
       {!isUserLoggedIn && (
         <div className={classNames({ blk, elt: 'navs' })}>
