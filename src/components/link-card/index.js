@@ -84,6 +84,7 @@ const LinkCard = ({
           target="_blank"
           rel="noreferrer"
           className={classNames({ blk, elt: 'link' })}
+          title="Open link in new tab"
         >
           <Image
             role="button"
@@ -97,6 +98,7 @@ const LinkCard = ({
           className={classNames({ blk, elt: 'link-copy' })}
           asButton
           onClick={handleCopy}
+          title="Copy link"
         />
 
         <Image
@@ -104,6 +106,7 @@ const LinkCard = ({
           asButton
           className={classNames({ blk, elt: 'link-share' })}
           onClick={handleShare}
+          title="Share link"
         />
 
         {isDeleting ? <Spinner size="small" category="red" /> : (
@@ -112,6 +115,7 @@ const LinkCard = ({
             asButton
             className={classNames({ blk, elt: 'link-delete' })}
             onClick={handleDelete}
+            title="Delete link"
           />
         )}
 
