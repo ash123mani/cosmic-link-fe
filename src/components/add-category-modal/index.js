@@ -33,6 +33,7 @@ const AddCategoryModal = ({
       </Modal.Header>
       <Modal.Content>
         <Input
+          autoFocus
           type="text"
           name="category"
           onChange={handleCategoryInputChange}

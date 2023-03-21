@@ -112,6 +112,7 @@ const AddLinkModal = ({
             )
             : (
               <Input
+                autoFocus
                 placeholder="Href"
                 category="light"
                 label="Link Url"

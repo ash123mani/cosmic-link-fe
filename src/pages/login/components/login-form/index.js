@@ -46,12 +46,12 @@ const LoginForm = ({
   return (
     <form className={classNames({ blk })} onSubmit={showForgotPassword ? handleForgotPasswordSubmit : handleSubmit}>
       <Input
+        autoFocus
         className={classNames({ blk, elt: 'email' })}
         placeholder="Email for your cosmos"
         label="Email"
         name="email"
         onChange={handleChange}
-
       />
       {!showForgotPassword && (
         <Input

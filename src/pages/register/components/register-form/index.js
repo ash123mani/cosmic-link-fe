@@ -40,6 +40,7 @@ const RegisterForm = ({ registerUser }) => {
   return (
     <form className={classNames({ blk })} onSubmit={handleSubmit}>
       <Input
+        autoFocus
         className={classNames({ blk, elt: 'name' })}
         placeholder="Name of owner of cosmos"
         label="Name"
