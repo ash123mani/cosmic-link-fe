@@ -43,6 +43,9 @@
     width: 100%;
     top: 68px;
     border-radius: 4px;
+    max-height: 200px;
+    overflow: auto;
+
 
     &--light {
       border: 2px solid $white;

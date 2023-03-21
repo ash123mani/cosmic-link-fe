@@ -23,7 +23,7 @@ const LinkTypes = ({
       direction={isMediumDown ? 'horizontal' : 'vertical'}
       tabs={allCategories}
       defaultSelected={selectedCategory}
-      className={classNames({ blk })}
+      className={classNames({ blk, mods: [isMediumDown ? 'horizontal' : 'vertical'] })}
       handleTabChange={handleTabChange}
     />
   )

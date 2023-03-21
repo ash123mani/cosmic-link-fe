@@ -11,6 +11,7 @@ const isDevelopment = process.env.NODE_ENV !== 'production'
 module.exports = {
   mode: isDevelopment ? 'development' : 'production',
   context: resolve('src'),
+  devtool: isDevelopment ? 'inline-source-map' : 'none',
   entry: {
     app: ['./polyfills', './index.js'],
   },

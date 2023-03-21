@@ -4,7 +4,7 @@
 @include fade-in-up (fade-in-up);
 
 .cosmic-alert {
-  padding: 24px 32px;
+  padding: 16px 24px;
   display: flex;
   justify-content: space-between;
   border-radius: 4px;
@@ -15,12 +15,26 @@
     z-index: 10;
     width: fit-content;
     right: 40px;
-    min-width: 480px;
+
+    @include medium-up {
+      min-width: 480px;
+      width: 50vw;
+    }
+
+    @include small-only {
+      width: 90vw;
+      right: 20px;
+      top: 20px;
+      padding: 12px 12px;
+    }
   }
 
   &__message {
     @include typography(m, semi-bold);
-    margin-right: 20px;
+
+    @include small-only {
+      @include typography(s, semi-bold);
+    }
   }
 
   &--info {

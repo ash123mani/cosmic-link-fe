@@ -1,6 +1,8 @@
+@import '~@common/theme/style';
+
 .action-buttons {
   display: flex;
-  margin-top: 12px;
+  margin-top: 20px;
 
   &__cancel {
     flex: 1;
@@ -9,5 +11,19 @@
 
   &__submit {
     flex: 1;
+
+    &--submit {
+      color: $submit;
+      border-color: $submit;
+    }
+
+    &--delete {
+      color: $delete;
+      border-color: $delete;
+    }
+  }
+
+  @include medium-down {
+    margin-top: 16px;
   }
 }

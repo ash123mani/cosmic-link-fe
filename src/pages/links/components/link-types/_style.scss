@@ -1,6 +1,5 @@
 .link-types {
-  > .cosmic-btn {
-    // height: unset;
-    // width: fit-content;
+  &--vertical {
+    overflow: auto;
   }
 }

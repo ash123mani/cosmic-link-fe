@@ -1,11 +1,11 @@
 import React from 'react'
-import { string, func } from 'prop-types'
+import { string, func, oneOf } from 'prop-types'
 
 import { Modal } from '@common'
 import ConfirmationButtons from '@local/confirmation-buttons'
 
 const ConfirmationModal = ({
-  message, confirmText, cancelText, handleSubmit, handleCancel, heading,
+  message, confirmText, cancelText, handleSubmit, handleCancel, heading, modalType,
 }) => (
   <Modal.Wrapper onEscKeydown={handleCancel}>
     <Modal.Header closeAble={false}>
@@ -19,6 +19,7 @@ const ConfirmationModal = ({
       cancelText={cancelText}
       handleSubmit={handleSubmit}
       handleCancel={handleCancel}
+      type={modalType}
     />
   </Modal.Wrapper>
 )
@@ -30,6 +31,7 @@ ConfirmationModal.propTypes = {
   handleSubmit: func.isRequired,
   handleCancel: func.isRequired,
   heading: string,
+  modalType: oneOf[('submit', 'delete')],
 }
 
 ConfirmationModal.defaultProps = {
@@ -37,6 +39,7 @@ ConfirmationModal.defaultProps = {
   confirmText: 'Confirm',
   cancelText: 'Cancel',
   heading: 'Are you sure ?',
+  modalType: 'submit',
 }
 
 export default ConfirmationModal

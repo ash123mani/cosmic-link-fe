@@ -66,6 +66,7 @@ const RegisterForm = ({ registerUser }) => {
         type="sublit"
         loading={isSubmitting}
         loader={<InlineSpinner />}
+        className={classNames({ blk, elt: 'submit-btn' })}
       >
         Submit
       </Button>

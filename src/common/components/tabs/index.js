@@ -20,6 +20,7 @@ const Tabs = ({
   }, [defaultSelected])
 
   const handleTabClick = ({ target: { name } }) => {
+    console.log('name', name)
     setActiveTab(name)
     handleTabChange(name)
   }
@@ -36,31 +37,42 @@ const Tabs = ({
         const isActive = activeTab === tab.key
 
         return (
-          <Button
-            className={classNames({
-              blk,
-              elt: 'btn',
-              mods: [
-                isActive && 'active',
-                direction,
-              ],
-            })}
-            name={tab.key}
-            category="plain"
-            onClick={handleTabClick}
-          >
-            <span className={classNames({
-              blk,
-              elt: 'label',
-              mods: [
-                direction,
-              ],
-            })}
+          <div className={classNames({ blk, elt: 'btn-wrapper' })}>
+            <Button
+              className={classNames({
+                blk,
+                elt: 'btn',
+                mods: [
+                  isActive && 'active',
+                  direction,
+                ],
+              })}
+              name={tab.key}
+              category="plain"
+              key={tab.key}
+              onClick={handleTabClick}
+            >
+              {tab.value}
+              {/* <span
+              name={tab.key}
+              onClick={handleTabClick}
+              onKeyDown={handleTabClick}
+              className={classNames({
+                blk,
+                elt: 'label',
+                mods: [
+                  direction,
+                ],
+              })}
+              role="button"
+              tabIndex={0}
             >
               {tab.value}
 
-            </span>
-          </Button>
+            </span> */}
+            </Button>
+          </div>
+
         )
       })}
     </div>

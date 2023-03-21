@@ -8,5 +8,9 @@
     width: 420px;
     margin: 0 auto;
     @include flex(column, center);
+
+    @include small-only {
+      width: 100%;
+    }
   }
 }

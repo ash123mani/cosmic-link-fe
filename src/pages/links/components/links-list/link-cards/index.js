@@ -85,6 +85,7 @@ const LinkCards = ({ categoryLinks, setAppBanner, deleteLink }) => {
           handleCancel={handleCancel}
           message="Do you want to delete this link ?"
           confirmText="Delete"
+          modalType="delete"
         />
       )}
     </div>

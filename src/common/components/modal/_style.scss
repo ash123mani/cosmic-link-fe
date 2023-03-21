@@ -21,16 +21,23 @@
   z-index: 2;
 
   &__wrapper {
-    padding: 16px 24px;
+    padding: 24px 24px;
     width: 480px;
     background: $black-medium;
     border-radius: 4px;
-    display: flex;
-    flex-direction: column;
     animation: expand 0.2s linear;
 
     &--backdrop {
       box-shadow: 0 0 0 50vmax $primary-light;
+    }
+
+    @include medium-only {
+      padding: 16px 16px;
+    }
+
+    @include small-down {
+      padding: 16px 16px;
+      width: 90%;
     }
   }
 }

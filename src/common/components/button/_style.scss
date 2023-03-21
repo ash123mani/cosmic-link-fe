@@ -10,7 +10,7 @@
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 
   @include small-only {
-    padding: 8px 16px;
+    padding: 12px 16px;
     @include typography(s, semi-bold);
   }
 

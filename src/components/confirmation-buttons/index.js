@@ -1,5 +1,7 @@
 import React from 'react'
-import { bool, func, string } from 'prop-types'
+import {
+  bool, func, string, oneOf,
+} from 'prop-types'
 
 import { Button } from '@common'
 import { classNames } from '@common/helpers'
@@ -10,7 +12,7 @@ import './_style.scss'
 const blk = 'action-buttons'
 
 const ConfirmationButtons = ({
-  handleCancel, handleSubmit, isSubmitting, confirmText, cancelText,
+  handleCancel, handleSubmit, isSubmitting, confirmText, cancelText, type,
 }) => (
   <div className={classNames({ blk })}>
     <Button
@@ -23,7 +25,7 @@ const ConfirmationButtons = ({
     <Button
       onClick={handleSubmit}
       category="light"
-      className={classNames({ blk, elt: 'submit' })}
+      className={classNames({ blk, elt: 'submit', mods: [type] })}
       loading={isSubmitting}
       loader={<InlineSpinner text="In Progress..." category="gray" />}
     >
@@ -38,12 +40,14 @@ ConfirmationButtons.propTypes = {
   isSubmitting: bool,
   confirmText: string,
   cancelText: string,
+  type: oneOf(['delete', 'submit']),
 }
 
 ConfirmationButtons.defaultProps = {
   isSubmitting: false,
   confirmText: 'Confirm',
   cancelText: 'Cancel',
+  type: 'submit',
 }
 
 export default ConfirmationButtons

@@ -1,3 +1,5 @@
+@import '~@common/theme/style';
+
 .register-form {
   margin: 4rem 0rem;
 
@@ -5,5 +7,13 @@
   &__email,
   &__password {
     margin-bottom: 1.6rem;
+
+    @include small-only {
+      margin-bottom: 1.2rem;
+    }
+  }
+
+  &__submit-btn {
+    margin-top: 2rem;
   }
 }

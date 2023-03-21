@@ -25,9 +25,16 @@
   &__actions {
     display: flex;
     justify-content: space-between;
+    width: 100%;
 
     @include medium-down {
       width: 100%;
+    }
+  }
+
+  &__category-btn {
+    @include large-up {
+      width: 220px;
     }
   }
 }

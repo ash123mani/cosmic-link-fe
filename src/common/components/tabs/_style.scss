@@ -2,30 +2,28 @@
 
 .cosmic-tabs {
   display: flex;
-  overflow: auto;
   -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  scrollbar-width: 1px;  /* Firefox */
   border: 1px solid $black-light;
 
   &--vertical {
     flex-direction: column;
-    overflow: auto;
     height: 100%;
-    min-width: 180px;
+    min-width: 222px;
   }
 
   &--horizontal {
     flex-direction: row;
     height: auto;
     max-width: 100vw;
+    overflow: auto;
   }
-  
-  &::-webkit-scrollbar {
-    display: none;
+
+  &__btn-wrapper {
+    margin-bottom: 6px;
   }
 
   &__btn {
-    padding: 12px 16px;
     color: $black-medium;
     position: relative;
     @include font-weight(semi-bold);
@@ -40,9 +38,17 @@
     }
 
     &--vertical {
-      padding-top: 12px;
-      padding-bottom: 12px;
+      padding: 12px 16px;
       text-align: left;
+      width: 220px;
+    }
+
+    &--horizontal {
+      width: 120px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      padding: 12px 12px;
     }
   }
 

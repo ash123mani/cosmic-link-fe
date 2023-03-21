@@ -9,7 +9,6 @@
     width: 240px;
     height: calc(100vh - 262px);
     margin: 4rem 0px;
-    overflow: auto;
     border-radius: 8px;
     display: flex;
     width: 100%;
@@ -20,6 +19,7 @@
     }
 
     @include medium-down {
+      height: calc(100vh - 120px);
       flex-direction: column;
       margin: 2rem 0px;
     }

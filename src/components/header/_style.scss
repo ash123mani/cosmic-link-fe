@@ -49,6 +49,10 @@
   &__sign-up {
     margin-left: 24px;
     width: max-content;
+
+    @include medium-down {
+      margin-left: 12px;
+    }
   }
 
   &__profile-link {
