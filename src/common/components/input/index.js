@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { memo } from 'react'
+import React, { memo, forwardRef } from 'react'
 import {
-  string, func, oneOf, shape,
+  string, func, oneOf, shape, object, oneOfType,
 } from 'prop-types'
 
 import { classNames } from '@common/helpers'
@@ -10,9 +10,10 @@ import './_style.scss'
 
 const blk = 'cosmic-input'
 
-const Input = ({
-  className, placeholder, label, errorMessage, type, onChange, name, category, as, ...extraProps
-}) => {
+const Input = forwardRef((props, ref) => {
+  const {
+    className, placeholder, label, errorMessage, type, onChange, name, category, as, ...extraProps
+  } = props
   const eltClassName = classNames({
     blk,
     className,
@@ -35,22 +36,24 @@ const Input = ({
       {as === 'textarea'
         ? (
           <textarea
+            {...extraProps}
             className={classNames({ blk, elt: 'box', mods: [category] })}
             placeholder={placeholder}
             onChange={onChange}
             type={type}
             name={name}
-            {...extraProps}
+            ref={ref}
           />
         )
         : (
           <input
+            {...extraProps}
             className={classNames({ blk, elt: 'box', mods: [category] })}
             placeholder={placeholder}
             onChange={onChange}
             type={type}
             name={name}
-            {...extraProps}
+            ref={ref}
           />
         )}
 
@@ -63,7 +66,7 @@ const Input = ({
       )}
     </div>
   )
-}
+})
 
 Input.propTypes = {
   className: string,
@@ -76,6 +79,7 @@ Input.propTypes = {
   category: oneOf(['dark', 'light']),
   extraProps: shape({}),
   as: oneOf(['textarea', 'input']),
+  ref: oneOfType([func, object]),
 }
 
 Input.defaultProps = {
@@ -88,6 +92,7 @@ Input.defaultProps = {
   category: 'dark',
   extraProps: {},
   as: 'input',
+  ref: null,
 }
 
 export default memo(Input)

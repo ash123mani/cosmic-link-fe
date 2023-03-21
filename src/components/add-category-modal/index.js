@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { Modal, Input } from '@common'
 
 import ConfirmationButtons from '@local/confirmation-buttons'
+import { useAutoFocus } from '@hooks'
 
 import { actions } from './index.connect'
 
@@ -13,6 +14,7 @@ const AddCategoryModal = ({
 }) => {
   const [categoryName, setCategoryName] = useState('')
   const [isAddingCategory, setIsAddingCategory] = useState(false)
+  const inputRef = useAutoFocus()
 
   const handleCategoryInputChange = ({ target: { value } }) => {
     setCategoryName(value)
@@ -33,13 +35,13 @@ const AddCategoryModal = ({
       </Modal.Header>
       <Modal.Content>
         <Input
-          autoFocus
           type="text"
           name="category"
           onChange={handleCategoryInputChange}
           placeholder="Category"
           category="light"
           label="Category Name"
+          ref={inputRef}
         />
       </Modal.Content>
       <ConfirmationButtons

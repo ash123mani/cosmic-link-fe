@@ -6,6 +6,7 @@ import { func, bool } from 'prop-types'
 import { Input, Button } from '@common'
 import { classNames } from '@common/helpers'
 import InlineSpinner from '@local/inline-spinner'
+import { useAutoFocus } from '@hooks'
 
 import { actions } from './index.connect'
 import './_style.scss'
@@ -42,11 +43,12 @@ const LoginForm = ({
     e.preventDefault()
     forgotPassword(formData.email || '')
   }
+  const inputRef = useAutoFocus([showForgotPassword])
 
   return (
     <form className={classNames({ blk })} onSubmit={showForgotPassword ? handleForgotPasswordSubmit : handleSubmit}>
       <Input
-        autoFocus
+        ref={inputRef}
         className={classNames({ blk, elt: 'email' })}
         placeholder="Email for your cosmos"
         label="Email"
