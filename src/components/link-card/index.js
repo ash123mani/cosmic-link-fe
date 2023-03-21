@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { string, func, bool } from 'prop-types'
+import { useMediaQuery } from 'react-responsive'
 
 import { classNames } from '@common/helpers'
 import Image from '@local/image'
@@ -8,6 +9,7 @@ import linkIcon from '@images/link.svg'
 import fileCopyIcon from '@images/file-copy.svg'
 import shareIcon from '@images/share.svg'
 import deleteIcon from '@images/delete.svg'
+import mediaQueries from '@common/media-queries'
 
 import './_style.scss'
 
@@ -17,6 +19,7 @@ const LinkCard = ({
   imageUrl, title, description, siteName, linkUrl, onLinkCopy, onLinkDelete, linkId, fadeDown, fadeUp,
 }) => {
   const [isDeleting, setIsDeleting] = useState(false)
+  const isMediumDown = useMediaQuery(mediaQueries.mediumDown)
 
   if (!title && !description) {
     return null
@@ -53,7 +56,7 @@ const LinkCard = ({
             <Image
               imageUrl={imageUrl}
               alt={siteName}
-              height="200px"
+              height={isMediumDown ? '140px' : '200px'}
             />
           ) : (
             <div className={classNames({ blk, elt: 'site-name' })}>
@@ -63,9 +66,9 @@ const LinkCard = ({
         }
 
         {title && (
-          <div className={classNames({ blk, elt: 'title' })}>
+          <h3 className={classNames({ blk, elt: 'title' })}>
             {title}
-          </div>
+          </h3>
         )}
 
         {description && (

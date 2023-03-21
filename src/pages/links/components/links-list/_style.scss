@@ -1,13 +1,13 @@
 @import '~@common/theme/style';
 
 .links-list {
-  padding: 0px 60px;
+  margin: 0px 60px;
   width: 100%;
   position: relative;
   height: 100%;
   overflow: auto;
 
   @include medium-down {
-    padding: 2rem 0rem;
+    margin: 2rem 0rem;
   }
 }

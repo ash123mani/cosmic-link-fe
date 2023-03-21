@@ -45,10 +45,8 @@
 
     &--horizontal {
       width: 120px;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
       padding: 12px 12px;
+      @include ellipsis-text;
     }
   }
 
