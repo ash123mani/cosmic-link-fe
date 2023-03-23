@@ -6,7 +6,9 @@ import { getStorageItem } from '@util/storage'
 import handleAuthError from './handle-auth-error'
 import config from './config'
 
-const baseUrl = 'http://localhost:5000'
+const isDevelopment = process.env.NODE_ENV !== 'production'
+
+const baseUrl = isDevelopment ? 'http://localhost:5000' : 'http://18.183.162.179:5000'
 
 const api = (name, options = {}) => {
   const {
