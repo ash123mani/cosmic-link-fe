@@ -1,7 +1,7 @@
 import React from 'react'
 import { useLocation, NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { bool } from 'prop-types'
+import { bool, func } from 'prop-types'
 
 import { classNames } from '@common/helpers'
 import { Button } from '@common'
@@ -10,12 +10,12 @@ import {
   isLoginPage, isRegisterPage, isHomePage, isProfilePage,
 } from '@util/location'
 
-import { mapStateToProps } from './index.connect'
+import { mapStateToProps, actions } from './index.connect'
 import './_style.scss'
 
 const blk = 'cosmic-header'
 
-const Header = ({ isUserLoggedIn }) => {
+const Header = ({ isUserLoggedIn, logOutUser }) => {
   const location = useLocation()
   const pathname = location.pathname
 
@@ -23,21 +23,6 @@ const Header = ({ isUserLoggedIn }) => {
   const isRegister = isRegisterPage(pathname)
   const isLogin = isLoginPage(pathname)
   const isProfile = isProfilePage(pathname)
-
-  // const handleInstall = (event) => {
-  //   const srcElement = event.target
-  //   window.deferredPrompt.prompt()
-  //   srcElement.classList.add('hidden')
-  //   window.deferredPrompt.userChoice.then((choice) => {
-  //     if (choice.outcome === 'accepted') {
-  //       console.log('User accepted the install prompt', choice)
-  //     } else {
-  //       srcElement.classList.remove('hidden')
-  //       console.log('User dismissed the install prompt', choice)
-  //     }
-  //     window.deferredPrompt = null
-  //   })
-  // }
 
   return (
     <nav className={classNames({ blk })}>
@@ -59,15 +44,11 @@ const Header = ({ isUserLoggedIn }) => {
             Profile
           </Button>
         )}
-        {/* {isUserLoggedIn && (
-          <Button
-            category="filled"
-            className={classNames({ blk, elt: 'install-btn' })}
-            onClick={handleInstall}
-          >
-            Install
+        {isProfile && (
+          <Button category="filled" onClick={logOutUser}>
+            Log Out
           </Button>
-        ) } */}
+        )}
       </div>
 
       {!isUserLoggedIn && (
@@ -101,6 +82,7 @@ const Header = ({ isUserLoggedIn }) => {
 
 Header.propTypes = {
   isUserLoggedIn: bool,
+  logOutUser: func.isRequired,
 }
 
 Header.defaultProps = {
@@ -108,7 +90,7 @@ Header.defaultProps = {
 }
 
 const HeaderWithConnect = connect(
-  mapStateToProps,
+  mapStateToProps, actions,
 )(Header)
 
 export default HeaderWithConnect

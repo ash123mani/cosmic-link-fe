@@ -7,7 +7,7 @@ import Image from '@local/image'
 import { Spinner } from '@common'
 import linkIcon from '@images/link.svg'
 import fileCopyIcon from '@images/file-copy.svg'
-import shareIcon from '@images/share.svg'
+// import shareIcon from '@images/share.svg'
 import deleteIcon from '@images/delete.svg'
 import mediaQueries from '@common/media-queries'
 
@@ -30,9 +30,9 @@ const LinkCard = ({
     await navigator.clipboard.writeText(linkUrl)
   }
 
-  const handleShare = async () => {
-    await window.navigator.share(linkUrl)
-  }
+  // const handleShare = async () => {
+  //   await window.navigator.share(linkUrl)
+  // }
 
   const handleDelete = async () => {
     setIsDeleting(true)
@@ -101,13 +101,13 @@ const LinkCard = ({
           title="Copy link"
         />
 
-        <Image
+        {/* <Image
           imageUrl={shareIcon}
           asButton
           className={classNames({ blk, elt: 'link-share' })}
           onClick={handleShare}
           title="Share link"
-        />
+        /> */}
 
         {isDeleting ? <Spinner size="small" category="red" /> : (
           <Image

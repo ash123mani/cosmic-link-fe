@@ -1,4 +1,6 @@
-import { REGISTER_USER_SUCCESS, LOGIN_USER_SUCCESS, GET_USER_DATA_SUCCESS } from '@state/constants/auth'
+import {
+  REGISTER_USER_SUCCESS, LOGIN_USER_SUCCESS, LOG_OUT_USER, GET_USER_DATA_SUCCESS,
+} from '@state/constants/auth'
 import { ADD_CATEGORY_SUCCESS } from '@state/constants/user'
 import { getStorageItem } from '@util/storage'
 
@@ -19,6 +21,11 @@ const authReducer = (state = intialState, action) => {
       ...state,
       token: getStorageItem('local', 'token'),
       user: payload.user,
+    }
+  case LOG_OUT_USER:
+    return {
+      ...state,
+      token: '',
     }
   default:
     return state

@@ -1,5 +1,4 @@
 import { removeStorageItem } from '@util/storage'
-import { history } from '@util/location'
 import { LOG_OUT_USER } from '@state/constants/auth'
 
 const logOutUser = () => async (dispatch) => {
@@ -7,8 +6,7 @@ const logOutUser = () => async (dispatch) => {
     type: LOG_OUT_USER,
   })
 
-  removeStorageItem('local', 'token')
-  history.push('/')
+  await removeStorageItem('local', 'token')
 }
 
 export default logOutUser

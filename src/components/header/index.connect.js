@@ -1,4 +1,5 @@
 import { isLoggedIn } from '@state/selectors/auth'
+import { logOutUser } from '@state/actions/auth'
 
 const mapStateToProps = (state) => {
   const isUserLoggedIn = isLoggedIn(state)
@@ -8,4 +9,6 @@ const mapStateToProps = (state) => {
   }
 }
 
-export { mapStateToProps }
+const actions = { logOutUser }
+
+export { mapStateToProps, actions }
