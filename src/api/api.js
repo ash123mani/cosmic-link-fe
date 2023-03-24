@@ -8,7 +8,7 @@ import config from './config'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
-const baseUrl = isDevelopment ? 'http://localhost:5000' : 'http://18.183.162.179:5000'
+const baseUrl = isDevelopment ? 'http://localhost:5000' : 'http://3.115.123.72:5000'
 
 const api = (name, options = {}) => {
   const {
