@@ -33,7 +33,7 @@ const LoginForm = ({
     setIsSubmitting(true)
     loginUser(formData).then(({ data }) => {
       if (data.token) {
-        history.push('/links')
+        history.replace('/links')
       }
     })
       .finally(() => setIsSubmitting(false))

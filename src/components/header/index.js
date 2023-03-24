@@ -1,5 +1,5 @@
 import React from 'react'
-import { useLocation, NavLink } from 'react-router-dom'
+import { useLocation, useHistory, NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bool, func } from 'prop-types'
 
@@ -16,6 +16,7 @@ import './_style.scss'
 const blk = 'cosmic-header'
 
 const Header = ({ isUserLoggedIn, logOutUser }) => {
+  const history = useHistory()
   const location = useLocation()
   const pathname = location.pathname
 
@@ -23,6 +24,11 @@ const Header = ({ isUserLoggedIn, logOutUser }) => {
   const isRegister = isRegisterPage(pathname)
   const isLogin = isLoginPage(pathname)
   const isProfile = isProfilePage(pathname)
+
+  const handleLogOut = () => {
+    logOutUser()
+    history.push('/')
+  }
 
   return (
     <nav className={classNames({ blk })}>
@@ -45,7 +51,7 @@ const Header = ({ isUserLoggedIn, logOutUser }) => {
           </Button>
         )}
         {isProfile && (
-          <Button category="filled" onClick={logOutUser}>
+          <Button category="filled" onClick={handleLogOut}>
             Log Out
           </Button>
         )}

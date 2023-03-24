@@ -13,8 +13,6 @@ const useLoggedInRedirect = () => {
   useLayoutEffect(() => {
     if (isUserLoggedIn) {
       history.replace(from)
-    } else {
-      history.push('/')
     }
   }, [isUserLoggedIn])
 }
