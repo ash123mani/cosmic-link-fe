@@ -8,12 +8,18 @@ const { GenerateSW } = require('workbox-webpack-plugin')
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 // TODO: add chaching
+// TODO: Add MiniCssExtractPlugin for splitting CSS out from the main application.
 module.exports = {
   mode: isDevelopment ? 'development' : 'production',
   context: resolve('src'),
   devtool: isDevelopment ? 'inline-source-map' : 'source-map',
   entry: {
     app: ['./polyfills', './index.js'],
+  },
+  output: {
+    filename: '[name].bundle.js',
+    chunkFilename: '[name].bundle.js',
+    path: resolve(__dirname, 'dist'),
   },
   module: {
     rules: [
@@ -57,6 +63,18 @@ module.exports = {
       clientsClaim: true,
       skipWaiting: true,
       swDest: 'sw.js',
+      runtimeCaching: [
+        {
+          urlPattern: /^https:\/\/.*\.(jpg|png|svg|jpeg|webp|gif|avif|apng)$/i,
+          handler: 'CacheFirst',
+          options: {
+            cacheName: 'link-images',
+            expiration: {
+              maxAgeSeconds: 3600 * 24 * 10,
+            },
+          },
+        },
+      ],
     }),
   ].filter(Boolean),
   resolve: {

@@ -12,7 +12,7 @@ const blk = 'category-info'
 const CategoryInfo = ({ categories }) => (
   <div className={classNames({ blk })}>
     <h2 className={classNames({ blk, elt: 'section-heading' })}>
-      Category Info
+      Your Categories
     </h2>
     <div className={classNames({ blk, elt: 'categories' })}>
       {categories.map((category) => {

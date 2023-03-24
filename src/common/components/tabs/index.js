@@ -20,7 +20,6 @@ const Tabs = ({
   }, [defaultSelected])
 
   const handleTabClick = ({ target: { name } }) => {
-    console.log('name', name)
     setActiveTab(name)
     handleTabChange(name)
   }

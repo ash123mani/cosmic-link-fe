@@ -12,7 +12,7 @@ const UserInfo = ({ user }) => {
   const { username, email } = user
   return (
     <div className={classNames({ blk })}>
-      <h2 className={classNames({ blk, elt: 'section-heading' })}>User Info</h2>
+      <h2 className={classNames({ blk, elt: 'section-heading' })}>Your Info</h2>
       <Input
         label="Your Name"
         value={username}
