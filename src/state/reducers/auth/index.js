@@ -5,7 +5,7 @@ import { ADD_CATEGORY_SUCCESS } from '@state/constants/user'
 import { getStorageItem } from '@util/storage'
 
 const intialState = {
-  token: '',
+  token: getStorageItem('local', 'token'),
   user: {},
 }
 
