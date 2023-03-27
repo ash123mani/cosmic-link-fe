@@ -30,10 +30,10 @@
   }
 
   &__message {
-    @include typography(m, semi-bold);
+    @include typography(m);
 
     @include small-only {
-      @include typography(s, semi-bold);
+      @include typography(s);
     }
   }
 

@@ -25,7 +25,7 @@ const deleteLinkFailure = (payload, dispatch) => {
 }
 
 const deleteLink = (linkId) => async (dispatch) => {
-  dispatch(deleteLinkRequest(linkId))
+  dispatch(deleteLinkRequest({ linkId }))
 
   try {
     const appendPath = `/${linkId}`

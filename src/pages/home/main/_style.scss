@@ -30,15 +30,15 @@
     color: $primary-medium;
 
     @include small-only {
-      @include typography(l, bold);
+      @include typography(l);
     }
 
     @include medium-only {
-      @include typography(xl, bold);
+      @include typography(xl);
     }
 
     @include large-up {
-      @include typography(xxl, bold);
+      @include typography(xxl);
     }
   }
 }

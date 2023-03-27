@@ -2,16 +2,37 @@
 
 .category-info {
   &__section-heading {
-    color: $primary;
+    color: $primary-medium;
     margin-bottom: 24px;
   }
 
   &__categories {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  &__name {
+    @include ellipsis-text();
   }
 
   &__category {
     margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+    align-items: center;
+    max-width: 100%;
+
+    padding: 12px;
+    border: 1px solid $black-medium;
+    border-radius: 4px;
+  }
+
+  &__delete {
+    height: 24px;
+    width: 24px;
+    cursor: pointer;
   }
 }

@@ -3,7 +3,7 @@
 .cosmic-btn {
   padding: 12px 24px;
   background: transparent;
-  border: 2px solid $black-light;
+  border: 1px solid $black-light;
   border-radius: $border-radius-default;
   color: $primary;
   text-decoration: none;
@@ -11,16 +11,16 @@
 
   @include small-only {
     padding: 12px 16px;
-    @include typography(s, semi-bold);
+    @include typography(s);
   }
 
   @include medium-only {
-    @include typography(m, semi-bold);
+    @include typography(m);
     padding: 12px 20px;
   }
 
   @include large-up {
-    @include typography(m, semi-bold);
+    @include typography(m);
   }
 
 

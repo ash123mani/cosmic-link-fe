@@ -3,7 +3,7 @@ import { setAppBanner } from '@state/actions/app'
 import { logOutUser } from '@state/actions/auth'
 
 const handleAuthError = (response = {}) => {
-  const authCodes = [401, 404]
+  const authCodes = [401]
 
   if (authCodes.includes(response.data.statusCode)) {
     store.dispatch(setAppBanner({

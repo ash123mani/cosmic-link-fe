@@ -15,7 +15,7 @@
   }
 
   &__selected {
-    border: 2px solid $gray;
+    border: 1px solid $gray;
     padding: 12px 16px;
     border-radius: 4px;
     cursor: pointer;
@@ -27,7 +27,7 @@
 
     &--light {
       color: $white;
-      border: 2px solid $white;
+      border: 1px solid $white;
 
       &:hover {
         color: $gray;
@@ -48,7 +48,7 @@
 
 
     &--light {
-      border: 2px solid $white;
+      border: 1px solid $white;
     }
 
     &--show {
