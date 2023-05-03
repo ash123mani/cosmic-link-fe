@@ -32,6 +32,10 @@
         color: $gray;
         border-color: $gray;
       }
+
+      &::placeholder {
+        color: $gray;
+      }
     }
 
     @include small-only {

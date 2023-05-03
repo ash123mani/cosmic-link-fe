@@ -12,7 +12,7 @@ import './_style.scss'
 const blk = 'action-buttons'
 
 const ConfirmationButtons = ({
-  handleCancel, handleSubmit, isSubmitting, confirmText, cancelText, type,
+  handleCancel, handleSubmit, isSubmitting, confirmText, cancelText, type, submitButtonType,
 }) => (
   <div className={classNames({ blk })}>
     <Button
@@ -28,6 +28,7 @@ const ConfirmationButtons = ({
       className={classNames({ blk, elt: 'submit', mods: [type] })}
       loading={isSubmitting}
       loader={<InlineSpinner text="In Progress..." category="gray" />}
+      type={submitButtonType}
     >
       {confirmText}
     </Button>
@@ -41,6 +42,7 @@ ConfirmationButtons.propTypes = {
   confirmText: string,
   cancelText: string,
   type: oneOf(['delete', 'submit']),
+  submitButtonType: string,
 }
 
 ConfirmationButtons.defaultProps = {
@@ -48,6 +50,7 @@ ConfirmationButtons.defaultProps = {
   confirmText: 'Confirm',
   cancelText: 'Cancel',
   type: 'submit',
+  submitButtonType: 'button',
 }
 
 export default ConfirmationButtons

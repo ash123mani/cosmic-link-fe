@@ -20,7 +20,8 @@ const AddCategoryModal = ({
     setCategoryName(value)
   }
 
-  const handleCategorySubmit = async () => {
+  const handleCategorySubmit = async (event) => {
+    event.preventDefault()
     setIsAddingCategory(true)
     await addCategory(categoryName)
     setIsAddingCategory(false)
@@ -34,23 +35,27 @@ const AddCategoryModal = ({
         Add Category
       </Modal.Header>
       <Modal.Content>
-        <Input
-          type="text"
-          name="category"
-          onChange={handleCategoryInputChange}
-          placeholder="Category"
-          category="light"
-          label="Category Name"
-          ref={inputRef}
-        />
+        <form onSubmit={handleCategorySubmit}>
+          <Input
+            type="text"
+            name="category"
+            onChange={handleCategoryInputChange}
+            placeholder="Popular movie links"
+            category="light"
+            label="Category Name"
+            ref={inputRef}
+          />
+          <ConfirmationButtons
+            confirmText={confirmText}
+            cancelText={cancelText}
+            handleCancel={handleCancel}
+            isSubmitting={isAddingCategory}
+            submitButtonType="submit"
+          />
+        </form>
+
       </Modal.Content>
-      <ConfirmationButtons
-        confirmText={confirmText}
-        cancelText={cancelText}
-        handleSubmit={handleCategorySubmit}
-        handleCancel={handleCancel}
-        isSubmitting={isAddingCategory}
-      />
+
     </Modal.Wrapper>
   )
 }

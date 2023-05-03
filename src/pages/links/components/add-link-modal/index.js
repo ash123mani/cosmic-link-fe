@@ -69,7 +69,8 @@ const AddLinkModal = ({
     setIsFetchingMeta(false)
   }
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault()
     if (!isFetchedMeta) {
       getMetaData()
     } else {
@@ -94,45 +95,60 @@ const AddLinkModal = ({
     })
   }
 
+  const handleEnterClick = (event) => {
+    if (event.which === 13) {
+      if (!event.repeat) {
+        const newEvent = new Event('submit', { cancelable: true })
+        event.target.form.dispatchEvent(newEvent)
+      }
+
+      handleSubmit(event)
+    }
+  }
+
   return (
     <Modal.Wrapper className={classNames({ blk })}>
       <Modal.Header closeAble={false}>
         Link Details
       </Modal.Header>
       <Modal.Content>
-        {
-          isFetchedMeta
-            ? (
-              <LinkMeta
-                meta={linkMeta}
-                handleCategoryChange={handleCategoryChange}
-                handleMetaChange={handleMetaChange}
-                allCategories={allCategories}
-              />
-            )
-            : (
-              <Input
-                autoFocus
-                placeholder="Href"
-                category="light"
-                label="Link Url"
-                as="textarea"
-                rows="2"
-                onChange={handleChange}
-                name="url"
-                className={classNames(
-                  { blk, elt: 'link-url' },
-                )}
-              />
-            )
-        }
-        <ConfirmationButtons
-          handleCancel={toggleAddLinkModal}
-          handleSubmit={handleSubmit}
-          isSubmitting={isFetchingMeta}
-          isFetchedMeta={isFetchedMeta}
-          confirmText={isFetchedMeta ? 'Add this Link' : 'Get Link Meta'}
-        />
+        <form onSubmit={handleSubmit}>
+          {
+            isFetchedMeta
+              ? (
+                <LinkMeta
+                  meta={linkMeta}
+                  handleCategoryChange={handleCategoryChange}
+                  handleMetaChange={handleMetaChange}
+                  allCategories={allCategories}
+                />
+              )
+              : (
+                <Input
+                  autoFocus
+                  placeholder="https://www.zachgollwitzer.com/posts/react-forms-best-practices"
+                  category="light"
+                  label="Url to save"
+                  as="textarea"
+                  rows="4"
+                  onChange={handleChange}
+                  name="url"
+                  className={classNames(
+                    { blk, elt: 'link-url' },
+                  )}
+                  onKeyPress={handleEnterClick}
+                />
+              )
+          }
+          <ConfirmationButtons
+            handleCancel={toggleAddLinkModal}
+            isSubmitting={isFetchingMeta}
+            isFetchedMeta={isFetchedMeta}
+            confirmText={isFetchedMeta ? 'Add this Link' : 'Get Link Meta'}
+            submitButtonType="submit"
+          />
+        </form>
+
       </Modal.Content>
     </Modal.Wrapper>
   )
