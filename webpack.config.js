@@ -4,6 +4,7 @@ const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 const ESLintPlugin = require('eslint-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const { GenerateSW } = require('workbox-webpack-plugin')
+const Dotenv = require('dotenv-webpack');
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
@@ -76,6 +77,7 @@ module.exports = {
         },
       ],
     }),
+    new Dotenv(),
   ].filter(Boolean),
   resolve: {
     extensions: ['.js', '.jsx'],
