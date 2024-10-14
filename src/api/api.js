@@ -8,7 +8,7 @@ import config from './config'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
-const baseUrl = isDevelopment ? process.env.API_BASE_URL_LOCAL : process.env.API_BASE_URL_PROD
+const baseUrl = isDevelopment ? 'http://localhost:5000' : 'https://cosmic-link-be.onrender.com'
 
 const api = (name, options = {}) => {
   const {
