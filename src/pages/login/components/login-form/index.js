@@ -10,6 +10,7 @@ import { useAutoFocus } from '@hooks'
 
 import { actions } from './index.connect'
 import './_style.scss'
+import log from "@util/log";
 
 const blk = 'login-form'
 
@@ -29,6 +30,7 @@ const LoginForm = ({
   }
 
   const handleSubmit = (e) => {
+    log('log', 'Logging In')
     e.preventDefault()
     setIsSubmitting(true)
     loginUser(formData).then(({ data }) => {
