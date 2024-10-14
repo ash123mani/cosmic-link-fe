@@ -30,7 +30,7 @@ const LoginForm = ({
   }
 
   const handleSubmit = (e) => {
-    log('log', 'Logging In')
+    log('Logging In', 'log')
     e.preventDefault()
     setIsSubmitting(true)
     loginUser(formData).then(({ data }) => {
