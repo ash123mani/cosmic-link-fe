@@ -1,3 +1,6 @@
-# cosmic-link-fe
+# cosmic-link
 Cosmic Link UI
-http://3.115.123.72/
+https://cosmic-link-fe.vercel.app/links
+
+Cosmic Link BE Healthcheck
+https://cosmic-link-be.onrender.com/healthcheck
