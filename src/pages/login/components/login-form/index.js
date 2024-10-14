@@ -4,13 +4,13 @@ import { useHistory } from 'react-router-dom'
 import { func, bool } from 'prop-types'
 
 import { Input, Button } from '@common'
+import log from '@util/log'
 import { classNames } from '@common/helpers'
 import InlineSpinner from '@local/inline-spinner'
 import { useAutoFocus } from '@hooks'
 
 import { actions } from './index.connect'
 import './_style.scss'
-import log from "@util/log";
 
 const blk = 'login-form'
 
