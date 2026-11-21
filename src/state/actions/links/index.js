@@ -4,6 +4,7 @@ import addLink from './add-link'
 import getLinks from './get-links'
 import setSelectedCategory from './set-selected-category'
 import deleteLink from './delete-link'
+import updateLink from './update-link'
 
 export {
   getLinkMeta,
@@ -12,4 +13,5 @@ export {
   getLinks,
   setSelectedCategory,
   deleteLink,
+  updateLink,
 }

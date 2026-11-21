@@ -45,6 +45,17 @@
     @include clamp-text(3);
   }
 
+  &__shared-by {
+    margin: 0 0 12px;
+    padding: 4px 8px;
+    display: inline-block;
+    width: fit-content;
+    border-radius: $border-radius-default;
+    background: rgba(255, 255, 255, 0.08);
+    color: $gray;
+    @include typography(xs);
+  }
+
   &__bottom {
     padding: 12px 12px 0px;
     border-top: 1px solid $primary-medium;
@@ -68,6 +79,12 @@
     }
 
     &-share {
+      height: 24px;
+      width: 24px;
+      cursor: pointer;
+    }
+
+    &-move {
       height: 24px;
       width: 24px;
       cursor: pointer;

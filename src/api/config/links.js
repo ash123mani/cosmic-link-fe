@@ -18,6 +18,11 @@ const links = {
     method: 'DELETE',
     auth: true,
   },
+  updateLink: {
+    endPoint: '/api/v1/link',
+    method: 'PATCH',
+    auth: true,
+  },
 }
 
 export default links

@@ -41,14 +41,17 @@
     background-color: $white;
     position: absolute;
     width: 100%;
-    top: 68px;
-    border-radius: 4px;
+    top: calc(100% + 4px);
+    border-radius: $border-radius-default;
     max-height: 200px;
     overflow: auto;
-
+    z-index: 30;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 
     &--light {
-      border: 1px solid $white;
+      border: 1px solid $gray;
+      background: $black-medium;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
     }
 
     &--show {
@@ -57,20 +60,45 @@
   }
 
   &__item {
-    padding: 8px 12px;
+    padding: 10px 12px;
     cursor: pointer;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    &:last-child {
+      border-bottom: none;
+    }
 
     &:hover {
       color: $black-medium;
+      background: rgba(0, 0, 0, 0.04);
     }
 
     &--light {
-      border-color: $gray;
-      color: $gray;
+      border-color: rgba(255, 255, 255, 0.08);
+      color: $white;
 
       &:hover {
-        color: $black-medium;
+        color: $white;
+        background: rgba(255, 255, 255, 0.08);
       }
     }
+  }
+
+  &__item-label {
+    @include typography(s, semi-bold);
+  }
+
+  &__item-sub {
+    @include typography(xs);
+    color: $gray;
+  }
+
+  &__status {
+    padding: 10px 12px;
+    @include typography(s);
+    color: $gray;
   }
 }

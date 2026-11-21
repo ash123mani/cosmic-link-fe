@@ -12,13 +12,21 @@ import './_style.scss'
 const blk = 'action-buttons'
 
 const ConfirmationButtons = ({
-  handleCancel, handleSubmit, isSubmitting, confirmText, cancelText, type, submitButtonType,
+  handleCancel,
+  handleSubmit,
+  isSubmitting,
+  submitDisabled,
+  confirmText,
+  cancelText,
+  type,
+  submitButtonType,
 }) => (
   <div className={classNames({ blk })}>
     <Button
       onClick={handleCancel}
       category="light"
       className={classNames({ blk, elt: 'cancel' })}
+      disabled={isSubmitting}
     >
       {cancelText}
     </Button>
@@ -29,6 +37,7 @@ const ConfirmationButtons = ({
       loading={isSubmitting}
       loader={<InlineSpinner text="In Progress..." category="gray" />}
       type={submitButtonType}
+      disabled={isSubmitting || submitDisabled}
     >
       {confirmText}
     </Button>
@@ -37,8 +46,9 @@ const ConfirmationButtons = ({
 
 ConfirmationButtons.propTypes = {
   handleCancel: func.isRequired,
-  handleSubmit: func.isRequired,
+  handleSubmit: func,
   isSubmitting: bool,
+  submitDisabled: bool,
   confirmText: string,
   cancelText: string,
   type: oneOf(['delete', 'submit']),
@@ -46,7 +56,9 @@ ConfirmationButtons.propTypes = {
 }
 
 ConfirmationButtons.defaultProps = {
+  handleSubmit() {},
   isSubmitting: false,
+  submitDisabled: false,
   confirmText: 'Confirm',
   cancelText: 'Cancel',
   type: 'submit',

@@ -20,7 +20,7 @@ import './_style.scss'
 const blk = 'links-page'
 
 const Main = ({
-  getLinks, setSelectedCategory, selectedCategory, isCategoryFetchedAlready, categoryLinks,
+  getLinks, setSelectedCategory, selectedCategory, isCategoryFetchedAlready, categoryLinks, categories,
 }) => {
   const [showAddCategoryModal, setShowAddCategoryModal] = useState(false)
   const [showAddLinkModal, setShowAddLinkModal] = useState(false)
@@ -66,6 +66,7 @@ const Main = ({
             <LinksList
               isFetchingLinks={isFetchingLinks}
               categoryLinks={categoryLinks}
+              categories={categories}
             />
           ) : (
             <div className={classNames({ blk, elt: 'empty-message-wrapper' })}>
@@ -113,8 +114,15 @@ Main.propTypes = {
       id: string,
       name: string,
     }),
-    linkUrl: string,
   })),
+  categories: arrayOf(shape({ id: string, name: string })),
+}
+
+Main.defaultProps = {
+  selectedCategory: '',
+  isCategoryFetchedAlready: false,
+  categoryLinks: [],
+  categories: [],
 }
 
 Main.defaultProps = {

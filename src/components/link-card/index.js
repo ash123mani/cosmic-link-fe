@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
-import { string, func, bool } from 'prop-types'
+import {
+  string, func, bool, shape,
+} from 'prop-types'
 import { useMediaQuery } from 'react-responsive'
 
 import { classNames } from '@common/helpers'
@@ -7,8 +9,9 @@ import Image from '@local/image'
 import { Spinner } from '@common'
 import linkIcon from '@images/link.svg'
 import fileCopyIcon from '@images/file-copy.svg'
-// import shareIcon from '@images/share.svg'
+import shareIcon from '@images/share.svg'
 import deleteIcon from '@images/delete.svg'
+import folderMoveIcon from '@images/folder-move.svg'
 import mediaQueries from '@common/media-queries'
 
 import './_style.scss'
@@ -16,7 +19,7 @@ import './_style.scss'
 const blk = 'link-card'
 
 const LinkCard = ({
-  imageUrl, title, description, siteName, linkUrl, onLinkCopy, onLinkDelete, linkId, fadeDown, fadeUp,
+  imageUrl, title, description, siteName, linkUrl, onLinkCopy, onLinkDelete, onLinkSend, onLinkMove, sharedBy, linkId, fadeDown, fadeUp,
 }) => {
   const [isDeleting, setIsDeleting] = useState(false)
   const isMediumDown = useMediaQuery(mediaQueries.mediumDown)
@@ -76,6 +79,12 @@ const LinkCard = ({
             {description}
           </div>
         )}
+        {sharedBy && sharedBy.username && (
+          <div className={classNames({ blk, elt: 'shared-by' })}>
+            Shared by @
+            {sharedBy.username}
+          </div>
+        )}
       </div>
 
       <div className={classNames({ blk, elt: 'bottom' })}>
@@ -101,13 +110,25 @@ const LinkCard = ({
           title="Copy link"
         />
 
-        {/* <Image
-          imageUrl={shareIcon}
-          asButton
-          className={classNames({ blk, elt: 'link-share' })}
-          onClick={handleShare}
-          title="Share link"
-        /> */}
+        {onLinkSend && (
+          <Image
+            imageUrl={shareIcon}
+            asButton
+            className={classNames({ blk, elt: 'link-share' })}
+            onClick={onLinkSend}
+            title="Send to user"
+          />
+        )}
+
+        {onLinkMove && (
+          <Image
+            imageUrl={folderMoveIcon}
+            asButton
+            className={classNames({ blk, elt: 'link-move' })}
+            onClick={onLinkMove}
+            title="Move to category"
+          />
+        )}
 
         {isDeleting ? <Spinner size="small" category="red" /> : (
           <Image
@@ -132,6 +153,12 @@ LinkCard.propTypes = {
   linkUrl: string.isRequired,
   onLinkCopy: func,
   onLinkDelete: func.isRequired,
+  onLinkSend: func,
+  onLinkMove: func,
+  sharedBy: shape({
+    id: string,
+    username: string,
+  }),
   linkId: string.isRequired,
   fadeDown: bool,
   fadeUp: bool,
@@ -143,6 +170,9 @@ LinkCard.defaultProps = {
   description: '',
   siteName: '',
   onLinkCopy() {},
+  onLinkSend: null,
+  onLinkMove: null,
+  sharedBy: null,
   fadeDown: false,
   fadeUp: false,
 }

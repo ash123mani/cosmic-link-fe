@@ -1,4 +1,5 @@
 import { getUserData } from '@state/actions/auth'
+import { getShareUnseenCount } from '@state/actions/shares'
 import { isLoggedIn } from '@state/selectors/auth'
 
 const mapStateToProps = (state) => {
@@ -9,6 +10,6 @@ const mapStateToProps = (state) => {
   }
 }
 
-const actions = { getUserData }
+const actions = { getUserData, getShareUnseenCount }
 
 export { mapStateToProps, actions }

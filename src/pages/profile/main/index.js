@@ -1,13 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { shape, arrayOf, string } from 'prop-types'
+import {
+  shape, arrayOf, string,
+} from 'prop-types'
 
 import { classNames } from '@common/helpers'
 
 import UserInfo from '../components/user-info'
 import CategoryInfo from '../components/category-info'
 
-import { mapStateToProps } from './index.connect'
+import { mapStateToProps, actions } from './index.connect'
 import './_style.scss'
 
 const blk = 'profile-page'
@@ -39,6 +41,6 @@ Main.defaultProps = {
   categories: [],
 }
 
-const MainWithConnect = connect(mapStateToProps)(Main)
+const MainWithConnect = connect(mapStateToProps, actions)(Main)
 
 export default MainWithConnect

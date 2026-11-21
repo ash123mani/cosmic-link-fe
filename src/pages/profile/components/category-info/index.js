@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import { Spinner } from '@common'
 
 import { classNames } from '@common/helpers'
+import { isSharedCategory } from '@util/shared-category'
 import Image from '@local/image'
 import ConfirmationModal from '@local/confirmation-modal'
 import deleteIcon from '@images/delete.svg'
@@ -37,6 +38,13 @@ const CategoryInfo = ({ categories, deleteCategory, setAppBanner }) => {
   }
 
   const handleDeleteCategory = (id) => {
+    if (isSharedCategory(id)) {
+      setAppBanner({
+        type: 'info',
+        message: 'Shared category cannot be deleted',
+      })
+      return
+    }
     setCategoryToDelete(id)
     setShowConfirmationModal(true)
   }
@@ -51,21 +59,27 @@ const CategoryInfo = ({ categories, deleteCategory, setAppBanner }) => {
       <div className={classNames({ blk, elt: 'categories' })}>
         {categories.map((category) => {
           const { name, id } = category
+          const shared = isSharedCategory(id)
           return (
             <div
               className={classNames(
                 { blk, elt: 'category' },
               )}
               id={id}
+              key={id}
             >
               <span className={classNames({ blk, elt: 'name' })}>{name}</span>
-              {isDeleting && id === categoryToDelete ? <Spinner size="small" /> : (
+              {shared && (
+                <span className={classNames({ blk, elt: 'system-label' })}>System</span>
+              )}
+              {!shared && isDeleting && id === categoryToDelete && <Spinner size="small" />}
+              {!shared && !(isDeleting && id === categoryToDelete) && (
                 <Image
                   imageUrl={deleteIcon}
                   asButton
                   className={classNames({ blk, elt: 'delete' })}
-                  onClick={(e) => handleDeleteCategory(id, e)}
-                  title="Delete link"
+                  onClick={() => handleDeleteCategory(id)}
+                  title="Delete category"
                 />
               )}
 

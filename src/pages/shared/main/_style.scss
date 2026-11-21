@@ -1,0 +1,69 @@
+@import '~@common/theme/style';
+
+.shared-page {
+  padding: 0 $layout-x-padding-desktop 40px;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  @include medium-only {
+    padding: 0 $layout-x-padding-tablet 40px;
+  }
+
+  @include small-only {
+    padding: 0 $layout-x-padding-mobile 40px;
+  }
+
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding: 20px 0 0;
+  }
+
+  &__refresh-btn { flex-shrink: 0; }
+  &__modal-copy { margin-bottom: 12px; color: $gray; @include typography(s); }
+
+  &__title {
+    margin: 0;
+    color: $primary-medium;
+    @include typography(xl, bold);
+  }
+
+  &__subtitle {
+    margin: 8px 0 0;
+    color: $gray;
+    @include typography(s);
+    max-width: 640px;
+  }
+
+  &__empty {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 48px 16px;
+  }
+
+  &__empty-title {
+    margin: 0 0 8px;
+    color: $primary-medium;
+  }
+
+  &__empty-desc {
+    margin: 0 0 16px;
+    @include typography(m);
+    color: $gray;
+  }
+
+  &__move-title {
+    margin-bottom: 12px;
+    @include typography(s, semi-bold);
+    color: $white;
+    word-break: break-word;
+  }
+}

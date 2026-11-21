@@ -6,9 +6,15 @@ const isHomePage = (pathname = document.location.pathname) => /^\/$/.test(pathna
 
 const isProfilePage = (pathname = document.location.pathname) => /\/profile$/.test(pathname)
 
+const isLinksPage = (pathname = document.location.pathname) => /^\/links(\/|$)/.test(pathname)
+
+const isSharedPage = (pathname = document.location.pathname) => /^\/shared(\/|$)/.test(pathname)
+
 export {
   isLoginPage,
   isRegisterPage,
   isHomePage,
   isProfilePage,
+  isLinksPage,
+  isSharedPage,
 }

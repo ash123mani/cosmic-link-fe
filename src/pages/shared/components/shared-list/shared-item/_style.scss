@@ -1,0 +1,23 @@
+@import '~@common/theme/style';
+
+.shared-item {
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 12px;
+  padding: 18px;
+  background: $white;
+
+  &--unseen {
+    border-color: $primary;
+    box-shadow: inset 3px 0 0 $primary;
+  }
+
+  &__top { margin-bottom: 8px; }
+  &__meta { display:flex; align-items:center; gap:8px; @include typography(xs); color:$gray; flex-wrap:wrap; }
+  &__sender { color:$primary; font-weight:600; }
+  &__meta-sep { opacity:.6; }
+  &__badge { padding:2px 8px; border-radius:999px; background:rgba(99,102,241,0.12); color:$primary; font-weight:600; }
+  &__title { @include typography(m, semi-bold); color:$black-medium; margin-bottom:4px; word-break:break-word; }
+  &__desc { @include typography(s); color:$black-medium; margin-bottom:8px; }
+  &__note { @include typography(s); color:$black-medium; background:rgba(0,0,0,0.04); border-radius:8px; padding:10px 12px; margin:8px 0 12px; }
+  &__actions { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-top:12px; }
+}

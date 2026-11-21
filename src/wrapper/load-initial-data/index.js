@@ -1,35 +1,49 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { connect } from 'react-redux'
+import { useLocation } from 'react-router-dom'
 import { func, bool } from 'prop-types'
-
-// import { Spinner } from '@common'
 
 import { actions, mapStateToProps } from './index.connect'
 
-const LoadInitialData = ({ getUserData, isUserLoggedIn }) => {
-  const [isLoading, setIsLoading] = useState(false)
-
-  const userData = async () => {
-    setIsLoading(true)
-    await getUserData()
-    setIsLoading(false)
-  }
+const LoadInitialData = ({ getUserData, getShareUnseenCount, isUserLoggedIn }) => {
+  const location = useLocation()
 
   useEffect(() => {
     if (isUserLoggedIn) {
-      userData()
+      getUserData()
+      getShareUnseenCount()
     }
   }, [isUserLoggedIn])
 
-  if (isLoading) {
-    return null
-  }
+  useEffect(() => {
+    if (isUserLoggedIn) {
+      getShareUnseenCount()
+    }
+  }, [isUserLoggedIn, location.pathname])
+
+  useEffect(() => {
+    if (!isUserLoggedIn) {
+      return undefined
+    }
+
+    const refresh = () => getShareUnseenCount()
+    window.addEventListener('focus', refresh)
+    document.addEventListener('visibilitychange', refresh)
+    const intervalId = setInterval(refresh, 30000)
+
+    return () => {
+      window.removeEventListener('focus', refresh)
+      document.removeEventListener('visibilitychange', refresh)
+      clearInterval(intervalId)
+    }
+  }, [isUserLoggedIn])
 
   return null
 }
 
 LoadInitialData.propTypes = {
   getUserData: func.isRequired,
+  getShareUnseenCount: func.isRequired,
   isUserLoggedIn: bool,
 }
 

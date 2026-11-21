@@ -7,20 +7,23 @@
 
   @include small-only {
     padding: 2rem $layout-x-padding-mobile;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
   }
 
   @include medium-only {
     padding: 2rem $layout-x-padding-tablet;
-  };
+  }
 
   @include large-up {
     padding: 4rem $layout-x-padding-desktop;
   }
-  
+
   &__link {
     color: $black-medium;
-    
-    &:active, 
+
+    &:active,
     &:hover {
       color: $primary;
     }
@@ -40,6 +43,28 @@
 
   &__navs {
     display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  &__nav-btn {
+    position: relative;
+  }
+
+  &__badge {
+    margin-left: 6px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 9px;
+    background: $error;
+    color: $white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    line-height: 1;
   }
 
   &__sign-in {
@@ -47,39 +72,11 @@
   }
 
   &__sign-up {
-    margin-left: 24px;
+    margin-left: 16px;
     width: max-content;
 
     @include medium-down {
-      margin-left: 12px;
-    }
-  }
-
-  &__profile-link {
-    // border: 2px solid $black-medium;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-  }
-
-  &__profile-text {
-    color: $black-medium;
-  }
-
-  &__profile-image {
-    width: 40px;
-    height: 40px;
-  }
-
-  &__install-btn {
-    margin-left: 8px;
-
-    &--show {
-      display: block;
-    }
-
-    &--hide {
-      display: none;
+      margin-left: 8px;
     }
   }
 }

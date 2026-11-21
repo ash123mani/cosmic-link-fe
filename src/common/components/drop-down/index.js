@@ -14,11 +14,34 @@ import './_style.scss'
 const blk = 'cosmic-dropdown'
 
 const DropDown = ({
-  category, className, defaultSelected, list, label, handleChange,
+  category,
+  className,
+  defaultSelected,
+  list,
+  label,
+  handleChange,
+  renderItem,
+  isOpen,
+  onOpenChange,
+  emptyText,
+  loading,
+  selectedLabel,
+  closeOnSelect,
 }) => {
-  const [showDropDown, setShowDropDown] = useState(false)
+  const [internalOpen, setInternalOpen] = useState(false)
   const [selected, setSelected] = useState(defaultSelected)
   const ref = useRef(null)
+
+  const showDropDown = isOpen !== undefined ? isOpen : internalOpen
+
+  const setOpen = (next) => {
+    if (isOpen === undefined) {
+      setInternalOpen(next)
+    }
+    if (onOpenChange) {
+      onOpenChange(next)
+    }
+  }
 
   const categoryMod = { mods: [category] }
   const eltClassName = classNames({
@@ -29,19 +52,21 @@ const DropDown = ({
 
   const outSideClickHandler = () => {
     if (showDropDown) {
-      setShowDropDown(false)
+      setOpen(false)
     }
   }
 
   useOutsideClick(ref, outSideClickHandler)
 
   const handleDropDownClick = () => {
-    setShowDropDown(!showDropDown)
+    setOpen(!showDropDown)
   }
 
   const handleSelectedItemChange = (item) => {
     setSelected(item)
-    handleDropDownClick()
+    if (closeOnSelect) {
+      setOpen(false)
+    }
     handleChange(item)
   }
 
@@ -49,14 +74,17 @@ const DropDown = ({
     setSelected(defaultSelected)
   }, [defaultSelected])
 
-  if (!list.length) {
+  if (!loading && !list.length && !emptyText) {
     return null
   }
+
+  const resolvedSelectedLabel = selectedLabel !== undefined
+    ? selectedLabel
+    : ((selected && (selected.value || selected.label)) || 'Select')
 
   return (
     <div
       className={eltClassName}
-      onBlur={handleDropDownClick}
       ref={ref}
     >
       {label && (
@@ -72,8 +100,9 @@ const DropDown = ({
         onClick={handleDropDownClick}
         onKeyDown={handleDropDownClick}
         role="button"
+        tabIndex={0}
       >
-        {selected.value || 'Select'}
+        {resolvedSelectedLabel}
       </div>
 
       <div
@@ -83,15 +112,35 @@ const DropDown = ({
           mods: [category, showDropDown && 'show'],
         })}
       >
-        {list.map((item) => (
+        {loading && (
+          <div className={classNames({ blk, elt: 'status', ...categoryMod })}>Loading...</div>
+        )}
+        {!loading && !list.length && emptyText && (
+          <div className={classNames({ blk, elt: 'status', ...categoryMod })}>{emptyText}</div>
+        )}
+        {!loading && list.map((item) => (
           <div
             className={classNames({ blk, elt: 'item', ...categoryMod })}
-            key={item.key}
-            onClick={(e) => handleSelectedItemChange(item, e)}
-            onKeyDown={(e) => handleSelectedItemChange(item, e)}
+            key={item.key || item.id}
+            onMouseDown={(e) => {
+              e.preventDefault()
+              handleSelectedItemChange(item)
+            }}
             role="button"
+            tabIndex={0}
           >
-            {item.value}
+            {renderItem ? renderItem(item) : (
+              <>
+                <span className={classNames({ blk, elt: 'item-label' })}>
+                  {item.value || item.label}
+                </span>
+                {(item.subLabel || item.email) && (
+                  <span className={classNames({ blk, elt: 'item-sub' })}>
+                    {item.subLabel || item.email}
+                  </span>
+                )}
+              </>
+            )}
           </div>
         ))}
       </div>
@@ -109,9 +158,18 @@ DropDown.propTypes = {
   list: arrayOf(shape({
     value: string,
     key: string,
+    id: string,
+    label: string,
   })),
   label: string,
   handleChange: func.isRequired,
+  renderItem: func,
+  isOpen: oneOf([true, false, undefined]),
+  onOpenChange: func,
+  emptyText: string,
+  loading: oneOf([true, false]),
+  selectedLabel: string,
+  closeOnSelect: oneOf([true, false]),
 }
 
 DropDown.defaultProps = {
@@ -120,6 +178,13 @@ DropDown.defaultProps = {
   defaultSelected: {},
   label: '',
   list: [],
+  renderItem: null,
+  isOpen: undefined,
+  onOpenChange: null,
+  emptyText: '',
+  loading: false,
+  selectedLabel: undefined,
+  closeOnSelect: true,
 }
 
 export default memo(DropDown)

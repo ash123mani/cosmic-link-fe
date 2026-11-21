@@ -1,7 +1,15 @@
 .profile-page {
   display: flex;
   flex-direction: column;
-  // justify-content: center;
   justify-content: space-between;
   gap: 40px;
+
+  &__actions {
+    margin-top: 24px;
+    width: 100%;
+  }
+
+  &__logout {
+    width: 100%;
+  }
 }

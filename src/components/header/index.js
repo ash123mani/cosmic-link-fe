@@ -1,13 +1,13 @@
 import React from 'react'
-import { useLocation, useHistory, NavLink } from 'react-router-dom'
+import { useLocation, NavLink, useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { bool, func } from 'prop-types'
+import { bool, number, func } from 'prop-types'
 
 import { classNames } from '@common/helpers'
 import { Button } from '@common'
 
 import {
-  isLoginPage, isRegisterPage, isHomePage, isProfilePage,
+  isLoginPage, isRegisterPage, isHomePage, isProfilePage, isLinksPage, isSharedPage,
 } from '@util/location'
 
 import { mapStateToProps, actions } from './index.connect'
@@ -15,15 +15,17 @@ import './_style.scss'
 
 const blk = 'cosmic-header'
 
-const Header = ({ isUserLoggedIn, logOutUser }) => {
-  const history = useHistory()
+const Header = ({ isUserLoggedIn, unseenCount, logOutUser }) => {
   const location = useLocation()
+  const history = useHistory()
   const pathname = location.pathname
 
   const isHome = isHomePage(pathname)
   const isRegister = isRegisterPage(pathname)
   const isLogin = isLoginPage(pathname)
   const isProfile = isProfilePage(pathname)
+  const isLinks = isLinksPage(pathname)
+  const isShared = isSharedPage(pathname)
 
   const handleLogOut = () => {
     logOutUser()
@@ -41,23 +43,49 @@ const Header = ({ isUserLoggedIn, logOutUser }) => {
         </div>
       </NavLink>
 
-      <div className={classNames({ blk, elt: 'navs' })}>
-        {isUserLoggedIn && !isProfile && (
+      {isUserLoggedIn ? (
+        <div className={classNames({ blk, elt: 'navs' })}>
           <Button
             asNav
-            to="/profile"
+            to="/links"
+            category={isLinks ? 'filled' : 'plain'}
+            className={classNames({ blk, elt: 'nav-btn' })}
           >
-            Profile
+            Links
           </Button>
-        )}
-        {isProfile && (
-          <Button category="filled" onClick={handleLogOut}>
-            Log Out
+          <Button
+            asNav
+            to="/shared"
+            category={isShared ? 'filled' : 'plain'}
+            className={classNames({ blk, elt: 'nav-btn', mods: ['shared'] })}
+          >
+            Shared
+            {unseenCount > 0 && (
+              <span className={classNames({ blk, elt: 'badge' })}>
+                {unseenCount}
+              </span>
+            )}
           </Button>
-        )}
-      </div>
-
-      {!isUserLoggedIn && (
+          {isProfile ? (
+            <Button
+              category="filled"
+              onClick={handleLogOut}
+              className={classNames({ blk, elt: 'nav-btn' })}
+            >
+              Logout
+            </Button>
+          ) : (
+            <Button
+              asNav
+              to="/profile"
+              category="plain"
+              className={classNames({ blk, elt: 'nav-btn' })}
+            >
+              Profile
+            </Button>
+          )}
+        </div>
+      ) : (
         <div className={classNames({ blk, elt: 'navs' })}>
           {(isHome || isRegister) && (
             <Button
@@ -78,21 +106,21 @@ const Header = ({ isUserLoggedIn, logOutUser }) => {
               Register
             </Button>
           )}
-
         </div>
       )}
-
     </nav>
   )
 }
 
 Header.propTypes = {
   isUserLoggedIn: bool,
+  unseenCount: number,
   logOutUser: func.isRequired,
 }
 
 Header.defaultProps = {
   isUserLoggedIn: false,
+  unseenCount: 0,
 }
 
 const HeaderWithConnect = connect(

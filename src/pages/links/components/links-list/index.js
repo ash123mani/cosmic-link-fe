@@ -12,7 +12,7 @@ import './_style.scss'
 
 const blk = 'links-list'
 
-const LinksList = ({ isFetchingLinks, categoryLinks }) => {
+const LinksList = ({ isFetchingLinks, categoryLinks, categories }) => {
   const renderContent = () => {
     if (isFetchingLinks) {
       return (
@@ -23,7 +23,7 @@ const LinksList = ({ isFetchingLinks, categoryLinks }) => {
       )
     }
 
-    return <LinkCards categoryLinks={categoryLinks} />
+    return <LinkCards categoryLinks={categoryLinks} categories={categories} />
   }
 
   return (
@@ -44,11 +44,13 @@ LinksList.propTypes = {
       name: string,
     }),
   })),
+  categories: arrayOf(shape({ id: string, name: string })),
 }
 
 LinksList.defaultProps = {
   isFetchingLinks: false,
   categoryLinks: [],
+  categories: [],
 }
 
 export default LinksList
