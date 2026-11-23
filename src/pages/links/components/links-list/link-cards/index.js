@@ -146,7 +146,7 @@ const LinkCards = ({
       )}
       {linkToMove && (
         <Modal.Wrapper onEscKeydown={() => !isMoving && setLinkToMove(null)}>
-          <Modal.Header closeAble={false}>
+          <Modal.Header closeAble={!isMoving} onClose={() => setLinkToMove(null)}>
             Move to category
           </Modal.Header>
           <Modal.Content>

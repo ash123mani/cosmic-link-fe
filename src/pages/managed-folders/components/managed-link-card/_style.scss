@@ -1,0 +1,20 @@
+@import '@common/theme/style';
+
+$blk: 'managed-link-card';
+
+.#{$blk} {
+  min-width: 0;
+
+  &__meta {
+    margin-top: 8px;
+    padding: 0 4px;
+    @include typography(xs);
+    color: $gray;
+  }
+
+  &__confirm {
+    margin: 0;
+    @include typography(m);
+    color: $white;
+  }
+}

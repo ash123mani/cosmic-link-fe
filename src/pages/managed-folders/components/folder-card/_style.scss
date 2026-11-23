@@ -1,0 +1,66 @@
+@import '@common/theme/style';
+
+$blk: 'managed-folder-card';
+
+.#{$blk} {
+  width: 100%;
+  text-align: left;
+  padding: 16px;
+  border: 1px solid $black-light;
+  border-radius: 12px;
+  background: $white;
+  cursor: pointer;
+  transition: border-color .2s ease, box-shadow .2s ease;
+
+  &:hover {
+    border-color: rgba($primary, 0.35);
+  }
+
+  &--active {
+    border-color: $primary;
+    box-shadow: inset 3px 0 0 $primary;
+  }
+
+  &__top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  &__name {
+    margin: 0;
+    @include typography(m, semi-bold);
+    color: $black-medium;
+    word-break: break-word;
+  }
+
+  &__role {
+    @include typography(xs, semi-bold);
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: rgba($primary, 0.08);
+    color: $primary;
+    text-transform: capitalize;
+    flex-shrink: 0;
+
+    &--admin {
+      background: rgba($primary, 0.12);
+    }
+  }
+
+  &__desc {
+    margin: 8px 0 0;
+    @include typography(s);
+    color: $gray;
+    @include clamp-text(2);
+  }
+
+  &__meta {
+    margin-top: 12px;
+    display: flex;
+    gap: 12px;
+    @include typography(xs);
+    color: $gray;
+  }
+}

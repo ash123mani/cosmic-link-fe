@@ -1,29 +1,47 @@
 @import '~@common/theme/style';
 
 .cosmic-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
   @include typography(l, bold);
   margin-bottom: 16px;
   color: $white;
   position: relative;
-  
-  &--closeable {
-    &::after {
-      position: absolute;
-      height: 28px;
-      width: 2px;
-      background-color: $white;
-      content: '';
-      right: 0;
-      transform: rotate(45deg);
-    }
-  
+
+  &__title {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__close {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+    padding: 0;
+    margin-top: -2px;
+
+    &::after,
     &::before {
       position: absolute;
+      top: 2px;
+      left: 15px;
       height: 28px;
       width: 2px;
       background-color: $white;
       content: '';
-      right: 0;
+    }
+
+    &::after {
+      transform: rotate(45deg);
+    }
+
+    &::before {
       transform: rotate(135deg);
     }
   }

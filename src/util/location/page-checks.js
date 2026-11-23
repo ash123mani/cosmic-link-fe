@@ -10,6 +10,8 @@ const isLinksPage = (pathname = document.location.pathname) => /^\/links(\/|$)/.
 
 const isSharedPage = (pathname = document.location.pathname) => /^\/shared(\/|$)/.test(pathname)
 
+const isManagedPage = (pathname = document.location.pathname) => /^\/managed(\/|$)/.test(pathname)
+
 export {
   isLoginPage,
   isRegisterPage,
@@ -17,4 +19,5 @@ export {
   isProfilePage,
   isLinksPage,
   isSharedPage,
+  isManagedPage,
 }

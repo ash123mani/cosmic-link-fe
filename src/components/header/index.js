@@ -7,7 +7,7 @@ import { classNames } from '@common/helpers'
 import { Button } from '@common'
 
 import {
-  isLoginPage, isRegisterPage, isHomePage, isProfilePage, isLinksPage, isSharedPage,
+  isLoginPage, isRegisterPage, isHomePage, isProfilePage, isLinksPage, isSharedPage, isManagedPage,
 } from '@util/location'
 
 import { mapStateToProps, actions } from './index.connect'
@@ -26,6 +26,7 @@ const Header = ({ isUserLoggedIn, unseenCount, logOutUser }) => {
   const isProfile = isProfilePage(pathname)
   const isLinks = isLinksPage(pathname)
   const isShared = isSharedPage(pathname)
+  const isManaged = isManagedPage(pathname)
 
   const handleLogOut = () => {
     logOutUser()
@@ -65,6 +66,14 @@ const Header = ({ isUserLoggedIn, unseenCount, logOutUser }) => {
                 {unseenCount}
               </span>
             )}
+          </Button>
+          <Button
+            asNav
+            to="/managed"
+            category={isManaged ? 'filled' : 'plain'}
+            className={classNames({ blk, elt: 'nav-btn' })}
+          >
+            Managed
           </Button>
           {isProfile ? (
             <Button

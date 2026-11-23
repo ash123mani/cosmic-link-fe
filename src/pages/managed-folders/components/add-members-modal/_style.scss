@@ -1,0 +1,3 @@
+@import '@common/theme/style';
+$blk: 'managed-add-members-modal';
+.#{$blk} { display:flex; flex-direction:column; gap:16px; &__error { @include typography(s); color:#ff8f8f; } }

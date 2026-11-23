@@ -1,0 +1,66 @@
+@import '@common/theme/style';
+
+$blk: 'managed-folder-header';
+
+.#{$blk} {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 24px;
+  background: $white;
+  border: 1px solid $black-light;
+  border-radius: 16px;
+
+  @include small-only {
+    flex-direction: column;
+    padding: 16px;
+  }
+
+  &__main {
+    min-width: 0;
+  }
+
+  &__title-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  &__title {
+    margin: 0;
+    @include typography(xl, bold);
+    color: $black-medium;
+    word-break: break-word;
+  }
+
+  &__role {
+    @include typography(xs, semi-bold);
+    text-transform: capitalize;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: rgba($primary, 0.08);
+    color: $primary;
+  }
+
+  &__desc {
+    margin: 8px 0 0;
+    @include typography(m);
+    color: $gray;
+  }
+
+  &__meta {
+    margin-top: 12px;
+    display: flex;
+    gap: 16px;
+    @include typography(s);
+    color: $gray;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+}

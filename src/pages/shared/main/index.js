@@ -101,7 +101,7 @@ const Main = ({
       {renderContent()}
       {shareToMove && (
         <Modal.Wrapper onEscKeydown={() => !isMoving && setShareToMove(null)}>
-          <Modal.Header closeAble={false}>Move to category</Modal.Header>
+          <Modal.Header closeAble onClose={() => !isMoving && setShareToMove(null)}>Move to category</Modal.Header>
           <Modal.Content>
             <div className={classNames({ blk, elt: 'move-title' })}>
               {shareToMove.title || shareToMove.linkUrl}

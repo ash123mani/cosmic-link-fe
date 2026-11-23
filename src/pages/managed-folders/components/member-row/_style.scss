@@ -1,0 +1,64 @@
+@import '@common/theme/style';
+
+$blk: 'managed-member-row';
+
+.#{$blk} {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid $black-light;
+
+  &:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  @include small-only {
+    flex-direction: column;
+  }
+
+  &__name {
+    @include typography(m, semi-bold);
+    color: $black-medium;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  &__you {
+    @include typography(xs);
+    color: $gray;
+  }
+
+  &__meta {
+    margin-top: 4px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    @include typography(s);
+    color: $gray;
+  }
+
+  &__role {
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: rgba($primary, 0.08);
+    color: $primary;
+    @include typography(xs, semi-bold);
+    text-transform: capitalize;
+  }
+
+  &__warning {
+    @include typography(xs, semi-bold);
+    color: $error;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+}

@@ -5,6 +5,7 @@ import {
   isProfilePage,
   isLinksPage,
   isSharedPage,
+  isManagedPage,
 } from './page-checks'
 import history from './history'
 
@@ -15,5 +16,6 @@ export {
   isProfilePage,
   isLinksPage,
   isSharedPage,
+  isManagedPage,
   history,
 }

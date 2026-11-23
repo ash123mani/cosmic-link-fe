@@ -68,4 +68,21 @@
       color: $gray;
     }
   }
+
+  &--danger {
+    border-color: $error;
+    color: $error;
+    background: transparent;
+
+    &:hover {
+      background: $error;
+      color: $white;
+      border-color: $error;
+    }
+  }
+
+  &--small {
+    padding: 8px 12px;
+    @include typography(s);
+  }
 }

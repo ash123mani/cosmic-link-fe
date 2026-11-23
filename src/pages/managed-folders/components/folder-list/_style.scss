@@ -1,0 +1,48 @@
+@import '@common/theme/style';
+
+$blk: 'managed-folder-list';
+
+.#{$blk} {
+  background: $white;
+  border: 1px solid $black-light;
+  border-radius: 16px;
+  padding: 20px;
+  min-width: 0;
+
+  &__head {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+    align-items: flex-start;
+  }
+
+  &__title {
+    margin: 0;
+    @include typography(l, semi-bold);
+    color: $black-medium;
+  }
+
+  &__subtitle {
+    margin: 4px 0 0;
+    @include typography(s);
+    color: $gray;
+  }
+
+  &__items {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__empty {
+    padding: 24px 12px;
+    text-align: center;
+    @include typography(s);
+    color: $gray;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+  }
+}

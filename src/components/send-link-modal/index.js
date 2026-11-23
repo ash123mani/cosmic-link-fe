@@ -81,7 +81,7 @@ const SendLinkModal = ({
 
   return (
     <Modal.Wrapper onEscKeydown={onClose}>
-      <Modal.Header closeAble={false}>
+      <Modal.Header closeAble onClose={onClose}>
         Send to user
       </Modal.Header>
       <Modal.Content className={classNames({ blk, elt: 'content' })}>

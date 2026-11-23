@@ -1,0 +1,127 @@
+@import '@common/theme/style';
+
+$blk: 'managed-folders';
+
+.#{$blk} {
+  min-height: 100%;
+
+  &__layout {
+    display: grid;
+    grid-template-columns: 320px minmax(0, 1fr);
+    gap: 24px;
+    align-items: start;
+
+    @include medium-down {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__content {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &__empty-detail {
+    background: $white;
+    border: 1px solid $black-light;
+    border-radius: 16px;
+    padding: 48px 24px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+
+    h2 { margin: 0; @include typography(xl, semi-bold); color: $black-medium; }
+    p { margin: 0; @include typography(m); color: $gray; max-width: 480px; }
+  }
+
+  &__tabs {
+    display: inline-flex;
+    gap: 8px;
+    padding: 4px;
+    background: $white;
+    border: 1px solid $black-light;
+    border-radius: 12px;
+    width: fit-content;
+  }
+
+  &__tab {
+    border: 0;
+    background: transparent;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    @include typography(s, semi-bold);
+    color: $gray;
+
+    &--active {
+      background: rgba($primary, 0.08);
+      color: $primary;
+    }
+  }
+
+  &__panel {
+    background: $white;
+    border: 1px solid $black-light;
+    border-radius: 16px;
+    padding: 24px;
+
+    @include small-only { padding: 16px; }
+  }
+
+  &__panel-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: flex-start;
+    margin-bottom: 20px;
+
+    @include small-only { flex-direction: column; }
+  }
+
+  &__panel-title { margin: 0; @include typography(l, semi-bold); color: $black-medium; }
+  &__panel-subtitle { margin: 4px 0 0; @include typography(s); color: $gray; }
+
+  &__list, &__members {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  &__empty {
+    padding: 24px;
+    text-align: center;
+    border: 1px dashed $black-light;
+    border-radius: 12px;
+    @include typography(s);
+    color: $gray;
+  }
+
+  &__confirm-message {
+    margin: 0;
+    @include typography(m);
+    color: $white;
+    line-height: 1.5;
+  }
+
+  &__rename-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid $gray;
+    border-radius: $border-radius-default;
+    background: transparent;
+    color: $white;
+    @include typography(m);
+    margin-bottom: 8px;
+
+    &:focus { outline: none; border-color: $primary; }
+  }
+}

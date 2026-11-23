@@ -19,7 +19,7 @@ import './_style.scss'
 const blk = 'link-card'
 
 const LinkCard = ({
-  imageUrl, title, description, siteName, linkUrl, onLinkCopy, onLinkDelete, onLinkSend, onLinkMove, sharedBy, linkId, fadeDown, fadeUp,
+  imageUrl, title, description, siteName, linkUrl, onLinkCopy, onLinkDelete, onLinkSend, onLinkMove, onLinkEdit, sharedBy, linkId, fadeDown, fadeUp, canDelete,
 }) => {
   const [isDeleting, setIsDeleting] = useState(false)
   const isMediumDown = useMediaQuery(mediaQueries.mediumDown)
@@ -130,7 +130,17 @@ const LinkCard = ({
           />
         )}
 
-        {isDeleting ? <Spinner size="small" category="red" /> : (
+        {onLinkEdit && (
+          <Image
+            imageUrl={folderMoveIcon}
+            asButton
+            className={classNames({ blk, elt: 'link-move' })}
+            onClick={onLinkEdit}
+            title="Edit link"
+          />
+        )}
+
+        {canDelete && (isDeleting ? <Spinner size="small" category="red" /> : (
           <Image
             imageUrl={deleteIcon}
             asButton
@@ -138,7 +148,7 @@ const LinkCard = ({
             onClick={handleDelete}
             title="Delete link"
           />
-        )}
+        ))}
 
       </div>
     </div>
@@ -155,6 +165,7 @@ LinkCard.propTypes = {
   onLinkDelete: func.isRequired,
   onLinkSend: func,
   onLinkMove: func,
+  onLinkEdit: func,
   sharedBy: shape({
     id: string,
     username: string,
@@ -162,6 +173,7 @@ LinkCard.propTypes = {
   linkId: string.isRequired,
   fadeDown: bool,
   fadeUp: bool,
+  canDelete: bool,
 }
 
 LinkCard.defaultProps = {
@@ -172,9 +184,11 @@ LinkCard.defaultProps = {
   onLinkCopy() {},
   onLinkSend: null,
   onLinkMove: null,
+  onLinkEdit: null,
   sharedBy: null,
   fadeDown: false,
   fadeUp: false,
+  canDelete: true,
 }
 
 export default LinkCard

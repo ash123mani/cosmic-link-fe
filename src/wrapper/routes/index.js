@@ -9,6 +9,7 @@ const Register = lazy(() => import(/* webpackChunkName: "pages/register" */ '@pa
 const Login = lazy(() => import(/* webpackChunkName: "pages/login" */ '@pages/login'))
 const Links = lazy(() => import(/* webpackChunkName: "pages/links" */ '@pages/links'))
 const Shared = lazy(() => import(/* webpackChunkName: "pages/shared" */ '@pages/shared'))
+const Managed = lazy(() => import(/* webpackChunkName: "pages/managed-folders" */ '@pages/managed-folders'))
 const Profile = lazy(() => import(/* webpackChunkName: "pages/profile" */ '@pages/profile'))
 const ResetPassword = lazy(() => import(/* webpackChunkName: "pages/reset-password" */ '@pages/reset-password'))
 
@@ -34,6 +35,9 @@ const Routes = () => (
         </PrivateRoute>
         <PrivateRoute path="/shared">
           <Shared />
+        </PrivateRoute>
+        <PrivateRoute path="/managed">
+          <Managed />
         </PrivateRoute>
         <PrivateRoute path="/profile">
           <Profile />

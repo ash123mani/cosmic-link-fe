@@ -1,0 +1,20 @@
+@import '@common/theme/style';
+
+$blk: 'create-managed-folder-modal';
+
+.#{$blk} {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  &__intro {
+    margin: 0;
+    @include typography(s);
+    color: rgba($white, 0.8);
+  }
+
+  &__error {
+    @include typography(s);
+    color: #ff8f8f;
+  }
+}

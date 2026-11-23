@@ -31,7 +31,7 @@ const AddCategoryModal = ({
 
   return (
     <Modal.Wrapper onEscKeydown={handleCancel}>
-      <Modal.Header closeAble={false}>
+      <Modal.Header closeAble onClose={handleCancel}>
         Add Category
       </Modal.Header>
       <Modal.Content>
