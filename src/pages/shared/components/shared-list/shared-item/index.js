@@ -23,34 +23,51 @@ const SharedItem = ({ share, onOpen, onMove }) => {
   const unseen = share.status === 'unseen'
   const senderName = (share.sender && share.sender.username) ? share.sender.username : 'Someone'
   const title = share.title || share.linkUrl || 'Shared link'
+  const domain = (() => {
+    try {
+      return new URL(share.linkUrl).hostname.replace(/^www\./, '')
+    } catch (e) {
+      return ''
+    }
+  })()
 
   return (
-    <div className={classNames({ blk, mods: [unseen && 'unseen'] })}>
+    <article className={classNames({ blk, mods: [unseen && 'unseen'] })}>
       <div className={classNames({ blk, elt: 'top' })}>
-        <div className={classNames({ blk, elt: 'meta' })}>
-          <span className={classNames({ blk, elt: 'sender' })}>
-            @
-            {senderName}
-          </span>
-          <span className={classNames({ blk, elt: 'meta-sep' })}>•</span>
-          <span>{formatDate(share.createdAt)}</span>
-          {unseen && <span className={classNames({ blk, elt: 'badge' })}>New</span>}
+        <div className={classNames({ blk, elt: 'sender-wrap' })}>
+          <span className={classNames({ blk, elt: 'avatar' })} aria-hidden="true">{senderName.charAt(0).toUpperCase()}</span>
+          <div className={classNames({ blk, elt: 'meta' })}>
+            <span className={classNames({ blk, elt: 'sender' })}>
+              @
+              {senderName}
+            </span>
+            <span className={classNames({ blk, elt: 'meta-sep' })}>•</span>
+            <span>{formatDate(share.createdAt)}</span>
+            {domain && (
+              <>
+                <span className={classNames({ blk, elt: 'meta-sep' })}>•</span>
+                <span>{domain}</span>
+              </>
+            )}
+          </div>
         </div>
+        {unseen && <span className={classNames({ blk, elt: 'badge' })}>New</span>}
       </div>
+
       <div className={classNames({ blk, elt: 'title' })}>{title}</div>
       {share.description && <div className={classNames({ blk, elt: 'desc' })}>{share.description}</div>}
       {share.message && (
         <div className={classNames({ blk, elt: 'note' })}>
-          “
-          {share.message}
-          ”
+          <span className={classNames({ blk, elt: 'note-label' })}>Note</span>
+          <p className={classNames({ blk, elt: 'note-text' })}>{share.message}</p>
         </div>
       )}
+
       <div className={classNames({ blk, elt: 'actions' })}>
-        <Button category="plain" onClick={() => onOpen(share)}>Open link</Button>
-        {onMove && <Button category="filled" onClick={() => onMove(share)}>Move to category</Button>}
+        <Button category="filled" onClick={() => onOpen(share)}>Open link</Button>
+        {onMove && <Button category="plain" onClick={() => onMove(share)}>Move to category</Button>}
       </div>
-    </div>
+    </article>
   )
 }
 
@@ -69,8 +86,6 @@ SharedItem.propTypes = {
   onMove: func,
 }
 
-SharedItem.defaultProps = {
-  onMove: null,
-}
+SharedItem.defaultProps = { onMove: null }
 
 export default SharedItem

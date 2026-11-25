@@ -8,57 +8,32 @@ $blk: 'managed-member-row';
   gap: 16px;
   padding: 14px 0;
   border-bottom: 1px solid $black-light;
+  align-items: flex-start;
+  &:last-child { border-bottom: 0; padding-bottom: 0; }
 
-  &:last-child {
-    border-bottom: 0;
-    padding-bottom: 0;
-  }
+  &__main { min-width: 0; flex: 1; }
+  &__name { @include typography(m, semi-bold); color: $black-medium; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  &__you { @include typography(xs, semi-bold); color: $primary; background: rgba($primary, .08); padding: 2px 8px; border-radius: 999px; }
+  &__meta { margin-top: 4px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; @include typography(s); color: $gray; }
+  &__role { padding: 2px 8px; border-radius: 999px; background: rgba($primary, 0.08); color: $primary; @include typography(xs, semi-bold); text-transform: capitalize; }
+  &__warning { @include typography(xs, semi-bold); color: $error; }
 
-  @include small-only {
-    flex-direction: column;
-  }
+  &__actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: flex-start; justify-content: flex-end; @include small-only { display: none; } }
 
-  &__name {
-    @include typography(m, semi-bold);
+  &__overflow {
+    display: none;
+    width: 44px;
+    height: 44px;
+    border: 1px solid $black-light;
+    border-radius: 12px;
+    background: $white;
     color: $black-medium;
-    display: flex;
-    gap: 8px;
+    font-size: 22px;
+    cursor: pointer;
+    flex-shrink: 0;
     align-items: center;
-  }
-
-  &__you {
-    @include typography(xs);
-    color: $gray;
-  }
-
-  &__meta {
-    margin-top: 4px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    align-items: center;
-    @include typography(s);
-    color: $gray;
-  }
-
-  &__role {
-    padding: 2px 8px;
-    border-radius: 999px;
-    background: rgba($primary, 0.08);
-    color: $primary;
-    @include typography(xs, semi-bold);
-    text-transform: capitalize;
-  }
-
-  &__warning {
-    @include typography(xs, semi-bold);
-    color: $error;
-  }
-
-  &__actions {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    align-items: flex-start;
+    justify-content: center;
+    @include small-only { display: inline-flex; }
+    &:focus-visible { outline: 2px solid $primary; outline-offset: 2px; }
   }
 }

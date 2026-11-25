@@ -1,13 +1,12 @@
 /* eslint-disable jsx-a11y/interactive-supports-focus */
 import React, {
-  useState, memo, useRef, useEffect,
+  useState, memo, useRef, useEffect, useCallback,
 } from 'react'
 import {
   oneOf, string, shape, arrayOf, func,
 } from 'prop-types'
 
 import { classNames } from '@common/helpers'
-import { useOutsideClick } from '@hooks'
 
 import './_style.scss'
 
@@ -30,18 +29,77 @@ const DropDown = ({
 }) => {
   const [internalOpen, setInternalOpen] = useState(false)
   const [selected, setSelected] = useState(defaultSelected)
+  const [menuStyle, setMenuStyle] = useState({})
   const ref = useRef(null)
+  const contentRef = useRef(null)
 
   const showDropDown = isOpen !== undefined ? isOpen : internalOpen
 
-  const setOpen = (next) => {
+  const setOpen = useCallback((next) => {
     if (isOpen === undefined) {
       setInternalOpen(next)
     }
     if (onOpenChange) {
       onOpenChange(next)
     }
-  }
+  }, [isOpen, onOpenChange])
+
+  const updateMenuPosition = useCallback(() => {
+    if (!ref.current) {
+      return
+    }
+    const rect = ref.current.getBoundingClientRect()
+    const spaceBelow = window.innerHeight - rect.bottom - 8
+    const spaceAbove = rect.top - 8
+    const openUp = spaceBelow < 180 && spaceAbove > spaceBelow
+    const maxHeight = Math.max(120, Math.min(240, openUp ? spaceAbove : spaceBelow))
+    setMenuStyle({
+      position: 'fixed',
+      left: rect.left,
+      width: rect.width,
+      top: openUp ? undefined : rect.bottom + 4,
+      bottom: openUp ? window.innerHeight - rect.top + 4 : undefined,
+      maxHeight,
+      zIndex: 1400,
+    })
+  }, [])
+
+  useEffect(() => {
+    if (!showDropDown) {
+      return undefined
+    }
+    updateMenuPosition()
+    const handle = () => updateMenuPosition()
+    window.addEventListener('resize', handle)
+    window.addEventListener('scroll', handle, true)
+    return () => {
+      window.removeEventListener('resize', handle)
+      window.removeEventListener('scroll', handle, true)
+    }
+  }, [showDropDown, updateMenuPosition, list.length, loading])
+
+  useEffect(() => {
+    if (!showDropDown) {
+      return undefined
+    }
+    const handleClick = (e) => {
+      if (ref.current?.contains(e.target) || contentRef.current?.contains(e.target)) {
+        return
+      }
+      setOpen(false)
+    }
+    const handleEsc = (e) => {
+      if (e.key === 'Escape') {
+        setOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClick)
+    document.addEventListener('keydown', handleEsc)
+    return () => {
+      document.removeEventListener('mousedown', handleClick)
+      document.removeEventListener('keydown', handleEsc)
+    }
+  }, [showDropDown, setOpen])
 
   const categoryMod = { mods: [category] }
   const eltClassName = classNames({
@@ -49,14 +107,6 @@ const DropDown = ({
     className,
     ...categoryMod,
   })
-
-  const outSideClickHandler = () => {
-    if (showDropDown) {
-      setOpen(false)
-    }
-  }
-
-  useOutsideClick(ref, outSideClickHandler)
 
   const handleDropDownClick = () => {
     setOpen(!showDropDown)
@@ -96,16 +146,25 @@ const DropDown = ({
       )}
 
       <div
-        className={classNames({ blk, elt: 'selected', ...categoryMod })}
+        className={classNames({ blk, elt: 'selected', mods: [category, showDropDown && 'open'] })}
         onClick={handleDropDownClick}
-        onKeyDown={handleDropDownClick}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault()
+            handleDropDownClick()
+          }
+        }}
         role="button"
         tabIndex={0}
+        aria-haspopup="listbox"
+        aria-expanded={!!showDropDown}
       >
         {resolvedSelectedLabel}
       </div>
 
       <div
+        ref={contentRef}
+        style={showDropDown ? menuStyle : undefined}
         className={classNames({
           blk,
           elt: 'content',

@@ -1,9 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
 import { classNames } from '@common/helpers'
-import { Modal } from '@common'
-import ConfirmationButtons from '@local/confirmation-buttons'
 import LinkCard from '@local/link-card'
 
 import './_style.scss'
@@ -11,51 +9,27 @@ import './_style.scss'
 const blk = 'managed-link-card'
 
 const ManagedLinkCard = ({
-  link, canMutate, onEdit, onDelete,
-}) => {
-  const [confirmDelete, setConfirmDelete] = useState(false)
-
-  return (
-    <div className={classNames({ blk })}>
-      <LinkCard
-        imageUrl={link.imageUrl}
-        title={link.title}
-        description={link.description}
-        siteName={link.siteName}
-        linkUrl={link.linkUrl}
-        linkId={link.id}
-        sharedBy={link.createdBy ? { username: link.createdBy.username, id: link.createdBy.id } : null}
-        onLinkCopy={() => {}}
-        onLinkDelete={() => setConfirmDelete(true)}
-        onLinkEdit={canMutate ? () => onEdit(link) : null}
-        canDelete={canMutate}
-      />
-      <div className={classNames({ blk, elt: 'meta' })}>
-        {`Added by ${link.createdBy?.username || 'member'}`}
-        {link.lastEditedBy?.username ? ` · Edited by ${link.lastEditedBy.username}` : ''}
-      </div>
-
-      {confirmDelete && (
-        <Modal.Wrapper onEscKeydown={() => setConfirmDelete(false)}>
-          <Modal.Header closeAble onClose={() => setConfirmDelete(false)}>Delete link?</Modal.Header>
-          <Modal.Content>
-            <p className={classNames({ blk, elt: 'confirm' })}>This removes the link for everyone in the folder.</p>
-            <ConfirmationButtons
-              handleCancel={() => setConfirmDelete(false)}
-              handleSubmit={async () => {
-                await onDelete(link); setConfirmDelete(false)
-              }}
-              confirmText="Delete link"
-              cancelText="Cancel"
-              type="delete"
-              submitButtonType="button"
-            />
-          </Modal.Content>
-        </Modal.Wrapper>
-      )}
+  link, canMutate, onEdit, onDelete, onCopy,
+}) => (
+  <div className={classNames({ blk })}>
+    <LinkCard
+      imageUrl={link.imageUrl}
+      title={link.title}
+      description={link.description}
+      siteName={link.siteName}
+      linkUrl={link.linkUrl}
+      linkId={link.id}
+      onLinkCopy={onCopy}
+      onLinkDelete={() => onDelete(link)}
+      onLinkEdit={canMutate ? () => onEdit(link) : null}
+      canDelete={canMutate}
+    />
+    <div className={classNames({ blk, elt: 'meta' })}>
+      {`Added by ${link.createdBy?.username || 'member'}`}
+      {link.lastEditedBy?.username ? ` · Edited by ${link.lastEditedBy.username}` : ''}
     </div>
-  )
-}
+  </div>
+)
 
 ManagedLinkCard.propTypes = {
   link: PropTypes.shape({
@@ -71,10 +45,12 @@ ManagedLinkCard.propTypes = {
   canMutate: PropTypes.bool,
   onEdit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
+  onCopy: PropTypes.func,
 }
 
 ManagedLinkCard.defaultProps = {
   canMutate: false,
+  onCopy: () => {},
 }
 
 export default ManagedLinkCard

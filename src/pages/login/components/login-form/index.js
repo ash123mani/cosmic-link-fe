@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import { func, bool } from 'prop-types'
 
 import { Input, Button } from '@common'
@@ -18,6 +18,7 @@ const LoginForm = ({
   loginUser, forgotPassword, onForgotPasswordClick, showForgotPassword,
 }) => {
   const history = useHistory()
+  const location = useLocation()
 
   const [formData, setFormData] = useState({})
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -35,7 +36,9 @@ const LoginForm = ({
     setIsSubmitting(true)
     loginUser(formData).then(({ data }) => {
       if (data.token) {
-        history.replace('/links')
+        const fromPath = location.state?.from?.pathname
+        const safePath = fromPath && fromPath.startsWith('/') ? fromPath : '/links'
+        history.replace(safePath)
       }
     })
       .finally(() => setIsSubmitting(false))

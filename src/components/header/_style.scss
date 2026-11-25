@@ -6,39 +6,37 @@
   align-items: center;
 
   @include small-only {
-    padding: 2rem $layout-x-padding-mobile;
-    flex-direction: column;
-    align-items: flex-start;
+    padding: 16px $layout-x-padding-mobile;
     gap: 12px;
   }
 
   @include medium-only {
-    padding: 2rem $layout-x-padding-tablet;
+    padding: 16px $layout-x-padding-tablet;
   }
 
   @include large-up {
     padding: 4rem $layout-x-padding-desktop;
   }
 
+  &--compact {
+    position: sticky;
+    top: 0;
+    z-index: 800;
+    background: rgba($white, 0.96);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba($black-light, 0.8);
+    min-height: var(--app-header-height);
+  }
+
   &__link {
     color: $black-medium;
-
-    &:active,
-    &:hover {
-      color: $primary;
-    }
+    &:active, &:hover { color: $primary; }
   }
 
   &__logo {
     @include typography(xl, bold);
-
-    @include small-only {
-      @include typography(m, bold);
-    }
-
-    @include medium-only {
-      @include typography(l, bold);
-    }
+    @include small-only { @include typography(l, bold); }
+    @include medium-only { @include typography(l, bold); }
   }
 
   &__navs {
@@ -48,9 +46,7 @@
     flex-wrap: wrap;
   }
 
-  &__nav-btn {
-    position: relative;
-  }
+  &__nav-btn { position: relative; }
 
   &__badge {
     margin-left: 6px;
@@ -67,16 +63,9 @@
     line-height: 1;
   }
 
-  &__sign-in {
-    width: max-content;
-  }
-
+  &__sign-in { width: max-content; }
   &__sign-up {
-    margin-left: 16px;
+    margin-left: 8px;
     width: max-content;
-
-    @include medium-down {
-      margin-left: 8px;
-    }
   }
 }

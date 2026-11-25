@@ -1,6 +1,7 @@
 import React, { Fragment, lazy, Suspense } from 'react'
 import { Switch, Route } from 'react-router-dom'
 
+import { Spinner } from '@common'
 import PrivateRoute from '@local/private-route'
 import LoadInitialData from '../load-initial-data'
 
@@ -12,40 +13,27 @@ const Shared = lazy(() => import(/* webpackChunkName: "pages/shared" */ '@pages/
 const Managed = lazy(() => import(/* webpackChunkName: "pages/managed-folders" */ '@pages/managed-folders'))
 const Profile = lazy(() => import(/* webpackChunkName: "pages/profile" */ '@pages/profile'))
 const ResetPassword = lazy(() => import(/* webpackChunkName: "pages/reset-password" */ '@pages/reset-password'))
+const NotFound = lazy(() => import(/* webpackChunkName: "pages/not-found" */ '@pages/not-found'))
 
 const Routes = () => (
-  <Suspense fallback={null}>
+  <Suspense fallback={<Spinner center text="Loading page..." />}>
     <Fragment>
       <LoadInitialData />
       <Switch>
-        <Route exact path="/">
-          <Home />
-        </Route>
-        <Route path="/register">
-          <Register />
-        </Route>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <Route path="/resetpassword/:resetToken">
-          <ResetPassword />
-        </Route>
-        <PrivateRoute path="/links">
-          <Links />
-        </PrivateRoute>
-        <PrivateRoute path="/shared">
-          <Shared />
-        </PrivateRoute>
-        <PrivateRoute path="/managed">
-          <Managed />
-        </PrivateRoute>
-        <PrivateRoute path="/profile">
-          <Profile />
-        </PrivateRoute>
+        <Route exact path="/"><Home /></Route>
+        <Route path="/register"><Register /></Route>
+        <Route path="/login"><Login /></Route>
+        <Route path="/resetpassword/:resetToken"><ResetPassword /></Route>
+        <PrivateRoute path="/links"><Links /></PrivateRoute>
+        <PrivateRoute path="/shared"><Shared /></PrivateRoute>
+        <PrivateRoute path="/managed/:id/:section(members|links)"><Managed /></PrivateRoute>
+        <PrivateRoute path="/managed/:id"><Managed /></PrivateRoute>
+        <PrivateRoute path="/managed"><Managed /></PrivateRoute>
+        <PrivateRoute path="/profile"><Profile /></PrivateRoute>
+        <Route path="*"><NotFound /></Route>
       </Switch>
     </Fragment>
   </Suspense>
-
 )
 
 export default Routes

@@ -7,32 +7,23 @@ $blk: 'managed-folder-header';
   justify-content: space-between;
   gap: 16px;
   align-items: flex-start;
-  padding: 24px;
+  padding: 20px 24px;
   background: $white;
   border: 1px solid $black-light;
   border-radius: 16px;
 
-  @include small-only {
-    flex-direction: column;
-    padding: 16px;
-  }
+  @include small-only { padding: 16px; gap: 12px; }
 
-  &__main {
-    min-width: 0;
-  }
-
-  &__title-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
+  &__main { min-width: 0; flex: 1; }
+  &__eyebrow { margin: 0 0 6px; @include typography(xs, semi-bold); color: $primary; text-transform: uppercase; letter-spacing: .08em; }
+  &__title-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 
   &__title {
     margin: 0;
     @include typography(xl, bold);
     color: $black-medium;
     word-break: break-word;
+    @include small-only { @include typography(l, bold); }
   }
 
   &__role {
@@ -44,23 +35,26 @@ $blk: 'managed-folder-header';
     color: $primary;
   }
 
-  &__desc {
-    margin: 8px 0 0;
-    @include typography(m);
-    color: $gray;
-  }
-
+  &__desc { margin: 8px 0 0; @include typography(s); color: $gray; max-width: 720px; }
   &__meta {
-    margin-top: 12px;
-    display: flex;
-    gap: 16px;
-    @include typography(s);
-    color: $gray;
+    margin-top: 12px; display: inline-flex; gap: 8px; align-items: center; flex-wrap: wrap;
+    @include typography(s); color: $gray;
+    padding: 6px 10px; border-radius: 999px; background: rgba($gray, .06);
   }
+  &__meta-sep { color: rgba($gray, .7); }
+  &__actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
 
-  &__actions {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
+  &__overflow {
+    width: 44px;
+    height: 44px;
+    border: 1px solid $black-light;
+    border-radius: 12px;
+    background: $white;
+    color: $black-medium;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    flex-shrink: 0;
+    &:focus-visible { outline: 2px solid $primary; outline-offset: 2px; }
   }
 }

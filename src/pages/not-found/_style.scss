@@ -1,0 +1,17 @@
+@import '~@common/theme/style';
+
+$blk: 'not-found-page';
+
+.#{$blk} {
+  min-height: 50vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 12px;
+  padding: 40px 16px;
+
+  &__title { margin: 0; @include typography(xl, bold); color: $black-medium; }
+  &__desc { margin: 0 0 8px; @include typography(m); color: $gray; max-width: 480px; }
+}

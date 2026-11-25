@@ -1,40 +1,78 @@
 @import '~@common/theme/style';
 
 .links-page {
-  &__title-wrapper {
-    margin: 2rem 0px;
-  }
+  background-color: $body-bg;
+  min-height: calc(100vh - var(--app-header-height, 72px));
+  padding-bottom: 20px;
 
   &__types-wrapper {
-    width: 240px;
-    height: calc(100vh - 262px);
-    margin: 4rem 0px;
-    border-radius: 8px;
+    margin-top: 24px;
     display: flex;
-    width: 100%;
-    flex-direction: row;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
+    gap: 20px;
+    align-items: flex-start;
 
     @include medium-down {
-      height: calc(100vh - 120px);
       flex-direction: column;
-      margin: 2rem 0px;
+      gap: 12px;
+      margin-top: 18px;
     }
+  }
+
+  &__content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__content-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: flex-end;
+    margin-bottom: 16px;
+    padding: 0 2px;
+    @include small-only { display: none; }
+  }
+
+  &__content-label {
+    margin: 0 0 4px;
+    @include typography(xs, semi-bold);
+    color: $gray;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+  }
+
+  &__content-title {
+    margin: 0;
+    @include typography(l, bold);
+    color: $primary-medium;
+    word-break: break-word;
+  }
+
+  &__content-count {
+    @include typography(s, semi-bold);
+    color: $gray;
+    background: rgba($gray, 0.08);
+    padding: 6px 12px;
+    border-radius: 999px;
+    white-space: nowrap;
   }
 
   &__empty-message-wrapper {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     width: 100%;
-    flex-direction: column;
-    height: 100%;
+    padding: 24px 0;
+  }
+
+  &__empty-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 12px;
   }
 
   &__add-link-button {
-    margin-top: 20px;
+    width: 220px;
+    max-width: 100%;
   }
 }

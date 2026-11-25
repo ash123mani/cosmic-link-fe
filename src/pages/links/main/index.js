@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, {
+  useState, useEffect, useCallback, useMemo,
+} from 'react'
 import { connect } from 'react-redux'
 import {
-  func, string, bool, arrayOf, shape,
+  arrayOf, bool, func, number, shape, string,
 } from 'prop-types'
 
 import { classNames } from '@common/helpers'
@@ -20,25 +22,20 @@ import './_style.scss'
 const blk = 'links-page'
 
 const Main = ({
-  getLinks, setSelectedCategory, selectedCategory, isCategoryFetchedAlready, categoryLinks, categories,
+  getLinks, setSelectedCategory, selectedCategory, isCategoryFetchedAlready, categoryLinks, categories, selectedCategoryCount,
 }) => {
   const [showAddCategoryModal, setShowAddCategoryModal] = useState(false)
   const [showAddLinkModal, setShowAddLinkModal] = useState(false)
   const [isFetchingLinks, setIsFetchingLinks] = useState(false)
 
-  const toggleAddLinkModal = () => {
-    setShowAddLinkModal(!showAddLinkModal)
-  }
+  const toggleAddLinkModal = () => setShowAddLinkModal((v) => !v)
+  const toggleAddCategoryModal = () => setShowAddCategoryModal((v) => !v)
 
-  const toggleAddCategoryModal = () => {
-    setShowAddCategoryModal(!showAddCategoryModal)
-  }
-
-  const getCategotyLinks = async (category) => {
+  const fetchCategoryLinks = useCallback(async (category) => {
     setIsFetchingLinks(true)
     await getLinks(category)
     setIsFetchingLinks(false)
-  }
+  }, [getLinks])
 
   const handleTabChange = (category) => {
     setSelectedCategory(category)
@@ -46,23 +43,49 @@ const Main = ({
 
   useEffect(() => {
     if (selectedCategory && !isCategoryFetchedAlready) {
-      getCategotyLinks(selectedCategory)
+      fetchCategoryLinks(selectedCategory)
     }
-  }, [selectedCategory])
+  }, [selectedCategory, isCategoryFetchedAlready, fetchCategoryLinks])
+
+  const selectedCategoryName = useMemo(() => {
+    const match = (categories || []).find((category) => category.id === selectedCategory)
+    return match ? match.name : ''
+  }, [categories, selectedCategory])
+
+  const hasNoCategories = !categories.length
+  const hasCount = typeof selectedCategoryCount === 'number'
 
   return (
     <main className={classNames({ blk })}>
       <Title
         toggleAddLinkModal={toggleAddLinkModal}
         toggleAddCategoryModal={toggleAddCategoryModal}
+        selectedCategoryName={selectedCategoryName}
+        selectedCategoryCount={selectedCategoryCount}
+        isFetchingLinks={isFetchingLinks}
       />
 
       <div className={classNames({ blk, elt: 'types-wrapper' })}>
-        <LinkTypes
-          handleTabChange={handleTabChange}
-        />
-        {
-          categoryLinks.length ? (
+        <LinkTypes handleTabChange={handleTabChange} isLoading={isFetchingLinks} />
+
+        <div className={classNames({ blk, elt: 'content' })}>
+          {!hasNoCategories && selectedCategoryName && (
+            <div className={classNames({ blk, elt: 'content-head' })}>
+              <div>
+                <p className={classNames({ blk, elt: 'content-label' })}>Showing</p>
+                <h2 className={classNames({ blk, elt: 'content-title' })}>{selectedCategoryName}</h2>
+              </div>
+              {hasCount && !isFetchingLinks && (
+                <span className={classNames({ blk, elt: 'content-count' })}>
+                  {selectedCategoryCount}
+                  {' '}
+                  {selectedCategoryCount === 1 ? 'link' : 'links'}
+                </span>
+              )}
+            </div>
+          )}
+
+          {categoryLinks.length ? (
             <LinksList
               isFetchingLinks={isFetchingLinks}
               categoryLinks={categoryLinks}
@@ -70,26 +93,30 @@ const Main = ({
             />
           ) : (
             <div className={classNames({ blk, elt: 'empty-message-wrapper' })}>
-              <EmptyMessage />
-              <Button
-                category="plain"
-                onClick={toggleAddLinkModal}
-                className={classNames({ blk, elt: 'add-link-button' })}
-              >
-                + Add a Link
-              </Button>
+              {isFetchingLinks ? (
+                <LinksList isFetchingLinks categoryLinks={[]} categories={categories} />
+              ) : (
+                <>
+                  <EmptyMessage hasNoCategories={hasNoCategories} />
+                  <div className={classNames({ blk, elt: 'empty-actions' })}>
+                    {hasNoCategories ? (
+                      <Button category="filled" onClick={toggleAddCategoryModal} className={classNames({ blk, elt: 'add-link-button' })}>
+                        Add category
+                      </Button>
+                    ) : (
+                      <Button category="filled" onClick={toggleAddLinkModal} className={classNames({ blk, elt: 'add-link-button' })}>
+                        Add link
+                      </Button>
+                    )}
+                  </div>
+                </>
+              )}
             </div>
-          )
-        }
-
+          )}
+        </div>
       </div>
 
-      {showAddLinkModal && (
-        <AddLinkModal
-          toggleAddLinkModal={toggleAddLinkModal}
-        />
-      )}
-
+      {showAddLinkModal && <AddLinkModal toggleAddLinkModal={toggleAddLinkModal} />}
       {showAddCategoryModal && (
         <AddCategoryModal
           toggleAddCategoryModal={toggleAddCategoryModal}
@@ -110,12 +137,10 @@ Main.propTypes = {
     description: string,
     siteName: string,
     imageUrl: string,
-    category: shape({
-      id: string,
-      name: string,
-    }),
+    category: shape({ id: string, name: string }),
   })),
   categories: arrayOf(shape({ id: string, name: string })),
+  selectedCategoryCount: number,
 }
 
 Main.defaultProps = {
@@ -123,16 +148,7 @@ Main.defaultProps = {
   isCategoryFetchedAlready: false,
   categoryLinks: [],
   categories: [],
+  selectedCategoryCount: null,
 }
 
-Main.defaultProps = {
-  selectedCategory: '',
-  isCategoryFetchedAlready: false,
-  categoryLinks: [],
-}
-
-const MainWithConnect = connect(
-  mapStateToProps, actions,
-)(Main)
-
-export default MainWithConnect
+export default connect(mapStateToProps, actions)(Main)

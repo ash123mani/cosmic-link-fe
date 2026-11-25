@@ -27,21 +27,22 @@ const Main = ({
     getShareInbox()
   }, [getShareInbox])
 
-  useEffect(() => {
-    if (unseenCount > 0) {
-      markSharesSeen({ all: true }).then(() => {
-        getShareUnseenCount()
-      })
-    }
-  }, [unseenCount, markSharesSeen, getShareUnseenCount])
+  // Unread state is cleared on explicit open or "Mark all read" to preserve inbox triage context.
 
   const handleOpen = async (share) => {
+    if (share.linkUrl) {
+      window.open(share.linkUrl, '_blank', 'noopener,noreferrer')
+    }
     if (share.status === 'unseen') {
       await markSharesSeen({ ids: [share.id] })
       getShareUnseenCount()
     }
-    if (share.linkUrl) {
-      window.open(share.linkUrl, '_blank', 'noopener,noreferrer')
+  }
+
+  const handleMarkAllRead = async () => {
+    if (unseenCount > 0) {
+      await markSharesSeen({ all: true })
+      getShareUnseenCount()
     }
   }
 
@@ -79,7 +80,10 @@ const Main = ({
           <p className={classNames({ blk, elt: 'empty-desc' })}>
             Links shared with you by other users will appear here.
           </p>
-          <Button asNav to="/links" category="plain">Go to Library</Button>
+          <div className={classNames({ blk, elt: 'empty-actions' })}>
+            <Button onClick={() => getShareInbox()} category="plain">Retry</Button>
+            <Button asNav to="/links" category="filled">Go to Library</Button>
+          </div>
         </div>
       )
     }
@@ -94,9 +98,16 @@ const Main = ({
           <h1 className={classNames({ blk, elt: 'title' })}>Shared Inbox</h1>
           <p className={classNames({ blk, elt: 'subtitle' })}>Links people have sent directly to you. Move them into a category to keep your library organized.</p>
         </div>
-        <Button category="plain" onClick={() => getShareInbox()} loading={isFetching && !!shares.length} className={classNames({ blk, elt: 'refresh-btn' })}>
-          Refresh
-        </Button>
+        <div className={classNames({ blk, elt: 'header-actions' })}>
+          {unseenCount > 0 && (
+            <Button category="plain" onClick={handleMarkAllRead} className={classNames({ blk, elt: 'refresh-btn' })}>
+              Mark all read
+            </Button>
+          )}
+          <Button category="plain" onClick={() => getShareInbox()} loading={isFetching && !!shares.length} className={classNames({ blk, elt: 'refresh-btn' })}>
+            Refresh
+          </Button>
+        </div>
       </div>
       {renderContent()}
       {shareToMove && (

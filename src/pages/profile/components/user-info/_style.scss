@@ -1,9 +1,14 @@
 @import '@common/theme/style';
 
 .user-info {
+  background: $white;
+  border: 1px solid $black-light;
+  border-radius: 16px;
+  padding: 20px;
+
   &__section-heading {
-    margin-bottom: 24px;
-    color: $primary-medium;
-    // font-weight: 500;
+    margin: 0 0 16px;
+    @include typography(l, semi-bold);
+    color: $black-medium;
   }
 }

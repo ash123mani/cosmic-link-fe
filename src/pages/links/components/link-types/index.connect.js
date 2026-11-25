@@ -1,19 +1,8 @@
-import { getSelectedCategory } from '@state/selectors/links'
-import { userLinkCategories } from '@state/selectors/user'
+import { getCategoryPickerItems, getSelectedCategory } from '@state/selectors/links'
 
-const mapStateToProps = (state) => {
-  const categories = userLinkCategories(state)
-  const selectedCategory = getSelectedCategory(state)
-
-  const allCategories = categories.map(({ name, id }) => ({
-    value: name,
-    key: id,
-  }))
-
-  return {
-    allCategories,
-    selectedCategory,
-  }
-}
+const mapStateToProps = (state) => ({
+  categories: getCategoryPickerItems(state),
+  selectedCategory: getSelectedCategory(state),
+})
 
 export { mapStateToProps }

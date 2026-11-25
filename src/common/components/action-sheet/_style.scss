@@ -1,0 +1,95 @@
+@import '~@common/theme/style';
+
+$blk: 'cosmic-action-sheet';
+
+.#{$blk} {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  &__backdrop {
+    position: absolute;
+    inset: 0;
+    border: 0;
+    background: rgba($black, 0.45);
+    padding: 0;
+    cursor: pointer;
+  }
+
+  &__sheet {
+    position: relative;
+    width: min(560px, 100%);
+    background: $white;
+    border-radius: 20px 20px 0 0;
+    padding: 8px 16px calc(16px + env(safe-area-inset-bottom, 0px));
+    box-shadow: 0 -12px 40px rgba($black, 0.18);
+    animation: cosmic-sheet-up .18s ease-out;
+    max-height: min(85dvh, calc(100dvh - 16px));
+    overflow: auto;
+  }
+
+  &__handle {
+    width: 40px;
+    height: 4px;
+    border-radius: 999px;
+    background: rgba($gray, 0.35);
+    margin: 8px auto 12px;
+  }
+
+  &__head {
+    padding: 4px 4px 12px;
+    border-bottom: 1px solid $black-light;
+    margin-bottom: 8px;
+  }
+
+  &__title { @include typography(m, semi-bold); color: $black-medium; }
+  &__description { margin-top: 4px; @include typography(s); color: $gray; }
+
+  &__actions { display: flex; flex-direction: column; gap: 4px; }
+
+  &__action {
+    width: 100%;
+    min-height: 52px;
+    padding: 12px;
+    border: 0;
+    border-radius: 12px;
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    &:hover:not(:disabled) { background: rgba($primary, 0.06); }
+    &:focus-visible { outline: 2px solid $primary; outline-offset: -2px; }
+    &:disabled { opacity: 0.45; cursor: not-allowed; }
+    &--danger .#{$blk}__action-label { color: $error; }
+  }
+
+  &__action-label { @include typography(m, semi-bold); color: $black-medium; }
+  &__action-helper { @include typography(xs); color: $gray; }
+
+  &__cancel {
+    width: 100%;
+    min-height: 48px;
+    margin-top: 8px;
+    border: 1px solid $black-light;
+    border-radius: 12px;
+    background: $white;
+    @include typography(m, semi-bold);
+    color: $black-medium;
+    cursor: pointer;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &__sheet { animation: none; }
+  }
+}
+
+@keyframes cosmic-sheet-up {
+  from { transform: translateY(20px); opacity: .6; }
+  to { transform: translateY(0); opacity: 1; }
+}

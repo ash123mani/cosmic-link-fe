@@ -3,4 +3,11 @@
 .cosmic-modal-content {
   margin: 16px 0px;
   color: $white;
+  max-height: calc(100dvh - 180px);
+  overflow-y: auto;
+  overflow-x: visible;
+
+  @include small-only {
+    max-height: calc(90dvh - 140px);
+  }
 }

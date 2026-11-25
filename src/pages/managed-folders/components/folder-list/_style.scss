@@ -6,34 +6,26 @@ $blk: 'managed-folder-list';
   background: $white;
   border: 1px solid $black-light;
   border-radius: 16px;
-  padding: 20px;
+  padding: 16px;
   min-width: 0;
+  @include small-only { padding: 14px; border-radius: 14px; }
 
   &__head {
     display: flex;
     justify-content: space-between;
     gap: 12px;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
     align-items: flex-start;
+    padding: 0 2px;
+    @include small-only { flex-direction: column; align-items: stretch; }
   }
 
-  &__title {
-    margin: 0;
-    @include typography(l, semi-bold);
-    color: $black-medium;
-  }
-
-  &__subtitle {
-    margin: 4px 0 0;
-    @include typography(s);
-    color: $gray;
-  }
-
-  &__items {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
+  &__copy { min-width: 0; }
+  &__eyebrow { margin: 0 0 4px; @include typography(xs, semi-bold); color: $primary; text-transform: uppercase; letter-spacing: .08em; }
+  &__title { margin: 0; @include typography(l, semi-bold); color: $black-medium; }
+  &__subtitle { margin: 4px 0 0; @include typography(s); color: $gray; }
+  &__create { flex-shrink: 0; min-height: 44px; @include small-only { width: 100%; } }
+  &__items { display: flex; flex-direction: column; gap: 8px; }
 
   &__empty {
     padding: 24px 12px;

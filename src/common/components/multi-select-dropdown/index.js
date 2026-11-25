@@ -1,13 +1,12 @@
 /* eslint-disable jsx-a11y/interactive-supports-focus */
 import React, {
-  memo, useEffect, useMemo, useRef, useState,
+  memo, useCallback, useEffect, useMemo, useRef, useState,
 } from 'react'
 import {
   arrayOf, bool, func, oneOf, shape, string,
 } from 'prop-types'
 
 import { classNames } from '@common/helpers'
-import { useOutsideClick } from '@hooks'
 
 import './_style.scss'
 
@@ -38,7 +37,9 @@ const MultiSelectDropDown = ({
 }) => {
   const [internalOpen, setInternalOpen] = useState(false)
   const [internalSearch, setInternalSearch] = useState('')
+  const [menuStyle, setMenuStyle] = useState({})
   const ref = useRef(null)
+  const contentRef = useRef(null)
 
   const open = isOpen !== undefined ? isOpen : internalOpen
   const query = onSearchChange ? searchValue : internalSearch
@@ -52,7 +53,7 @@ const MultiSelectDropDown = ({
   const visibleChips = (selected || []).slice(0, maxVisibleChips)
   const hiddenCount = Math.max((selected || []).length - visibleChips.length, 0)
 
-  const setOpen = (next) => {
+  const setOpen = useCallback((next) => {
     if (disabled) {
       return
     }
@@ -62,26 +63,64 @@ const MultiSelectDropDown = ({
     if (onOpenChange) {
       onOpenChange(next)
     }
-  }
+  }, [disabled, isOpen, onOpenChange])
 
-  useOutsideClick(ref, () => {
-    if (open) {
-      setOpen(false)
+  const updateMenuPosition = useCallback(() => {
+    if (!ref.current) {
+      return
     }
-  })
+    const rect = ref.current.getBoundingClientRect()
+    const spaceBelow = window.innerHeight - rect.bottom - 8
+    const spaceAbove = rect.top - 8
+    const openUp = spaceBelow < 220 && spaceAbove > spaceBelow
+    const maxHeight = Math.max(140, Math.min(320, openUp ? spaceAbove : spaceBelow))
+    setMenuStyle({
+      position: 'fixed',
+      left: rect.left,
+      width: rect.width,
+      top: openUp ? undefined : rect.bottom + 4,
+      bottom: openUp ? window.innerHeight - rect.top + 4 : undefined,
+      maxHeight,
+      zIndex: 1400,
+    })
+  }, [])
 
   useEffect(() => {
     if (!open) {
       return undefined
+    }
+    updateMenuPosition()
+    const handle = () => updateMenuPosition()
+    window.addEventListener('resize', handle)
+    window.addEventListener('scroll', handle, true)
+    return () => {
+      window.removeEventListener('resize', handle)
+      window.removeEventListener('scroll', handle, true)
+    }
+  }, [open, updateMenuPosition, (options || []).length, loading])
+
+  useEffect(() => {
+    if (!open) {
+      return undefined
+    }
+    const handleClick = (e) => {
+      if (ref.current?.contains(e.target) || contentRef.current?.contains(e.target)) {
+        return
+      }
+      setOpen(false)
     }
     const handleEsc = (e) => {
       if (e.key === 'Escape') {
         setOpen(false)
       }
     }
+    document.addEventListener('mousedown', handleClick)
     document.addEventListener('keydown', handleEsc)
-    return () => document.removeEventListener('keydown', handleEsc)
-  }, [open])
+    return () => {
+      document.removeEventListener('mousedown', handleClick)
+      document.removeEventListener('keydown', handleEsc)
+    }
+  }, [open, setOpen])
 
   const handleSearch = (e) => {
     const { value } = e.target
@@ -168,6 +207,8 @@ const MultiSelectDropDown = ({
       )}
 
       <div
+        ref={contentRef}
+        style={open ? menuStyle : undefined}
         className={classNames({
           blk, elt: 'content', mods: [category, open && 'show'],
         })}

@@ -1,40 +1,77 @@
 @import '~@common/theme/style';
 
 .links-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  padding-top: 20px;
 
-  &__title {
-    color: $primary;
-
-
-    @include small-only {
-      @include typography(s, bold);
-    }
-
-    @include medium-only {
-      @include typography(m, bold);
-    }
-
-    @include large-up {
-      @include typography(l, bold);
-    }
+  &__top {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: flex-start;
   }
+
+  &__copy { min-width: 0; }
+  &__eyebrow { margin: 0 0 6px; @include typography(xs, semi-bold); color: $primary; text-transform: uppercase; letter-spacing: .08em; }
+  &__heading { margin: 0; @include typography(xl, bold); color: $primary-medium; @include small-only { @include typography(l, bold); } }
+  &__subtitle { margin: 8px 0 0; @include typography(s); color: $gray; }
 
   &__actions {
     display: flex;
-    justify-content: space-between;
-    width: 100%;
-
-    @include medium-down {
-      width: 100%;
-    }
+    justify-content: flex-end;
+    gap: 12px;
+    flex-shrink: 0;
   }
 
-  &__category-btn {
-    @include large-up {
-      width: 220px;
+  &__action {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    &--secondary { @include large-up { min-width: 148px; } }
+    &--primary { @include large-up { min-width: 132px; } }
+  }
+
+  &__action-icon { display: inline-flex; align-items: center; justify-content: center; line-height: 1; }
+  &__action-label { @include typography(s, semi-bold); }
+
+  &__context {
+    margin-top: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba($primary, 0.05);
+    border: 1px solid rgba($primary, 0.08);
+    @include typography(s);
+    max-width: 100%;
+  }
+  &__context-label { color: $gray; }
+  &__context-name { color: $primary-medium; @include font-weight(semi-bold); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: min(46vw, 320px); }
+  &__context-sep, &__context-meta { color: $gray; white-space: nowrap; }
+
+  @include small-only {
+    padding-top: 14px;
+    &__eyebrow, &__subtitle { display: none; }
+    &__top { align-items: center; gap: 10px; }
+    &__actions { gap: 8px; }
+    &__action {
+      min-width: 44px; width: 44px; padding: 0;
+      &--primary { width: auto; min-width: 112px; padding: 0 14px; }
     }
+    &__action-label--desktop { display: none; }
+    &__context {
+      margin-top: 10px;
+      padding: 6px 10px;
+      gap: 6px;
+      width: fit-content;
+      max-width: 100%;
+      flex-wrap: nowrap;
+      overflow: hidden;
+    }
+    &__context-label, &__context-sep { display: none; }
+    &__context-name { max-width: 52vw; }
   }
 }

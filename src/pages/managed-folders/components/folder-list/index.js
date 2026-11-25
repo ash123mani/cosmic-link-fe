@@ -10,20 +10,20 @@ import './_style.scss'
 const blk = 'managed-folder-list'
 
 const FolderList = ({
-  folders, selectedId, isLoading, onSelect, onCreate,
+  folders, selectedId, onSelect, onCreate, isLoading,
 }) => (
-  <aside className={classNames({ blk })}>
+  <aside className={classNames({ blk })} aria-label="Managed folders">
     <div className={classNames({ blk, elt: 'head' })}>
-      <div>
+      <div className={classNames({ blk, elt: 'copy' })}>
+        <p className={classNames({ blk, elt: 'eyebrow' })}>Workspace</p>
         <h2 className={classNames({ blk, elt: 'title' })}>Managed folders</h2>
         <p className={classNames({ blk, elt: 'subtitle' })}>Collaborate on links with your team.</p>
       </div>
-      <Button category="filled" size="small" onClick={onCreate}>New folder</Button>
+      <Button category="filled" size="small" className={classNames({ blk, elt: 'create' })} onClick={onCreate}>New folder</Button>
     </div>
 
-    {isLoading && <Spinner center text="Loading folders..." />}
-    {!isLoading && (
-      <div className={classNames({ blk, elt: 'items' })}>
+    {isLoading ? <Spinner center text="Loading folders..." /> : (
+      <div className={classNames({ blk, elt: 'items' })} role="listbox" aria-label="Folders">
         {folders.map((folder) => (
           <FolderCard
             key={folder.id}
@@ -34,7 +34,7 @@ const FolderList = ({
         ))}
         {!folders.length && (
           <div className={classNames({ blk, elt: 'empty' })}>
-            <p>No managed folders yet.</p>
+            <span>No managed folders yet.</span>
             <Button category="plain" size="small" onClick={onCreate}>Create folder</Button>
           </div>
         )}
@@ -44,11 +44,11 @@ const FolderList = ({
 )
 
 FolderList.propTypes = {
-  folders: PropTypes.arrayOf(PropTypes.shape({ id: PropTypes.string.isRequired })).isRequired,
+  folders: PropTypes.arrayOf(PropTypes.shape({ id: PropTypes.string })).isRequired,
   selectedId: PropTypes.string,
-  isLoading: PropTypes.bool,
   onSelect: PropTypes.func.isRequired,
   onCreate: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool,
 }
 
 FolderList.defaultProps = {

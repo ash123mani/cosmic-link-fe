@@ -1,15 +1,21 @@
-.profile-page {
+@import '@common/theme/style';
+
+$blk: 'profile-page';
+
+.#{$blk} {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 40px;
+  gap: 20px;
+  padding-bottom: 24px;
+
+  &__head { padding-top: 20px; }
+  &__title { margin: 0; @include typography(xl, bold); color: $primary-medium; @include small-only { @include typography(l, bold); } }
+  &__subtitle { margin: 8px 0 0; @include typography(s); color: $gray; }
 
   &__actions {
-    margin-top: 24px;
-    width: 100%;
-  }
-
-  &__logout {
-    width: 100%;
+    margin-top: 8px;
+    @include small-only {
+      .cosmic-btn { width: 100%; min-height: 48px; }
+    }
   }
 }

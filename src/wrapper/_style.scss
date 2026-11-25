@@ -1,2 +1,24 @@
 @import "~@common/theme/style";
 @import "~@common/theme/reset";
+
+.app-shell {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.skip-link {
+  position: absolute;
+  left: 16px;
+  top: -48px;
+  background: $primary;
+  color: $white;
+  padding: 10px 14px;
+  border-radius: 8px;
+  z-index: 1200;
+  transition: top .2s ease;
+
+  &:focus {
+    top: 12px;
+  }
+}

@@ -1,23 +1,40 @@
 @import '~@common/theme/style';
 
-.shared-item {
-  border: 1px solid rgba(0,0,0,0.08);
-  border-radius: 12px;
-  padding: 18px;
+$blk: 'shared-item';
+
+.#{$blk} {
   background: $white;
+  border: 1px solid $black-light;
+  border-radius: 16px;
+  padding: 18px;
+  transition: border-color .2s ease, box-shadow .2s ease;
 
-  &--unseen {
-    border-color: $primary;
-    box-shadow: inset 3px 0 0 $primary;
+  &--unseen { border-color: rgba($primary, 0.3); box-shadow: inset 3px 0 0 $primary; }
+
+  &__top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+  &__sender-wrap { display: flex; align-items: center; gap: 10px; min-width: 0; }
+  &__avatar {
+    width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: rgba($primary, 0.1); color: $primary; @include typography(s, bold);
   }
+  &__meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; @include typography(s); color: $gray; min-width: 0; }
+  &__sender { @include typography(s, semi-bold); color: $primary-medium; }
+  &__meta-sep { color: rgba($gray, 0.6); }
+  &__badge { @include typography(xs, semi-bold); color: $primary; background: rgba($primary, 0.08); padding: 4px 10px; border-radius: 999px; flex-shrink: 0; }
 
-  &__top { margin-bottom: 8px; }
-  &__meta { display:flex; align-items:center; gap:8px; @include typography(xs); color:$gray; flex-wrap:wrap; }
-  &__sender { color:$primary; font-weight:600; }
-  &__meta-sep { opacity:.6; }
-  &__badge { padding:2px 8px; border-radius:999px; background:rgba(99,102,241,0.12); color:$primary; font-weight:600; }
-  &__title { @include typography(m, semi-bold); color:$black-medium; margin-bottom:4px; word-break:break-word; }
-  &__desc { @include typography(s); color:$black-medium; margin-bottom:8px; }
-  &__note { @include typography(s); color:$black-medium; background:rgba(0,0,0,0.04); border-radius:8px; padding:10px 12px; margin:8px 0 12px; }
-  &__actions { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-top:12px; }
+  &__title { @include typography(m, semi-bold); color: $black-medium; word-break: break-word; }
+  &__desc { margin-top: 6px; @include typography(s); color: $gray; @include clamp-text(2); }
+
+  &__note {
+    margin-top: 12px; padding: 12px 14px; border-radius: 12px;
+    background: rgba($primary, 0.04); border: 1px solid rgba($primary, 0.08);
+  }
+  &__note-label { display: block; margin-bottom: 4px; @include typography(xs, semi-bold); color: $primary; text-transform: uppercase; letter-spacing: .04em; }
+  &__note-text { margin: 0; @include typography(s); color: $black-medium; word-break: break-word; }
+
+  &__actions {
+    display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap;
+    @include small-only { flex-direction: column; .cosmic-btn { width: 100%; min-height: 44px; } }
+  }
 }

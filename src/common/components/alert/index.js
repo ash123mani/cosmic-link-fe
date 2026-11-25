@@ -12,8 +12,8 @@ const blk = 'cosmic-alert'
 const Alert = ({
   type, message, center, autoClose, onClose, duration, banner,
 }) => {
-  const [fadeDown, setfadeDown] = useState(false)
-  const [fadeUp, setfadeUp] = useState(false)
+  const [fadeDown, setFadeDown] = useState(false)
+  const [fadeUp, setFadeUp] = useState(false)
 
   const eltClassName = classNames({
     blk,
@@ -26,11 +26,10 @@ const Alert = ({
     ],
   })
 
-  const closeAlert = () => setTimeout(() => onClose(), 799)
-
   useEffect(() => {
-    setfadeDown(true)
-  }, [])
+    setFadeDown(true)
+    setFadeUp(false)
+  }, [message, type])
 
   useEffect(() => {
     let timer
@@ -38,19 +37,35 @@ const Alert = ({
 
     if (autoClose) {
       timer = setTimeout(() => {
-        setfadeUp(true)
-        closeAlert()
-        clearTimeout(closeTimer)
+        setFadeUp(true)
+        setFadeDown(false)
+        closeTimer = setTimeout(() => onClose(), 799)
       }, duration)
     }
 
-    return () => timer && clearTimeout(timer)
-  }, [])
+    return () => {
+      if (timer) {
+        clearTimeout(timer)
+      }
+      if (closeTimer) {
+        clearTimeout(closeTimer)
+      }
+    }
+  }, [autoClose, duration, onClose, message, type])
+
+  const role = type === 'error' ? 'alert' : 'status'
 
   return (
-    <div className={eltClassName}>
+    <div className={eltClassName} role={role} aria-live={type === 'error' ? 'assertive' : 'polite'}>
       <div className={classNames({ blk, elt: 'message' })}>{message}</div>
-      {/* <div>Close</div> */}
+      <button
+        type="button"
+        className={classNames({ blk, elt: 'close' })}
+        onClick={onClose}
+        aria-label="Dismiss notification"
+      >
+        ×
+      </button>
     </div>
   )
 }

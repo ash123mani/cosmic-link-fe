@@ -16,9 +16,33 @@
 
   &__selected {
     border: 1px solid $gray;
-    padding: 12px 16px;
+    padding: 12px 40px 12px 16px;
     border-radius: 4px;
     cursor: pointer;
+    position: relative;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+
+    &::after {
+      content: '';
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      width: 8px;
+      height: 8px;
+      margin-top: -6px;
+      border-right: 2px solid currentColor;
+      border-bottom: 2px solid currentColor;
+      transform: rotate(45deg);
+      transition: transform 0.2s ease;
+      pointer-events: none;
+    }
+
+    &--open::after {
+      transform: rotate(-135deg);
+      margin-top: -2px;
+    }
 
     &:hover {
       border-color: $black-medium;
@@ -43,10 +67,10 @@
     width: 100%;
     top: calc(100% + 4px);
     border-radius: $border-radius-default;
-    max-height: 200px;
+    max-height: 240px;
     overflow: auto;
-    z-index: 30;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    z-index: 1200;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
 
     &--light {
       border: 1px solid $gray;

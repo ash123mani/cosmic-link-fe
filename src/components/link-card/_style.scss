@@ -1,99 +1,100 @@
 @import '~@common/theme/style';
 
-@include fade-in-down (fade-in-down);
-@include fade-in-up (fade-in-up);
+@include fade-in-down(fade-in-down);
+@include fade-in-up(fade-in-up);
 
-.link-card {
-  border-radius: 4px;
-  padding: 12px 16px;
-  border: 1px solid $primary-medium;
+$blk: 'link-card';
+
+.#{$blk} {
+  border-radius: 16px;
+  padding: 16px;
+  border: 1px solid rgba($primary-medium, 0.25);
+  background: rgba($white, 0.02);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-width: 280px;
+  min-width: 0;
+  transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
 
-  &--fade-down {
-    animation: fade-in-down 0.3s linear;
-  }
+  &:hover { border-color: rgba($primary, 0.45); box-shadow: 0 8px 24px rgba(0,0,0,.08); }
 
-  &--fade-up {
-    animation: fade-in-up 0.3s linear;
-  }
+  &--fade-down { animation: fade-in-down .3s linear; }
+  &--fade-up { animation: fade-in-up .3s linear; }
 
-  &__link-main-img {
-    height: 200px;
-  }
+  &__body { min-width: 0; }
 
   &__title {
-    margin: 12px 0px;
-    word-wrap: break-word;
+    margin: 12px 0 8px;
     color: $primary-medium;
     @include typography(l, bold);
-    @include clamp-text;
+    @include clamp-text(2);
+    word-break: break-word;
   }
 
   &__site-name {
-    height: 200px;
-    width: 380px;
+    height: 180px;
+    width: 100%;
+    border-radius: 12px;
+    background: rgba($primary, 0.06);
+    color: $primary-medium;
     @include flex-center;
-    @include typography(l, bold);
+    @include typography(m, semi-bold);
+    @include small-only { height: 140px; }
   }
 
   &__description {
-    margin: 12px 0px;
-    @include typography(m, semi-bold);
+    margin: 0 0 12px;
+    color: $gray;
+    @include typography(s);
     @include clamp-text(3);
   }
 
   &__shared-by {
     margin: 0 0 12px;
-    padding: 4px 8px;
-    display: inline-block;
+    padding: 4px 10px;
+    display: inline-flex;
     width: fit-content;
-    border-radius: $border-radius-default;
-    background: rgba(255, 255, 255, 0.08);
-    color: $gray;
-    @include typography(xs);
+    border-radius: 999px;
+    background: rgba($primary, 0.08);
+    color: $primary-medium;
+    @include typography(xs, semi-bold);
   }
 
   &__bottom {
-    padding: 12px 12px 0px;
-    border-top: 1px solid $primary-medium;
-    @include typography(m, semi-bold);
-    display: flex;
-    justify-content: space-around;
+    padding-top: 12px;
+    border-top: 1px solid rgba($primary-medium, 0.16);
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
   }
 
-  &__link {
+  &__action {
+    min-height: 44px;
+    border: 1px solid rgba($primary-medium, 0.16);
+    border-radius: 10px;
+    background: transparent;
     color: $primary-medium;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    @include typography(xs, semi-bold);
+    transition: background-color .2s ease, border-color .2s ease, color .2s ease;
 
-    &-image {
-      height: 24px;
-      width: 24px;
-    }
+    &:hover { background: rgba($primary, 0.06); border-color: rgba($primary, 0.3); }
+    &:focus-visible { outline: 2px solid $primary; outline-offset: 2px; }
+    &:disabled { opacity: .6; cursor: not-allowed; }
 
-    &-copy {
-      height: 24px;
-      width: 24px;
-      cursor: pointer;
-    }
-
-    &-share {
-      height: 24px;
-      width: 24px;
-      cursor: pointer;
-    }
-
-    &-move {
-      height: 24px;
-      width: 24px;
-      cursor: pointer;
-    }
-
-    &-delete {
-      height: 24px;
-      width: 24px;
-      cursor: pointer;
+    &--danger {
+      color: $error;
+      border-color: rgba($error, 0.2);
+      &:hover { background: rgba($error, 0.06); border-color: rgba($error, 0.35); }
     }
   }
+
+  &__action-icon { display: inline-flex; width: 18px; height: 18px; flex-shrink: 0; svg { display: block; } }
+  &__action-label { white-space: nowrap; }
 }

@@ -1,20 +1,31 @@
 @import '~@common/theme/style';
 
+:root {
+  --app-header-height: 104px;
+  --app-bottom-nav-height: 64px;
+  @include medium-down { --app-header-height: 61px; }
+}
+
 .layout {
-  height: 100%;
-  
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 0;
+
   @include small-only {
-    padding: 0rem $layout-x-padding-mobile;
-    height: calc(100vh - 88px);
+    padding: 0 $layout-x-padding-mobile;
   }
 
   @include medium-only {
-    padding: 0rem $layout-x-padding-tablet;
-    height: calc(100vh - 88px);
+    padding: 0 $layout-x-padding-tablet;
   }
 
   @include large-up {
-    padding: 0rem $layout-x-padding-desktop;
-    height: calc(100vh - 130px);
+    padding: 0 $layout-x-padding-desktop;
+  }
+}
+
+.layout--with-bottom-nav {
+  @include medium-down {
+    padding-bottom: calc(var(--app-bottom-nav-height) + 12px + env(safe-area-inset-bottom, 0px));
   }
 }

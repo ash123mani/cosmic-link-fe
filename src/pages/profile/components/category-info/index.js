@@ -1,102 +1,141 @@
 import React, { useState } from 'react'
 import {
-  arrayOf, string, shape, func,
+  arrayOf, bool, func, shape, string,
 } from 'prop-types'
 import { connect } from 'react-redux'
 
-import { Spinner } from '@common'
-
+import { Button, Spinner } from '@common'
 import { classNames } from '@common/helpers'
 import { isSharedCategory } from '@util/shared-category'
-import Image from '@local/image'
 import ConfirmationModal from '@local/confirmation-modal'
-import deleteIcon from '@images/delete.svg'
 
 import { actions } from './index.connect'
 import './_style.scss'
 
 const blk = 'category-info'
 
+const CategoryIcon = ({ shared }) => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    {shared ? (
+      <>
+        <path d="M4 7.5A2.5 2.5 0 0 1 6.5 5H10l2 2h5.5A2.5 2.5 0 0 1 20 9.5V17a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z" />
+        <path d="M12 11v4" />
+        <path d="M10 13h4" />
+      </>
+    ) : (
+      <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z" />
+    )}
+  </svg>
+)
+
+CategoryIcon.propTypes = { shared: bool }
+CategoryIcon.defaultProps = { shared: false }
+
+const DeleteIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M3 6h18" />
+    <path d="M8 6V4h8v2" />
+    <path d="M19 6l-1 14H6L5 6" />
+    <path d="M10 11v6M14 11v6" />
+  </svg>
+)
+
 const CategoryInfo = ({ categories, deleteCategory, setAppBanner }) => {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false)
-  const [categoryToDelete, setCategoryToDelete] = useState('')
+  const [categoryToDelete, setCategoryToDelete] = useState(null)
   const [isDeleting, setIsDeleting] = useState(false)
 
   const handleConfirm = async () => {
-    setShowConfirmationModal(false)
-
-    setIsDeleting(true)
-    const { success } = await deleteCategory(categoryToDelete)
-    setIsDeleting(false)
-
-    if (success) {
-      setAppBanner({
-        type: 'info',
-        message: 'Category deleted succesfully',
-      })
-    }
-  }
-
-  const handleDeleteCategory = (id) => {
-    if (isSharedCategory(id)) {
-      setAppBanner({
-        type: 'info',
-        message: 'Shared category cannot be deleted',
-      })
+    if (!categoryToDelete) {
       return
     }
-    setCategoryToDelete(id)
+    setShowConfirmationModal(false)
+    setIsDeleting(true)
+    const { success } = await deleteCategory(categoryToDelete.id)
+    setIsDeleting(false)
+    if (success) {
+      setAppBanner({ type: 'info', message: `"${categoryToDelete.name}" deleted` })
+    }
+    setCategoryToDelete(null)
+  }
+
+  const handleDeleteCategory = (category) => {
+    if (isSharedCategory(category.id)) {
+      setAppBanner({ type: 'info', message: 'Shared category cannot be deleted' })
+      return
+    }
+    setCategoryToDelete(category)
     setShowConfirmationModal(true)
   }
 
-  const handleCancel = () => setShowConfirmationModal(false)
+  const handleCancel = () => {
+    setShowConfirmationModal(false)
+    setCategoryToDelete(null)
+  }
 
   return (
-    <div className={classNames({ blk })}>
-      <h2 className={classNames({ blk, elt: 'section-heading' })}>
-        Your Categories
-      </h2>
+    <section className={classNames({ blk })} aria-labelledby="profile-categories-heading">
+      <div className={classNames({ blk, elt: 'head' })}>
+        <div>
+          <h2 id="profile-categories-heading" className={classNames({ blk, elt: 'section-heading' })}>Your Categories</h2>
+          <p className={classNames({ blk, elt: 'section-copy' })}>Organize where your links live. Shared is managed by the system.</p>
+        </div>
+        <span className={classNames({ blk, elt: 'count' })}>{categories.length}</span>
+      </div>
+
       <div className={classNames({ blk, elt: 'categories' })}>
+        {!categories.length && (
+          <div className={classNames({ blk, elt: 'empty' })}>
+            <div className={classNames({ blk, elt: 'empty-icon' })}><CategoryIcon shared={false} /></div>
+            <p className={classNames({ blk, elt: 'empty-title' })}>No categories yet</p>
+            <p className={classNames({ blk, elt: 'empty-copy' })}>Create a category from the Links page to organize your saved links.</p>
+          </div>
+        )}
         {categories.map((category) => {
           const { name, id } = category
           const shared = isSharedCategory(id)
+          const deleting = !shared && isDeleting && categoryToDelete?.id === id
           return (
-            <div
-              className={classNames(
-                { blk, elt: 'category' },
-              )}
-              id={id}
-              key={id}
-            >
-              <span className={classNames({ blk, elt: 'name' })}>{name}</span>
-              {shared && (
-                <span className={classNames({ blk, elt: 'system-label' })}>System</span>
-              )}
-              {!shared && isDeleting && id === categoryToDelete && <Spinner size="small" />}
-              {!shared && !(isDeleting && id === categoryToDelete) && (
-                <Image
-                  imageUrl={deleteIcon}
-                  asButton
-                  className={classNames({ blk, elt: 'delete' })}
-                  onClick={() => handleDeleteCategory(id)}
-                  title="Delete category"
-                />
-              )}
-
+            <div className={classNames({ blk, elt: 'category', mods: [shared && 'system'] })} key={id}>
+              <div className={classNames({ blk, elt: 'category-main' })}>
+                <span className={classNames({ blk, elt: 'icon', mods: [shared && 'system'] })}><CategoryIcon shared={shared} /></span>
+                <div className={classNames({ blk, elt: 'details' })}>
+                  <span className={classNames({ blk, elt: 'name' })}>{name}</span>
+                  <span className={classNames({ blk, elt: 'meta' })}>{shared ? 'System category · cannot be deleted' : 'Personal category'}</span>
+                </div>
+              </div>
+              <div className={classNames({ blk, elt: 'category-actions' })}>
+                {shared ? (
+                  <span className={classNames({ blk, elt: 'system-label' })}>System</span>
+                ) : (
+                  <Button
+                    category="plain"
+                    size="small"
+                    className={classNames({ blk, elt: 'delete' })}
+                    onClick={() => handleDeleteCategory(category)}
+                    aria-label={`Delete ${name} category`}
+                    disabled={deleting}
+                  >
+                    {deleting ? <Spinner size="small" inline /> : <DeleteIcon />}
+                    <span className={classNames({ blk, elt: 'delete-text' })}>{deleting ? 'Deleting' : 'Delete'}</span>
+                  </Button>
+                )}
+              </div>
             </div>
           )
         })}
-        {showConfirmationModal && (
-          <ConfirmationModal
-            handleSubmit={handleConfirm}
-            handleCancel={handleCancel}
-            message="Do you want to delete this category ?"
-            confirmText="Delete"
-            modalType="delete"
-          />
-        )}
       </div>
-    </div>
+
+      {showConfirmationModal && categoryToDelete && (
+        <ConfirmationModal
+          handleSubmit={handleConfirm}
+          handleCancel={handleCancel}
+          message={`Delete "${categoryToDelete.name}"? Links in it will be moved according to your category rules.`}
+          confirmText="Delete"
+          modalType="delete"
+        />
+      )}
+    </section>
   )
 }
 
@@ -113,8 +152,6 @@ CategoryInfo.defaultProps = {
   categories: [],
 }
 
-const CategoryInfoWithConnect = connect(
-  null, actions,
-)(CategoryInfo)
+const CategoryInfoWithConnect = connect(null, actions)(CategoryInfo)
 
 export default CategoryInfoWithConnect

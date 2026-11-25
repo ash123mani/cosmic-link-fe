@@ -1,5 +1,5 @@
 import React from 'react'
-import { shape, arrayOf, string } from 'prop-types'
+import { shape, string } from 'prop-types'
 
 import { Input } from '@common'
 import { classNames } from '@common/helpers'
@@ -14,18 +14,22 @@ const UserInfo = ({ user }) => {
     <div className={classNames({ blk })}>
       <h2 className={classNames({ blk, elt: 'section-heading' })}>Your Info</h2>
       <Input
+        name="username"
         label="Your Name"
-        value={username}
-        disabled
+        value={username || ''}
+        readOnly
       />
       <Input
+        name="email"
         label="Your Email"
-        value={email}
-        disabled
+        value={email || ''}
+        readOnly
       />
       <Input
+        name="password"
         label="Your Password"
-        value="It'a screte for you to remember 😛. You can reset it."
+        value="Managed securely. Use reset password to change it."
+        readOnly
         disabled
       />
     </div>
@@ -34,12 +38,8 @@ const UserInfo = ({ user }) => {
 
 UserInfo.propTypes = {
   user: shape({
-    name: string,
+    username: string,
     email: string,
-    categories: arrayOf(shape({
-      name: string,
-      id: string,
-    })),
   }),
 }
 

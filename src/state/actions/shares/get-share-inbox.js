@@ -40,6 +40,7 @@ const getShareInbox = () => async (dispatch) => {
 
     return response
   } catch (error) {
+    dispatch(getShareInboxFailure(error.message || 'Could not load shared links', dispatch))
     return { success: false, data: { error: error.message } }
   }
 }

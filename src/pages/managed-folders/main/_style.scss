@@ -10,10 +10,6 @@ $blk: 'managed-folders';
     grid-template-columns: 320px minmax(0, 1fr);
     gap: 24px;
     align-items: start;
-
-    @include medium-down {
-      grid-template-columns: 1fr;
-    }
   }
 
   &__content {
@@ -38,37 +34,11 @@ $blk: 'managed-folders';
     p { margin: 0; @include typography(m); color: $gray; max-width: 480px; }
   }
 
-  &__tabs {
-    display: inline-flex;
-    gap: 8px;
-    padding: 4px;
-    background: $white;
-    border: 1px solid $black-light;
-    border-radius: 12px;
-    width: fit-content;
-  }
-
-  &__tab {
-    border: 0;
-    background: transparent;
-    padding: 10px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    @include typography(s, semi-bold);
-    color: $gray;
-
-    &--active {
-      background: rgba($primary, 0.08);
-      color: $primary;
-    }
-  }
-
   &__panel {
     background: $white;
     border: 1px solid $black-light;
     border-radius: 16px;
     padding: 24px;
-
     @include small-only { padding: 16px; }
   }
 
@@ -78,22 +48,23 @@ $blk: 'managed-folders';
     gap: 16px;
     align-items: flex-start;
     margin-bottom: 20px;
-
-    @include small-only { flex-direction: column; }
+    @include small-only {
+      flex-direction: column;
+      align-items: stretch;
+    }
   }
+
+  &__panel-action { min-height: 44px; @include small-only { width: 100%; } }
 
   &__panel-title { margin: 0; @include typography(l, semi-bold); color: $black-medium; }
   &__panel-subtitle { margin: 4px 0 0; @include typography(s); color: $gray; }
-
-  &__list, &__members {
-    display: flex;
-    flex-direction: column;
-  }
+  &__members { display: flex; flex-direction: column; }
 
   &__list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 20px;
+    @include small-only { grid-template-columns: 1fr; gap: 16px; }
   }
 
   &__empty {
@@ -105,23 +76,5 @@ $blk: 'managed-folders';
     color: $gray;
   }
 
-  &__confirm-message {
-    margin: 0;
-    @include typography(m);
-    color: $white;
-    line-height: 1.5;
-  }
-
-  &__rename-input {
-    width: 100%;
-    padding: 12px 16px;
-    border: 1px solid $gray;
-    border-radius: $border-radius-default;
-    background: transparent;
-    color: $white;
-    @include typography(m);
-    margin-bottom: 8px;
-
-    &:focus { outline: none; border-color: $primary; }
-  }
+  &__confirm-message { margin: 0; @include typography(m); color: $white; line-height: 1.5; }
 }

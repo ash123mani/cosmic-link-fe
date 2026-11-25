@@ -1,5 +1,19 @@
+@import '~@common/theme/style';
+
 .link-types {
   &--vertical {
     overflow: auto;
+    flex-shrink: 0;
+  }
+
+  &--horizontal {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 4px 0 8px;
+    position: sticky;
+    top: 72px;
+    z-index: 5;
+    background: $body-bg;
   }
 }

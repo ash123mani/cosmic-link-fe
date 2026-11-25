@@ -119,10 +119,10 @@ $blk: 'cosmic-multi-select-dropdown';
     background: $white;
     border: 1px solid $black-light;
     border-radius: $border-radius-default;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-    max-height: 280px;
+    max-height: 320px;
     overflow: auto;
-    z-index: 40;
+    z-index: 1200;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.16);
 
     &--show {
       display: block;

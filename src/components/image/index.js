@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React from 'react'
 import { string, bool, func } from 'prop-types'
 
@@ -17,27 +16,15 @@ const Image = ({
 
   if (asButton) {
     return (
-      // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-      <img
-        className={eltClassName}
-        src={imageUrl}
-        alt={alt}
-        height={height}
-        width={width}
-        loading={lazy ? 'lazy' : 'eager'}
-        onClick={onClick}
-        onKeyDown={onClick}
-        // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
-        role="button"
-        tabIndex="0"
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        {...rest}
-      />
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      <button type="button" className={eltClassName} onClick={onClick} aria-label={alt} {...rest}>
+        <img src={imageUrl} alt="" aria-hidden="true" height={height} width={width} loading={lazy ? 'lazy' : 'eager'} />
+      </button>
     )
   }
 
   return (
-    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+    /* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions, react/jsx-props-no-spreading */
     <img
       className={eltClassName}
       src={imageUrl}

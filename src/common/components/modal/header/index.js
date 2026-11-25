@@ -10,10 +10,10 @@ import './_style.scss'
 const blk = 'cosmic-modal-header'
 
 const ModalHeader = ({
-  children, className, closeAble, onClose,
+  children, className, closeAble, onClose, id,
 }) => (
   <div className={classNames({ blk, className })}>
-    <div className={classNames({ blk, elt: 'title' })}>{children}</div>
+    <div id={id} className={classNames({ blk, elt: 'title' })}>{children}</div>
     {closeAble && (
       <button
         type="button"
@@ -30,12 +30,14 @@ ModalHeader.propTypes = {
   className: string,
   closeAble: bool,
   onClose: func,
+  id: string,
 }
 
 ModalHeader.defaultProps = {
   className: '',
   closeAble: true,
   onClose: () => {},
+  id: undefined,
 }
 
 export default ModalHeader

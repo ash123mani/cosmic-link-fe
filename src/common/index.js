@@ -6,8 +6,10 @@ import Tabs from './components/tabs'
 import Modal from './components/modal'
 import DropDown from './components/drop-down'
 import MultiSelectDropDown from './components/multi-select-dropdown'
+import ActionSheet from './components/action-sheet'
 
 export {
+  ActionSheet,
   Button,
   Input,
   Spinner,

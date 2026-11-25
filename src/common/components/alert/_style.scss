@@ -11,10 +11,11 @@
 
   &--banner {
     position: fixed;
-    top: 40px;
-    z-index: 10;
+    top: 88px;
+    z-index: 950;
     width: fit-content;
     right: 40px;
+    box-shadow: 0 8px 24px rgba($black, 0.12);
 
     @include medium-up {
       min-width: 480px;
@@ -22,19 +23,33 @@
     }
 
     @include small-only {
-      width: 90vw;
-      right: 20px;
-      top: 20px;
+      width: calc(100vw - 32px);
+      right: 16px;
+      top: calc(var(--app-header-height, 61px) + 12px + env(safe-area-inset-top, 0px));
       padding: 12px 12px;
     }
   }
 
   &__message {
     @include typography(m);
+    flex: 1;
 
     @include small-only {
       @include typography(s);
     }
+  }
+
+  &__close {
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font-size: 24px;
+    line-height: 1;
+    margin-left: 12px;
+    cursor: pointer;
+    padding: 0 4px;
+    min-width: 44px;
+    min-height: 44px;
   }
 
   &--info {

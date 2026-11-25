@@ -1,50 +1,37 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import {
-  arrayOf, shape, string, func,
+  arrayOf, bool, func, number, shape, string,
 } from 'prop-types'
-import { useMediaQuery } from 'react-responsive'
 
-import { Tabs } from '@common'
-import { classNames } from '@common/helpers'
-import mediaQueries from '@common/media-queries'
-
+import CategoryPicker from '../category-picker'
 import { mapStateToProps } from './index.connect'
-import './_style.scss'
 
-const blk = 'link-types'
-
-const LinkTypes = ({
-  allCategories, handleTabChange, selectedCategory,
-}) => {
-  const isMediumDown = useMediaQuery(mediaQueries.mediumDown)
-  return (
-    <Tabs
-      direction={isMediumDown ? 'horizontal' : 'vertical'}
-      tabs={allCategories}
-      defaultSelected={selectedCategory}
-      className={classNames({ blk, mods: [isMediumDown ? 'horizontal' : 'vertical'] })}
-      handleTabChange={handleTabChange}
-    />
-  )
-}
+const LinkTypes = ({ categories, handleTabChange, isLoading }) => (
+  <CategoryPicker
+    categories={categories}
+    onSelect={handleTabChange}
+    isLoading={isLoading}
+  />
+)
 
 LinkTypes.propTypes = {
-  allCategories: arrayOf(shape({
-    label: string,
-    key: string,
+  categories: arrayOf(shape({
+    id: string.isRequired,
+    name: string.isRequired,
+    isShared: bool,
+    isActive: bool,
+    count: number,
   })),
   handleTabChange: func.isRequired,
-  selectedCategory: string,
+  isLoading: bool,
 }
 
 LinkTypes.defaultProps = {
-  allCategories: [],
-  selectedCategory: '',
+  categories: [],
+  isLoading: false,
 }
 
-const LinkTypesWithConnect = connect(
-  mapStateToProps,
-)(LinkTypes)
+const LinkTypesWithConnect = connect(mapStateToProps)(LinkTypes)
 
 export default LinkTypesWithConnect
