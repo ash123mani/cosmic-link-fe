@@ -1,88 +1,24 @@
 import log from '@util/log'
-import store from '@store'
-import { setAppBanner } from '@state/actions/app'
-import { getStorageItem } from '@util/storage'
 
+import httpClient from './http-client'
+import normalizeResponse from './normalize-response'
+import buildRequest from './request'
 import handleAuthError from './handle-auth-error'
-import config from './config'
 
-const isDevelopment = process.env.NODE_ENV !== 'production'
-
-const baseUrl = isDevelopment ? 'http://localhost:5000' : 'https://cosmic-link-be.onrender.com'
-
-const api = (name, options = {}) => {
-  const {
-    appendPath = '', body, headers, params,
-  } = options
-  const requestConfig = config[name]
-
-  if (!requestConfig) {
-    log('No config is found inside \'@api/config\'', 'error')
-  }
-
-  const { endPoint, auth = false, ...rest } = requestConfig
-  const url = new URL(baseUrl + endPoint + appendPath)
-
-  if (params) {
-    Object.keys(params).forEach((key) => url.searchParams.append(key, params[key]))
-  }
-
-  let requestHeaders = {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-    ...headers,
-    ...requestConfig.headers || {},
-  }
-
-  if (auth) {
-    const token = getStorageItem('local', 'token')
-    requestHeaders = {
-      ...requestHeaders,
-      Authorization: `Bearer ${token}`,
-    }
-  }
-
-  let requestOptions = {
-    ...rest,
-    body: JSON.stringify(body),
-    headers: requestHeaders,
-  }
-
-  if (requestConfig.method !== 'GET') {
-    requestOptions = {
-      ...requestOptions,
-      body: JSON.stringify(body),
-    }
-  }
-
-  return fetch(url, requestOptions)
-    .then((response) => response.json())
-    .then((response) => {
-      const {
-        success, error, statusCode = 200, ...rest
-      } = response
-      if (success) {
-        return {
-          success,
-          data: rest,
-        }
-      }
-      return {
-        success,
-        data: { error, statusCode },
-      }
+const api = async (name, options = {}) => {
+  try {
+    const { url, requestOptions } = buildRequest(name, options)
+    const response = await httpClient(url, requestOptions)
+    const normalized = normalizeResponse(response)
+    return handleAuthError(normalized)
+  } catch (error) {
+    log(error.message || 'API request failed', 'error')
+    return handleAuthError({
+      success: false,
+      data: { error: error.message || 'Request failed', statusCode: 0 },
+      error: { message: error.message || 'Request failed', statusCode: 0 },
     })
-    .then(handleAuthError)
-    .catch((error) => {
-      const message = error.message || 'It \'s fine, some network problem!'
-
-      store.dispatch(setAppBanner({
-        type: 'error',
-        message,
-      }))
-
-      throw new Error(message)
-    })
+  }
 }
 
 export default api

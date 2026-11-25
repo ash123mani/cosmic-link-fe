@@ -7,7 +7,9 @@
     "dev": "webpack --mode=development",
     "start": "webpack-dev-server --hot --mode=development",
     "build": "NODE_ENV=production webpack --mode=production",
-    "local": "http-server dist"
+    "local": "http-server dist",
+    "lint": "eslint \"src/**/*.{js,jsx}\"",
+    "lint:fix": "eslint \"src/**/*.{js,jsx}\" --fix"
   },
   "keywords": [],
   "author": "",

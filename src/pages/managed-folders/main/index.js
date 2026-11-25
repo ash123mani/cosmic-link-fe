@@ -8,14 +8,15 @@ import { classNames } from '@common/helpers'
 import { Button, Modal, Spinner } from '@common'
 import ConfirmationButtons from '@local/confirmation-buttons'
 import mediaQueries from '@common/media-queries'
+import { useAsyncAction, useConfirmDialog, useDisclosure } from '@hooks'
 
 import {
   canManageFolder, canMutateManagedLink, getFolderMember, isLastAdminMember,
 } from '../utils'
 import FolderList from '../components/folder-list'
 import FolderWorkspace from '../components/folder-workspace'
-import ManagedLinkCard from '../components/managed-link-card'
-import MemberRow from '../components/member-row'
+import FolderLinksPanel from '../components/folder-links-panel'
+import FolderMembersPanel from '../components/folder-members-panel'
 import CreateFolderModal from '../components/create-folder-modal'
 import AddEditLinkModal from '../components/add-edit-link-modal'
 import AddMembersModal from '../components/add-members-modal'
@@ -36,11 +37,12 @@ const ManagedFoldersMain = ({
   const history = useHistory()
   const isMediumDown = useMediaQuery(mediaQueries.mediumDown)
   const activeScope = section === 'members' ? 'members' : 'links'
-  const [createOpen, setCreateOpen] = useState(false)
-  const [addMembersOpen, setAddMembersOpen] = useState(false)
+  const createModal = useDisclosure(false)
+  const addMembersModal = useDisclosure(false)
+  const renameModal = useDisclosure(false)
   const [linkModal, setLinkModal] = useState({ open: false, link: null })
-  const [renameOpen, setRenameOpen] = useState(false)
-  const [confirm, setConfirm] = useState(null)
+  const confirmDialog = useConfirmDialog()
+  const asyncAction = useAsyncAction()
 
   const selectedId = routeId || null
 
@@ -68,97 +70,106 @@ const ManagedFoldersMain = ({
   const notify = (message, type = 'info') => setAppBanner({
     message, type, autoClose: true, duration: 3000,
   })
-  const closeConfirm = () => setConfirm(null)
 
-  const runAction = async (action, successMessage, onSuccess) => {
-    const res = await action()
-    if (res?.type?.endsWith('_SUCCESS')) {
+  const run = (action, successMessage, onSuccess) => asyncAction.execute(action, {
+    onSuccess: async (res) => {
       if (successMessage) {
         notify(successMessage)
       }
       if (onSuccess) {
-        onSuccess(res)
+        await onSuccess(res)
       }
-      closeConfirm()
-      return res
-    }
-    notify(res?.payload?.message || 'Something went wrong', 'error')
-    return res
-  }
+    },
+    onError: (_res, message) => notify(message, 'error'),
+  })
 
   const selectFolder = (id) => history.push(`/managed/${id}`)
   const goToList = () => history.push('/managed')
 
   const handleCreate = async (payload) => {
-    const res = await createManagedFolder(payload)
-    if (res?.type?.endsWith('_SUCCESS')) {
-      notify('Managed folder created')
-      setCreateOpen(false)
-      const id = res.payload?.folder?.id
+    const { ok, res } = await run(() => createManagedFolder(payload), 'Managed folder created', async (res) => {
+      createModal.close()
+      const id = res?.data?.folder?.id || res?.payload?.folder?.id
       if (id) {
         selectFolder(id)
       }
-    }
-    return res
+    })
+    return ok ? res : res
   }
 
   const handleSaveLink = async (payload) => {
     if (!currentFolder) {
       return null
     }
-    if (linkModal.link) {
-      return runAction(() => updateManagedFolderLink(currentFolder.id, linkModal.link.id, payload), 'Link updated', () => setLinkModal({ open: false, link: null }))
-    }
-    return runAction(() => createManagedFolderLink(currentFolder.id, payload), 'Link added', () => setLinkModal({ open: false, link: null }))
+    const action = linkModal.link
+      ? () => updateManagedFolderLink(currentFolder.id, linkModal.link.id, payload)
+      : () => createManagedFolderLink(currentFolder.id, payload)
+    const { res } = await run(action, linkModal.link ? 'Link updated' : 'Link added', async () => {
+      setLinkModal({ open: false, link: null })
+    })
+    return res
   }
 
-  const handleAddMembers = async (payload) => runAction(() => addManagedFolderMembers(currentFolder.id, payload), 'Members added', () => setAddMembersOpen(false))
+  const handleAddMembers = async (payload) => {
+    const { res } = await run(() => addManagedFolderMembers(currentFolder.id, payload), 'Members added', async () => addMembersModal.close())
+    return res
+  }
 
-  const openDeleteFolder = () => setConfirm({
+  const openDeleteFolder = () => confirmDialog.open({
     title: 'Delete folder?',
     message: `Delete "${currentFolder.name}" and all its links for everyone? This cannot be undone.`,
     confirmText: 'Delete folder',
     type: 'delete',
-    onConfirm: () => runAction(() => deleteManagedFolder(currentFolder.id), 'Folder deleted', () => {
-      goToList()
-      getManagedFolders()
-    }),
+    onConfirm: async () => {
+      await run(() => deleteManagedFolder(currentFolder.id), 'Folder deleted', async () => {
+        goToList(); getManagedFolders()
+      })
+    },
   })
 
-  const openRename = () => setRenameOpen(true)
-  const handleRename = async (payload) => runAction(() => updateManagedFolder(currentFolder.id, payload), 'Folder renamed', () => setRenameOpen(false))
+  const handleRename = async (payload) => {
+    const { res } = await run(() => updateManagedFolder(currentFolder.id, payload), 'Folder renamed', async () => renameModal.close())
+    return res
+  }
 
-  const openDeleteLink = (link) => setConfirm({
+  const openDeleteLink = (link) => confirmDialog.open({
     title: 'Delete link?',
     message: 'This removes the link for everyone in the folder.',
     confirmText: 'Delete link',
     type: 'delete',
-    onConfirm: () => runAction(() => deleteManagedFolderLink(currentFolder.id, link.id), 'Link deleted'),
+    onConfirm: async () => {
+      await run(() => deleteManagedFolderLink(currentFolder.id, link.id), 'Link deleted')
+    },
   })
 
-  const openRemoveMember = (member) => setConfirm({
+  const openRemoveMember = (member) => confirmDialog.open({
     title: 'Remove member?',
     message: `Remove ${member.username || 'this member'} from the folder? They will lose access, but links they added remain.`,
     confirmText: 'Remove member',
     type: 'delete',
-    onConfirm: () => runAction(() => removeManagedFolderMember(currentFolder.id, member.userId), 'Member removed'),
+    onConfirm: async () => {
+      await run(() => removeManagedFolderMember(currentFolder.id, member.userId), 'Member removed')
+    },
   })
 
-  const openLeave = () => setConfirm({
+  const openLeave = () => confirmDialog.open({
     title: 'Leave folder?',
     message: `Leave "${currentFolder.name}"? You will lose access. Links you added will remain.`,
     confirmText: 'Leave folder',
     type: 'delete',
-    onConfirm: () => runAction(() => removeManagedFolderMember(currentFolder.id, currentUser.id), 'You left the folder', () => {
-      goToList()
-      getManagedFolders()
-    }),
+    onConfirm: async () => {
+      await run(() => removeManagedFolderMember(currentFolder.id, currentUser.id), 'You left the folder', async () => {
+        goToList(); getManagedFolders()
+      })
+    },
   })
 
-  const handleRole = (member, role) => runAction(
+  const handleRole = (member, role) => run(
     () => updateManagedFolderMemberRole(currentFolder.id, member.userId, { role }),
     role === 'admin' ? 'Member promoted to admin' : 'Admin role removed',
   )
+
+  const busy = isMutating || asyncAction.isLoading
 
   const detailContent = currentFolder ? (
     <FolderWorkspace
@@ -167,64 +178,34 @@ const ManagedFoldersMain = ({
       isMediumDown={isMediumDown}
       isLastAdmin={myLastAdmin}
       activeScope={activeScope}
-      onRename={openRename}
+      onRename={renameModal.open}
       onDelete={openDeleteFolder}
       onLeave={openLeave}
     >
       {activeScope === 'links' && (
-        <section className={classNames({ blk, elt: 'panel' })}>
-          <div className={classNames({ blk, elt: 'panel-head' })}>
-            <div>
-              <h3 className={classNames({ blk, elt: 'panel-title' })}>Links</h3>
-              <p className={classNames({ blk, elt: 'panel-subtitle' })}>Links added here are visible to all folder members.</p>
-            </div>
-            <Button category="filled" size="small" className={classNames({ blk, elt: 'panel-action' })} onClick={() => setLinkModal({ open: true, link: null })}>Add link</Button>
-          </div>
-          {isFetchingLinks ? <Spinner center text="Loading links..." /> : (
-            <div className={classNames({ blk, elt: 'list' })}>
-              {links.map((link) => (
-                <ManagedLinkCard
-                  key={link.id}
-                  link={link}
-                  canMutate={canMutateManagedLink(currentFolder, link, currentUser?.id)}
-                  onEdit={(l) => setLinkModal({ open: true, link: l })}
-                  onDelete={openDeleteLink}
-                  onCopy={() => setAppBanner({
-                    message: 'Link copied to clipboard', type: 'info', autoClose: true, duration: 2500,
-                  })}
-                />
-              ))}
-              {!links.length && <div className={classNames({ blk, elt: 'empty' })}>No links yet. Add the first link for your team.</div>}
-            </div>
-          )}
-        </section>
+        <FolderLinksPanel
+          links={links}
+          isLoading={isFetchingLinks}
+          canMutateLink={(link) => canMutateManagedLink(currentFolder, link, currentUser?.id)}
+          onAdd={() => setLinkModal({ open: true, link: null })}
+          onEdit={(link) => setLinkModal({ open: true, link })}
+          onDelete={openDeleteLink}
+          onCopy={() => setAppBanner({
+            message: 'Link copied to clipboard', type: 'info', autoClose: true, duration: 2500,
+          })}
+        />
       )}
-
       {activeScope === 'members' && (
-        <section className={classNames({ blk, elt: 'panel' })}>
-          <div className={classNames({ blk, elt: 'panel-head' })}>
-            <div>
-              <h3 className={classNames({ blk, elt: 'panel-title' })}>Members</h3>
-              <p className={classNames({ blk, elt: 'panel-subtitle' })}>Admins can manage members and all links. Members can manage their own links.</p>
-            </div>
-            {isAdmin && <Button category="filled" size="small" className={classNames({ blk, elt: 'panel-action' })} onClick={() => setAddMembersOpen(true)}>Add members</Button>}
-          </div>
-          <div className={classNames({ blk, elt: 'members' })}>
-            {(currentFolder.members || []).map((member) => (
-              <MemberRow
-                key={member.userId}
-                folder={currentFolder}
-                member={member}
-                currentUserId={currentUser?.id}
-                isAdmin={isAdmin}
-                onMakeAdmin={(m) => handleRole(m, 'admin')}
-                onRemoveAdmin={(m) => handleRole(m, 'member')}
-                onRemove={openRemoveMember}
-                onLeave={openLeave}
-              />
-            ))}
-          </div>
-        </section>
+        <FolderMembersPanel
+          folder={currentFolder}
+          currentUserId={currentUser?.id}
+          isAdmin={isAdmin}
+          onAddMembers={addMembersModal.open}
+          onMakeAdmin={(member) => handleRole(member, 'admin')}
+          onRemoveAdmin={(member) => handleRole(member, 'member')}
+          onRemove={openRemoveMember}
+          onLeave={openLeave}
+        />
       )}
     </FolderWorkspace>
   ) : null
@@ -235,7 +216,7 @@ const ManagedFoldersMain = ({
         <div className={classNames({ blk, elt: 'empty-detail' })}>
           <h2>Select a managed folder</h2>
           <p>Choose a folder to view links and members, or create a new collaborative folder.</p>
-          <Button category="filled" onClick={() => setCreateOpen(true)}>Create folder</Button>
+          <Button category="filled" onClick={createModal.open}>Create folder</Button>
         </div>
       )}
       {isFetchingFolder && !currentFolder && <Spinner center text="Loading folder..." />}
@@ -249,7 +230,7 @@ const ManagedFoldersMain = ({
       selectedId={selectedId}
       isLoading={isFetchingFolders}
       onSelect={selectFolder}
-      onCreate={() => setCreateOpen(true)}
+      onCreate={createModal.open}
     />
   )
 
@@ -268,52 +249,52 @@ const ManagedFoldersMain = ({
       {body}
 
       <CreateFolderModal
-        isOpen={createOpen}
-        onClose={() => !isMutating && setCreateOpen(false)}
+        isOpen={createModal.isOpen}
+        onClose={() => !busy && createModal.close()}
         onSubmit={handleCreate}
         searchUsers={searchUsers}
         searchedUsers={searchedUsers}
         isSearchingUsers={isSearchingUsers}
-        isSubmitting={isMutating}
+        isSubmitting={busy}
         currentUserId={currentUser?.id}
       />
       <AddEditLinkModal
         isOpen={linkModal.open}
-        onClose={() => !isMutating && setLinkModal({ open: false, link: null })}
+        onClose={() => !busy && setLinkModal({ open: false, link: null })}
         onSubmit={handleSaveLink}
-        isSubmitting={isMutating}
+        isSubmitting={busy}
         link={linkModal.link}
       />
       <AddMembersModal
-        isOpen={addMembersOpen}
-        onClose={() => !isMutating && setAddMembersOpen(false)}
+        isOpen={addMembersModal.isOpen}
+        onClose={() => !busy && addMembersModal.close()}
         onSubmit={handleAddMembers}
         folder={currentFolder}
         searchUsers={searchUsers}
         searchedUsers={searchedUsers}
         isSearchingUsers={isSearchingUsers}
-        isSubmitting={isMutating}
+        isSubmitting={busy}
       />
       <RenameFolderModal
-        isOpen={renameOpen}
-        onClose={() => !isMutating && setRenameOpen(false)}
+        isOpen={renameModal.isOpen}
+        onClose={() => !busy && renameModal.close()}
         onSubmit={handleRename}
-        isSubmitting={isMutating}
+        isSubmitting={busy}
         folder={currentFolder}
       />
 
-      {confirm && (
-        <Modal.Wrapper onEscKeydown={() => !isMutating && closeConfirm()}>
-          <Modal.Header closeAble={!isMutating} onClose={closeConfirm}>{confirm.title}</Modal.Header>
+      {confirmDialog.confirm && (
+        <Modal.Wrapper onEscKeydown={() => !confirmDialog.isConfirming && confirmDialog.close()}>
+          <Modal.Header closeAble={!confirmDialog.isConfirming} onClose={confirmDialog.close}>{confirmDialog.confirm.title}</Modal.Header>
           <Modal.Content>
-            <p className={classNames({ blk, elt: 'confirm-message' })}>{confirm.message}</p>
+            <p className={classNames({ blk, elt: 'confirm-message' })}>{confirmDialog.confirm.message}</p>
             <ConfirmationButtons
-              handleCancel={closeConfirm}
-              handleSubmit={confirm.onConfirm}
-              isSubmitting={isMutating}
-              confirmText={confirm.confirmText}
+              handleCancel={confirmDialog.close}
+              handleSubmit={confirmDialog.run}
+              isSubmitting={confirmDialog.isConfirming}
+              confirmText={confirmDialog.confirm.confirmText}
               cancelText="Cancel"
-              type={confirm.type || 'submit'}
+              type={confirmDialog.confirm.type || 'submit'}
               submitButtonType="button"
             />
           </Modal.Content>
@@ -351,6 +332,7 @@ ManagedFoldersMain.propTypes = {
   searchUsers: PropTypes.func.isRequired,
   setAppBanner: PropTypes.func.isRequired,
 }
+
 ManagedFoldersMain.defaultProps = {
   currentFolder: null, isFetchingFolders: false, isFetchingFolder: false, isFetchingLinks: false, isMutating: false, isSearchingUsers: false, currentUser: null,
 }
