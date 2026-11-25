@@ -62,7 +62,8 @@ const AddLinkModal = ({
     setIsSubmitting(true)
     try {
       const res = await onSubmit(meta)
-      if (res?.success || res?.type?.endsWith?.('_SUCCESS') || res === true) {
+      const ok = res?.success === true || res?.type?.endsWith?.('_SUCCESS') || res === true
+      if (ok) {
         onClose()
       }
     } finally {

@@ -7,9 +7,9 @@ import {
 import { classNames } from '@common/helpers'
 import { Modal, DropDown } from '@common'
 import LinkCard from '@local/link-card'
-import ConfirmationModal from '@local/confirmation-modal'
 import ConfirmationButtons from '@local/confirmation-buttons'
 import SendLinkModal from '@local/send-link-modal'
+import { useAsyncAction, useDisclosure } from '@hooks'
 
 import { actions } from './index.connect'
 import './_style.scss'
@@ -19,51 +19,38 @@ const blk = 'link-cards'
 const LinkCards = ({
   categoryLinks, setAppBanner, deleteLink, updateLink, getUserData, categories,
 }) => {
-  // const [fadeUp, setFadeUp] = useState(false)
-  const [showConfirmationModal, setShowConfirmationModal] = useState(false)
-  const [selectedCardToDelete, setSelectedCardToDelete] = useState('')
-  const [isDeleting, setIsDeleting] = useState(false)
+  const [selectedCardToDelete, setSelectedCardToDelete] = useState(null)
   const [linkToSend, setLinkToSend] = useState(null)
   const [linkToMove, setLinkToMove] = useState(null)
   const [moveCategory, setMoveCategory] = useState(null)
-  const [isMoving, setIsMoving] = useState(false)
+  const deleteDialog = useDisclosure(false)
+  const deleteAction = useAsyncAction()
+  const moveAction = useAsyncAction()
 
   const handleLinkCopyClick = () => {
-    setAppBanner({
-      type: 'info',
-      message: 'Link Url copied succesfully',
-    })
+    setAppBanner({ type: 'info', message: 'Link Url copied succesfully' })
   }
-
-  const handleConfirm = async () => {
-    setShowConfirmationModal(false)
-    setIsDeleting(true)
-
-    const { success } = await deleteLink(selectedCardToDelete)
-    setIsDeleting(false)
-
-    const link = categoryLinks.filter((link) => link.id === selectedCardToDelete)[0]
-    if (success) {
-      // setFadeUp(true)
-      setTimeout(() => {
-        // setFadeUp(false)
-      })
-      setAppBanner({
-        type: 'info',
-        message: `${link.title} of ${link.category.name} deleted succesfully`,
-      })
-    }
-  }
-
-  const handleCancel = () => setShowConfirmationModal(false)
 
   const handleDeleteClick = (linkId) => {
-    setSelectedCardToDelete(linkId)
-    setShowConfirmationModal(true)
+    const link = categoryLinks.find((item) => item.id === linkId)
+    setSelectedCardToDelete(link || null)
+    deleteDialog.open()
   }
 
-  const handleSendClick = (link) => {
-    setLinkToSend(link)
+  const handleConfirmDelete = async () => {
+    if (!selectedCardToDelete) {
+      return
+    }
+    await deleteAction.execute(() => deleteLink(selectedCardToDelete.id), {
+      onSuccess: async () => {
+        setAppBanner({
+          type: 'info',
+          message: `${selectedCardToDelete.title} of ${selectedCardToDelete.category?.name || 'category'} deleted succesfully`,
+        })
+        deleteDialog.close()
+        setSelectedCardToDelete(null)
+      },
+    })
   }
 
   const handleMoveClick = (link) => {
@@ -73,86 +60,73 @@ const LinkCards = ({
   }
 
   const handleMoveConfirm = async () => {
-    if (!linkToMove || !moveCategory || isMoving) {
+    if (!linkToMove || !moveCategory) {
       return
     }
-    setIsMoving(true)
-    const response = await updateLink({
+    await moveAction.execute(() => updateLink({
       id: linkToMove.id,
       description: linkToMove.description || '',
       category: moveCategory,
+    }), {
+      onSuccess: async () => {
+        setAppBanner({ type: 'info', message: `Link moved to ${moveCategory.name}` })
+        setLinkToMove(null)
+        setMoveCategory(null)
+        getUserData()
+      },
     })
-    setIsMoving(false)
-    if (response && response.success) {
-      setAppBanner({
-        type: 'info',
-        message: `Link moved to ${moveCategory.name}`,
-      })
-      setLinkToMove(null)
-      setMoveCategory(null)
-      getUserData()
-    }
   }
-
-  const renderLinks = () => categoryLinks.map((link) => {
-    const {
-      title, description, imageUrl, siteName, linkUrl, id, sharedBy,
-    } = link
-
-    return (
-      <LinkCard
-        title={title}
-        imageUrl={imageUrl}
-        description={description}
-        siteName={siteName}
-        linkUrl={linkUrl}
-        onLinkCopy={handleLinkCopyClick}
-        onLinkDelete={handleDeleteClick}
-        onLinkSend={() => handleSendClick(link)}
-        onLinkMove={() => handleMoveClick(link)}
-        sharedBy={sharedBy}
-        linkId={id}
-        key={id}
-        fadeDown
-        // fadeUp={fadeUp}
-        isDeleting={isDeleting}
-      />
-    )
-  })
 
   return (
     <div className={classNames({ blk })}>
-      {renderLinks()}
-      {showConfirmationModal && (
-        <ConfirmationModal
-          handleSubmit={handleConfirm}
-          handleCancel={handleCancel}
-          message="Do you want to delete this link ?"
-          confirmText="Delete"
-          modalType="delete"
+      {categoryLinks.map((link) => (
+        <LinkCard
+          title={link.title}
+          imageUrl={link.imageUrl}
+          description={link.description}
+          siteName={link.siteName}
+          linkUrl={link.linkUrl}
+          onLinkCopy={handleLinkCopyClick}
+          onLinkDelete={handleDeleteClick}
+          onLinkSend={() => setLinkToSend(link)}
+          onLinkMove={() => handleMoveClick(link)}
+          sharedBy={link.sharedBy}
+          linkId={link.id}
+          key={link.id}
+          fadeDown
+          isDeleting={deleteAction.isLoading && selectedCardToDelete?.id === link.id}
         />
+      ))}
+
+      {deleteDialog.isOpen && (
+        <Modal.Wrapper onEscKeydown={() => !deleteAction.isLoading && deleteDialog.close()}>
+          <Modal.Header closeAble={!deleteAction.isLoading} onClose={deleteDialog.close}>Are you sure ?</Modal.Header>
+          <Modal.Content>
+            <p className={classNames({ blk, elt: 'confirm' })}>Do you want to delete this link ?</p>
+            <ConfirmationButtons
+              handleCancel={deleteDialog.close}
+              handleSubmit={handleConfirmDelete}
+              isSubmitting={deleteAction.isLoading}
+              confirmText="Delete"
+              type="delete"
+            />
+          </Modal.Content>
+        </Modal.Wrapper>
       )}
+
       {linkToSend && (
         <SendLinkModal
           link={linkToSend}
           onClose={() => setLinkToSend(null)}
-          onSent={(user) => {
-            setAppBanner({
-              type: 'info',
-              message: `Link sent to @${user.username}`,
-            })
-          }}
+          onSent={(user) => setAppBanner({ type: 'info', message: `Link sent to @${user.username}` })}
         />
       )}
+
       {linkToMove && (
-        <Modal.Wrapper onEscKeydown={() => !isMoving && setLinkToMove(null)}>
-          <Modal.Header closeAble={!isMoving} onClose={() => setLinkToMove(null)}>
-            Move to category
-          </Modal.Header>
+        <Modal.Wrapper onEscKeydown={() => !moveAction.isLoading && setLinkToMove(null)}>
+          <Modal.Header closeAble={!moveAction.isLoading} onClose={() => setLinkToMove(null)}>Move to category</Modal.Header>
           <Modal.Content>
-            <div className={classNames({ blk, elt: 'move-title' })}>
-              {linkToMove.title || linkToMove.linkUrl}
-            </div>
+            <div className={classNames({ blk, elt: 'move-title' })}>{linkToMove.title || linkToMove.linkUrl}</div>
             <DropDown
               category="light"
               list={(categories || []).filter((c) => c.id !== linkToMove.category?.id).map((c) => ({ value: c.name, key: c.id }))}
@@ -163,7 +137,7 @@ const LinkCards = ({
             <ConfirmationButtons
               handleCancel={() => setLinkToMove(null)}
               handleSubmit={handleMoveConfirm}
-              isSubmitting={isMoving}
+              isSubmitting={moveAction.isLoading}
               submitDisabled={!moveCategory}
               confirmText="Move"
               cancelText="Cancel"
@@ -177,17 +151,7 @@ const LinkCards = ({
 }
 
 LinkCards.propTypes = {
-  categoryLinks: arrayOf(shape({
-    title: string,
-    description: string,
-    siteName: string,
-    imageUrl: string,
-    category: shape({
-      id: string,
-      name: string,
-    }),
-    linkUrl: string,
-  })),
+  categoryLinks: arrayOf(shape({ id: string, title: string, category: shape({ id: string, name: string }) })),
   categories: arrayOf(shape({ id: string, name: string })),
   setAppBanner: func.isRequired,
   deleteLink: func.isRequired,
@@ -200,8 +164,4 @@ LinkCards.defaultProps = {
   categories: [],
 }
 
-const LinkCardsWithConnect = connect(
-  null, actions,
-)(LinkCards)
-
-export default LinkCardsWithConnect
+export default connect(null, actions)(LinkCards)
