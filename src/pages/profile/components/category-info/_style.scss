@@ -7,17 +7,22 @@ $blk: 'category-info';
   border: 1px solid $black-light;
   border-radius: 16px;
   padding: 20px;
+  @include medium-down { padding: 16px; border-radius: 14px; }
 
   &__head { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; margin-bottom: 16px; }
+  @include medium-down { &__head { margin-bottom: 12px; align-items: center; } }
   &__section-heading { margin: 0; @include typography(l, semi-bold); color: $black-medium; }
-  &__section-copy { margin: 4px 0 0; @include typography(s); color: $gray; }
+  &__section-copy {
+    margin: 4px 0 0; @include typography(s); color: $gray;
+    @include medium-down { display: none; }
+  }
   &__count {
     min-width: 32px; height: 32px; padding: 0 10px; border-radius: 999px;
     background: rgba($primary, 0.08); color: $primary; @include typography(s, semi-bold);
     display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
   }
 
-  &__categories { display: flex; flex-direction: column; gap: 10px; }
+  &__categories { display: flex; flex-direction: column; gap: 10px; @include medium-down { gap: 8px; } }
 
   &__empty {
     padding: 28px 16px; text-align: center; border: 1px dashed rgba($gray, 0.35);
@@ -37,15 +42,16 @@ $blk: 'category-info';
     background: $white; transition: border-color .2s ease, background-color .2s ease;
     &:hover { border-color: rgba($primary, 0.25); background: rgba($primary, 0.01); }
     &--system { background: rgba($gray, 0.03); }
-    @include small-only { align-items: stretch; flex-direction: column; }
+    @include medium-down { padding: 12px; gap: 12px; }
   }
 
-  &__category-main { min-width: 0; display: flex; align-items: center; gap: 12px; }
+  &__category-main { min-width: 0; display: flex; align-items: center; gap: 12px; flex: 1; }
   &__icon {
     width: 40px; height: 40px; border-radius: 12px; flex-shrink: 0;
     display: inline-flex; align-items: center; justify-content: center;
     color: $primary; background: rgba($primary, 0.08);
     &--system { color: $gray; background: rgba($gray, 0.12); }
+    @include medium-down { width: 36px; height: 36px; border-radius: 10px; }
   }
   &__details { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
   &__name { @include typography(m, semi-bold); color: $black-medium; word-break: break-word; }
@@ -55,6 +61,7 @@ $blk: 'category-info';
   &__system-label {
     @include typography(xs, semi-bold); color: $gray; background: rgba($gray, 0.1);
     padding: 6px 12px; border-radius: 999px;
+    @include medium-down { padding: 5px 10px; }
   }
 
   &__delete {
@@ -62,7 +69,7 @@ $blk: 'category-info';
     display: inline-flex; align-items: center; justify-content: center; gap: 8px; line-height: 1;
     svg { flex-shrink: 0; display: block; }
     &:hover { background: rgba($error, 0.05); border-color: rgba($error, 0.35); }
-    @include small-only { width: 100%; }
+    @include medium-down { min-width: 44px; padding: 8px; .category-info__delete-text { display: none; } }
   }
 
   &__delete-text { @include typography(s, semi-bold); line-height: 1; display: inline-flex; align-items: center; }

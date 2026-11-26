@@ -9,6 +9,7 @@ const Home = lazy(() => import(/* webpackChunkName: "pages/home" */ '@pages/home
 const Register = lazy(() => import(/* webpackChunkName: "pages/register" */ '@pages/register'))
 const Login = lazy(() => import(/* webpackChunkName: "pages/login" */ '@pages/login'))
 const Links = lazy(() => import(/* webpackChunkName: "pages/links" */ '@pages/links'))
+const EditLink = lazy(() => import(/* webpackChunkName: "pages/edit-link" */ '@pages/links/edit'))
 const Shared = lazy(() => import(/* webpackChunkName: "pages/shared" */ '@pages/shared'))
 const Managed = lazy(() => import(/* webpackChunkName: "pages/managed-folders" */ '@pages/managed-folders'))
 const Profile = lazy(() => import(/* webpackChunkName: "pages/profile" */ '@pages/profile'))
@@ -24,8 +25,10 @@ const Routes = () => (
         <Route path="/register"><Register /></Route>
         <Route path="/login"><Login /></Route>
         <Route path="/resetpassword/:resetToken"><ResetPassword /></Route>
+        <PrivateRoute path="/links/:id/edit"><EditLink /></PrivateRoute>
         <PrivateRoute path="/links"><Links /></PrivateRoute>
         <PrivateRoute path="/shared"><Shared /></PrivateRoute>
+        <PrivateRoute path="/managed/:folderId/links/:linkId/edit"><EditLink /></PrivateRoute>
         <PrivateRoute path="/managed/:id/:section(members|links)"><Managed /></PrivateRoute>
         <PrivateRoute path="/managed/:id"><Managed /></PrivateRoute>
         <PrivateRoute path="/managed"><Managed /></PrivateRoute>

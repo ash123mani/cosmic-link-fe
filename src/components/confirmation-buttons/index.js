@@ -20,11 +20,12 @@ const ConfirmationButtons = ({
   cancelText,
   type,
   submitButtonType,
+  category = 'light',
 }) => (
   <div className={classNames({ blk })}>
     <Button
       onClick={handleCancel}
-      category="light"
+      category={category}
       className={classNames({ blk, elt: 'cancel' })}
       disabled={isSubmitting}
     >
@@ -32,7 +33,7 @@ const ConfirmationButtons = ({
     </Button>
     <Button
       onClick={handleSubmit}
-      category="light"
+      category={category}
       className={classNames({ blk, elt: 'submit', mods: [type] })}
       loading={isSubmitting}
       loader={<InlineSpinner text="In Progress..." category="gray" />}
@@ -53,6 +54,7 @@ ConfirmationButtons.propTypes = {
   cancelText: string,
   type: oneOf(['delete', 'submit']),
   submitButtonType: string,
+  category: oneOf(['dark', 'light']),
 }
 
 ConfirmationButtons.defaultProps = {
@@ -63,6 +65,7 @@ ConfirmationButtons.defaultProps = {
   cancelText: 'Cancel',
   type: 'submit',
   submitButtonType: 'button',
+  category: 'light',
 }
 
 export default ConfirmationButtons

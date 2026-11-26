@@ -5,7 +5,7 @@
   flex-direction: column;
   width: 100%;
   margin-bottom: 16px;
-  
+
   &__box {
     padding: 12px 16px;
     border: 1px solid $black-medium;
@@ -38,6 +38,21 @@
       }
     }
 
+    &--dark {
+      border-color: $black;
+      color: $black;
+
+      &:focus {
+        color: $gray;
+        border-color: $gray;
+      }
+
+      &::placeholder {
+        color: $gray;
+      }
+    }
+
+
     @include small-only {
       padding: 12px 12px;
     }
@@ -49,6 +64,10 @@
 
     &--light {
       color: $white;
+    }
+
+    &--dark {
+      color: $black;
     }
   }
 

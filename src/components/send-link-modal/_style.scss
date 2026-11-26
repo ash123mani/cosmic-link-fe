@@ -1,9 +1,7 @@
 @import '~@common/theme/style';
 
 .send-link-modal {
-  &__content {
-    padding-top: 0;
-  }
+  &__content { padding-top: 0; }
 
   &__link-title {
     margin-bottom: 12px;
@@ -12,75 +10,47 @@
     word-break: break-word;
   }
 
-  &__search-wrap {
-    position: relative;
-  }
-
-  &__input {
-    margin-bottom: 12px;
-
-    &--search-open {
-      margin-bottom: 0;
-    }
-  }
+  &__search-wrap { position: relative; }
+  &__input { margin-bottom: 12px; &--search-open { margin-bottom: 0; } }
 
   &__suggestions {
-    .cosmic-dropdown__label,
-    .cosmic-dropdown__selected {
-      display: none;
-    }
+    position: absolute;
+    top: calc(100% - 2px);
+    left: 0;
+    right: 0;
+    z-index: 30;
+    max-height: 220px;
+    overflow-y: auto;
+    background: $black-medium;
+    border: 1px solid $gray;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  }
 
-    .cosmic-dropdown__content {
-      top: calc(100% - 2px);
-      z-index: 30;
-      max-height: 180px;
-      background: $black-medium;
-      border: 1px solid $gray;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-    }
-
-    .cosmic-dropdown__item {
-      padding: 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-
-      &:last-child {
-        border-bottom: none;
-      }
-
-      &:hover {
-        background: rgba(255, 255, 255, 0.08);
-      }
-    }
-
-    &--hidden {
-      display: none;
-    }
+  &__status {
+    padding: 12px;
+    @include typography(s);
+    color: $gray;
   }
 
   &__user {
+    width: 100%;
     padding: 10px 12px;
     display: flex;
     flex-direction: column;
     gap: 2px;
+    text-align: left;
+    border: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background: transparent;
+    cursor: pointer;
+    &:last-child { border-bottom: none; }
+    &:hover, &--active { background: rgba(255, 255, 255, 0.08); }
   }
 
-  &__user-name {
-    @include typography(s, semi-bold);
-    color: $white;
-  }
-
-  &__user-email {
-    @include typography(xs);
-    color: $gray;
-  }
-
-  &__error {
-    margin: 0 0 12px;
-    color: $error;
-    @include typography(s);
-  }
-
-  .action-buttons {
-    margin-top: 4px;
-  }
+  &__user-name { @include typography(s, semi-bold); color: $white; }
+  &__user-email { @include typography(xs); color: $gray; }
+  &__selected { margin: 8px 0 12px; @include typography(s); color: $gray; strong { color: $white; } }
+  &__error { margin: 0 0 12px; color: $error; @include typography(s); }
+  .action-buttons { margin-top: 4px; }
 }

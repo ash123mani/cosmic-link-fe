@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   arrayOf, bool, func, shape, string,
 } from 'prop-types'
 import { connect } from 'react-redux'
 
+import { api } from '@api'
 import { Button, Spinner } from '@common'
 import { classNames } from '@common/helpers'
 import { isSharedCategory } from '@util/shared-category'
@@ -44,6 +45,29 @@ const CategoryInfo = ({ categories, deleteCategory, setAppBanner }) => {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false)
   const [categoryToDelete, setCategoryToDelete] = useState(null)
   const [isDeleting, setIsDeleting] = useState(false)
+  const [counts, setCounts] = useState({})
+
+  useEffect(() => {
+    let cancelled = false
+    const loadCounts = async () => {
+      const res = await api('getAllLinks')
+      if (cancelled || !res?.success) {
+        return
+      }
+      const next = {};
+      (res.data?.links || []).forEach((link) => {
+        const id = link.category?.id
+        if (id) {
+          next[id] = (next[id] || 0) + 1
+        }
+      })
+      setCounts(next)
+    }
+    loadCounts()
+    return () => {
+      cancelled = true
+    }
+  }, [categories])
 
   const handleConfirm = async () => {
     if (!categoryToDelete) {
@@ -84,24 +108,29 @@ const CategoryInfo = ({ categories, deleteCategory, setAppBanner }) => {
       </div>
 
       <div className={classNames({ blk, elt: 'categories' })}>
-        {!categories.length && (
+        {!categories.length ? (
           <div className={classNames({ blk, elt: 'empty' })}>
             <div className={classNames({ blk, elt: 'empty-icon' })}><CategoryIcon shared={false} /></div>
             <p className={classNames({ blk, elt: 'empty-title' })}>No categories yet</p>
             <p className={classNames({ blk, elt: 'empty-copy' })}>Create a category from the Links page to organize your saved links.</p>
           </div>
-        )}
+        ) : null}
         {categories.map((category) => {
           const { name, id } = category
           const shared = isSharedCategory(id)
           const deleting = !shared && isDeleting && categoryToDelete?.id === id
+          const linkCount = counts[id] || 0
           return (
             <div className={classNames({ blk, elt: 'category', mods: [shared && 'system'] })} key={id}>
               <div className={classNames({ blk, elt: 'category-main' })}>
                 <span className={classNames({ blk, elt: 'icon', mods: [shared && 'system'] })}><CategoryIcon shared={shared} /></span>
                 <div className={classNames({ blk, elt: 'details' })}>
                   <span className={classNames({ blk, elt: 'name' })}>{name}</span>
-                  <span className={classNames({ blk, elt: 'meta' })}>{shared ? 'System category · cannot be deleted' : 'Personal category'}</span>
+                  <span className={classNames({ blk, elt: 'meta' })}>
+                    {linkCount}
+                    {' '}
+                    {linkCount === 1 ? 'link' : 'links'}
+                  </span>
                 </div>
               </div>
               <div className={classNames({ blk, elt: 'category-actions' })}>
@@ -126,7 +155,7 @@ const CategoryInfo = ({ categories, deleteCategory, setAppBanner }) => {
         })}
       </div>
 
-      {showConfirmationModal && categoryToDelete && (
+      {showConfirmationModal && categoryToDelete ? (
         <ConfirmationModal
           handleSubmit={handleConfirm}
           handleCancel={handleCancel}
@@ -134,24 +163,17 @@ const CategoryInfo = ({ categories, deleteCategory, setAppBanner }) => {
           confirmText="Delete"
           modalType="delete"
         />
-      )}
+      ) : null}
     </section>
   )
 }
 
 CategoryInfo.propTypes = {
-  categories: arrayOf(shape({
-    name: string.isRequired,
-    id: string.isRequired,
-  })),
+  categories: arrayOf(shape({ name: string.isRequired, id: string.isRequired })),
   deleteCategory: func.isRequired,
   setAppBanner: func.isRequired,
 }
 
-CategoryInfo.defaultProps = {
-  categories: [],
-}
+CategoryInfo.defaultProps = { categories: [] }
 
-const CategoryInfoWithConnect = connect(null, actions)(CategoryInfo)
-
-export default CategoryInfoWithConnect
+export default connect(null, actions)(CategoryInfo)

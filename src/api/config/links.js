@@ -13,6 +13,11 @@ const links = {
     method: 'GET',
     auth: true,
   },
+  getAllLinks: {
+    endPoint: '/api/v1/link/all',
+    method: 'GET',
+    auth: true,
+  },
   deleteLink: {
     endPoint: '/api/v1/link',
     method: 'DELETE',

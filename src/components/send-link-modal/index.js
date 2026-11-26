@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { connect } from 'react-redux'
 import {
   bool, func, shape, string,
 } from 'prop-types'
 
-import {
-  Modal, Input, DropDown,
-} from '@common'
+import { Modal, Input } from '@common'
 import { classNames } from '@common/helpers'
 import ConfirmationButtons from '@local/confirmation-buttons'
 
@@ -24,6 +22,8 @@ const SendLinkModal = ({
   const [selectedUser, setSelectedUser] = useState(null)
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
+  const [activeIndex, setActiveIndex] = useState(-1)
+  const listRef = useRef(null)
 
   useEffect(() => {
     const handle = setTimeout(() => setDebouncedQuery(query.trim()), 300)
@@ -44,6 +44,7 @@ const SendLinkModal = ({
       }
       if (response.success) {
         setResults((response.data && response.data.users) || [])
+        setActiveIndex(-1)
       } else {
         setResults([])
         setError((response.data && response.data.error) || 'Could not search users')
@@ -78,12 +79,36 @@ const SendLinkModal = ({
   }
 
   const showResults = !selectedUser && debouncedQuery.length >= 2
+  const selectUser = (user) => {
+    setSelectedUser(user)
+    setQuery(user.username)
+    setResults([])
+    setDebouncedQuery('')
+    setActiveIndex(-1)
+  }
+
+  const onQueryKeyDown = (e) => {
+    if (!showResults || !results.length) {
+      return
+    }
+    if (e.key === 'ArrowDown') {
+      e.preventDefault(); setActiveIndex((i) => (i + 1) % results.length)
+    }
+    if (e.key === 'ArrowUp') {
+      e.preventDefault(); setActiveIndex((i) => (i <= 0 ? results.length - 1 : i - 1))
+    }
+    if (e.key === 'Enter' && activeIndex >= 0 && results[activeIndex]) {
+      e.preventDefault()
+      selectUser(results[activeIndex])
+    }
+    if (e.key === 'Escape') {
+      e.preventDefault(); setResults([]); setDebouncedQuery('')
+    }
+  }
 
   return (
     <Modal.Wrapper onEscKeydown={onClose}>
-      <Modal.Header closeAble onClose={onClose}>
-        Send to user
-      </Modal.Header>
+      <Modal.Header closeAble onClose={onClose}>Send to user</Modal.Header>
       <Modal.Content className={classNames({ blk, elt: 'content' })}>
         <div className={classNames({ blk })}>
           <div className={classNames({ blk, elt: 'link-title' })}>
@@ -105,41 +130,51 @@ const SendLinkModal = ({
                   setDebouncedQuery('')
                 }
               }}
+              onKeyDown={onQueryKeyDown}
               autoFocus
               autoComplete="off"
               className={classNames({ blk, elt: 'input', mods: [showResults && 'search-open'] })}
+              aria-activedescendant={activeIndex >= 0 && results[activeIndex] ? `share-user-${results[activeIndex].id}` : undefined}
             />
 
-            <DropDown
-              category="light"
-              className={classNames({ blk, elt: 'suggestions', mods: [!showResults && 'hidden'] })}
-              isOpen={showResults}
-              onOpenChange={() => {}}
-              list={results.map((user) => ({ ...user, key: user.id, value: user.username }))}
-              loading={isSearching}
-              emptyText={!error ? 'No users found' : ''}
-              selectedLabel={selectedUser ? `@${selectedUser.username}` : ''}
-              handleChange={(item) => {
-                setSelectedUser(item)
-                setQuery(item.username)
-                setResults([])
-                setDebouncedQuery('')
-              }}
-              renderItem={(item) => (
-                <div className={classNames({ blk, elt: 'user' })}>
-                  <span className={classNames({ blk, elt: 'user-name' })}>
-                    @
-                    {item.username}
-                  </span>
-                  {item.email && (
-                    <span className={classNames({ blk, elt: 'user-email' })}>
-                      {item.email}
+            {showResults ? (
+              <div className={classNames({ blk, elt: 'suggestions' })} role="listbox" ref={listRef}>
+                {isSearching ? <div className={classNames({ blk, elt: 'status' })}>Searching...</div> : null}
+                {!isSearching && !results.length && !error ? <div className={classNames({ blk, elt: 'status' })}>No users found</div> : null}
+                {!isSearching && results.map((user, index) => (
+                  <button
+                    key={user.id}
+                    id={`share-user-${user.id}`}
+                    type="button"
+                    role="option"
+                    aria-selected={index === activeIndex}
+                    className={classNames({ blk, elt: 'user', mods: [index === activeIndex && 'active'] })}
+                    onMouseDown={(e) => {
+                      e.preventDefault(); selectUser(user)
+                    }}
+                    onMouseEnter={() => setActiveIndex(index)}
+                  >
+                    <span className={classNames({ blk, elt: 'user-name' })}>
+                      @
+                      {user.username}
                     </span>
-                  )}
-                </div>
-              )}
-            />
+                    {user.email ? <span className={classNames({ blk, elt: 'user-email' })}>{user.email}</span> : null}
+                  </button>
+                ))}
+              </div>
+            ) : null}
           </div>
+
+          {selectedUser ? (
+            <div className={classNames({ blk, elt: 'selected' })}>
+              Sending to
+              {' '}
+              <strong>
+                @
+                {selectedUser.username}
+              </strong>
+            </div>
+          ) : null}
 
           <Input
             category="light"
@@ -153,7 +188,7 @@ const SendLinkModal = ({
             className={classNames({ blk, elt: 'input' })}
           />
 
-          {error && <div className={classNames({ blk, elt: 'error' })}>{error}</div>}
+          {error ? <div className={classNames({ blk, elt: 'error' })}>{error}</div> : null}
 
           <ConfirmationButtons
             handleCancel={onClose}
@@ -171,11 +206,7 @@ const SendLinkModal = ({
 }
 
 SendLinkModal.propTypes = {
-  link: shape({
-    id: string,
-    title: string,
-    linkUrl: string,
-  }),
+  link: shape({ id: string, title: string, linkUrl: string }),
   onClose: func.isRequired,
   onSent: func,
   searchUsers: func.isRequired,
@@ -185,10 +216,7 @@ SendLinkModal.propTypes = {
 }
 
 SendLinkModal.defaultProps = {
-  link: null,
-  onSent() {},
-  isSearching: false,
-  isSending: false,
+  link: null, onSent() {}, isSearching: false, isSending: false,
 }
 
 export default connect(mapStateToProps, actions)(SendLinkModal)

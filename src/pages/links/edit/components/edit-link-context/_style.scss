@@ -1,0 +1,70 @@
+@import '~@common/theme/style';
+
+.edit-link-context {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 16px;
+  margin-bottom: 24px;
+  border: 1px solid $black-light;
+  border-radius: 12px;
+  background: $body-bg;
+
+  @include small-only {
+    gap: 12px;
+    padding: 12px;
+  }
+
+  &__media {
+    flex-shrink: 0;
+    width: 72px;
+    height: 72px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: $white;
+
+    @include small-only {
+      width: 56px;
+      height: 56px;
+    }
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  &__details {
+    min-width: 0;
+    flex: 1;
+  }
+
+  &__label {
+    margin: 0 0 4px;
+    @include typography(xs, semi-bold);
+    color: $gray;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+  }
+
+  &__source {
+    margin: 0 0 4px;
+    @include typography(m, semi-bold);
+    color: $primary-medium;
+    word-break: break-word;
+  }
+
+  &__url {
+    display: inline-block;
+    margin: 0;
+    @include typography(s);
+    color: $primary;
+    word-break: break-all;
+    text-decoration: none;
+
+    &:hover { text-decoration: underline; }
+    &:focus-visible { outline: 2px solid $primary; outline-offset: 2px; border-radius: 2px; }
+  }
+}

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import {
   arrayOf, shape, string, func,
 } from 'prop-types'
@@ -19,6 +20,7 @@ const blk = 'link-cards'
 const LinkCards = ({
   categoryLinks, setAppBanner, deleteLink, updateLink, getUserData, categories,
 }) => {
+  const history = useHistory()
   const [selectedCardToDelete, setSelectedCardToDelete] = useState(null)
   const [linkToSend, setLinkToSend] = useState(null)
   const [linkToMove, setLinkToMove] = useState(null)
@@ -90,6 +92,7 @@ const LinkCards = ({
           onLinkDelete={handleDeleteClick}
           onLinkSend={() => setLinkToSend(link)}
           onLinkMove={() => handleMoveClick(link)}
+          onLinkEdit={() => history.push({ pathname: `/links/${link.id}/edit`, state: { from: '/links' } })}
           sharedBy={link.sharedBy}
           linkId={link.id}
           key={link.id}
@@ -133,6 +136,9 @@ const LinkCards = ({
               label="Select category"
               defaultSelected={moveCategory ? { value: moveCategory.name, key: moveCategory.id } : null}
               handleChange={(item) => setMoveCategory({ id: item.key, name: item.value })}
+              searchable
+              searchPlaceholder="Search categories"
+              emptyText="No categories available"
             />
             <ConfirmationButtons
               handleCancel={() => setLinkToMove(null)}

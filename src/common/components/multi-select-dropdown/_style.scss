@@ -112,27 +112,22 @@ $blk: 'cosmic-multi-select-dropdown';
 
   &__content {
     display: none;
-    position: absolute;
-    top: calc(100% + 4px);
-    left: 0;
-    width: 100%;
     background: $white;
     border: 1px solid $black-light;
     border-radius: $border-radius-default;
-    max-height: 320px;
-    overflow: auto;
-    z-index: 1200;
+    z-index: 1400;
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.16);
-
-    &--show {
-      display: block;
-    }
-
-    &--light {
-      background: $black-medium;
-      border-color: $gray;
-    }
+    overflow: hidden;
+    &--show { display: flex; flex-direction: column; }
+    &--light { background: $black-medium; border-color: $gray; }
   }
+  &__overlay { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 1399; }
+  &__sheet-handle { display:none; }
+  &__sheet-title { display:none; }
+  &__meta { display:flex; align-items:center; justify-content:space-between; padding:8px 12px; font-size:12px; color:$gray; border-bottom:1px solid $black-light; }
+  &__clear, &__done { background:none; border:none; color:$primary; font:inherit; font-weight:600; cursor:pointer; min-height:44px; padding:0 8px; }
+  &__options { overflow-y:auto; flex:1; }
+  &__footer { padding:8px 12px; border-top:1px solid $black-light; display:flex; justify-content:flex-end; background:inherit; }
 
   &__search-wrap {
     padding: 8px;
@@ -181,7 +176,7 @@ $blk: 'cosmic-multi-select-dropdown';
     cursor: pointer;
     color: $black-medium;
 
-    &:hover:not(:disabled) {
+    &:hover:not(:disabled), &--active {
       background: rgba($primary, 0.04);
     }
 
@@ -239,5 +234,19 @@ $blk: 'cosmic-multi-select-dropdown';
     padding: 12px;
     @include typography(s);
     color: $gray;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .cosmic-multi-select-dropdown {
+    &__content--show {
+      position: fixed !important; left: 0 !important; right: 0 !important; bottom: 0 !important; top: auto !important;
+      width: 100% !important; max-height: min(76vh, 620px) !important; border-radius: 20px 20px 0 0; z-index: 1400 !important;
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+    &__sheet-handle { display:block; width:40px; height:4px; border-radius:2px; background:$black-light; margin:10px auto 4px; }
+    &__sheet-title { display:block; padding:8px 16px 12px; font-weight:600; color:$black-medium; }
+    &__sheet-title--light { color:$white; }
   }
 }

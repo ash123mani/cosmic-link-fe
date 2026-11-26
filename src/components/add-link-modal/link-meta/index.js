@@ -41,6 +41,8 @@ const LinkMeta = ({
           label="Category for your link"
           handleChange={handleCategoryChange}
           defaultSelected={selectedCategory}
+          searchable={categories.length > 7}
+          searchPlaceholder="Search categories"
         />
       )}
     </div>

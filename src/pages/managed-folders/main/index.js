@@ -30,7 +30,7 @@ const ManagedFoldersMain = ({
   folders, currentFolder, links, isFetchingFolders, isFetchingFolder, isFetchingLinks, isMutating,
   searchedUsers, isSearchingUsers, currentUser,
   getManagedFolders, createManagedFolder, getManagedFolder, updateManagedFolder, deleteManagedFolder,
-  getManagedFolderLinks, createManagedFolderLink, updateManagedFolderLink, deleteManagedFolderLink,
+  getManagedFolderLinks, createManagedFolderLink, deleteManagedFolderLink,
   addManagedFolderMembers, removeManagedFolderMember, updateManagedFolderMemberRole, searchUsers, setAppBanner,
 }) => {
   const { id: routeId, section } = useParams()
@@ -40,7 +40,7 @@ const ManagedFoldersMain = ({
   const createModal = useDisclosure(false)
   const addMembersModal = useDisclosure(false)
   const renameModal = useDisclosure(false)
-  const [linkModal, setLinkModal] = useState({ open: false, link: null })
+  const [linkModalOpen, setLinkModalOpen] = useState(false)
   const confirmDialog = useConfirmDialog()
   const asyncAction = useAsyncAction()
 
@@ -101,11 +101,8 @@ const ManagedFoldersMain = ({
     if (!currentFolder) {
       return null
     }
-    const action = linkModal.link
-      ? () => updateManagedFolderLink(currentFolder.id, linkModal.link.id, payload)
-      : () => createManagedFolderLink(currentFolder.id, payload)
-    const { res } = await run(action, linkModal.link ? 'Link updated' : 'Link added', async () => {
-      setLinkModal({ open: false, link: null })
+    const { res } = await run(() => createManagedFolderLink(currentFolder.id, payload), 'Link added', async () => {
+      setLinkModalOpen(false)
     })
     return res
   }
@@ -187,8 +184,8 @@ const ManagedFoldersMain = ({
           links={links}
           isLoading={isFetchingLinks}
           canMutateLink={(link) => canMutateManagedLink(currentFolder, link, currentUser?.id)}
-          onAdd={() => setLinkModal({ open: true, link: null })}
-          onEdit={(link) => setLinkModal({ open: true, link })}
+          onAdd={() => setLinkModalOpen(true)}
+          onEdit={(link) => history.push({ pathname: `/managed/${currentFolder.id}/links/${link.id}/edit`, state: { from: `/managed/${currentFolder.id}` } })}
           onDelete={openDeleteLink}
           onCopy={() => setAppBanner({
             message: 'Link copied to clipboard', type: 'info', autoClose: true, duration: 2500,
@@ -259,11 +256,9 @@ const ManagedFoldersMain = ({
         currentUserId={currentUser?.id}
       />
       <AddEditLinkModal
-        isOpen={linkModal.open}
-        onClose={() => !busy && setLinkModal({ open: false, link: null })}
+        isOpen={linkModalOpen}
+        onClose={() => !busy && setLinkModalOpen(false)}
         onSubmit={handleSaveLink}
-        isSubmitting={busy}
-        link={linkModal.link}
       />
       <AddMembersModal
         isOpen={addMembersModal.isOpen}
@@ -324,7 +319,6 @@ ManagedFoldersMain.propTypes = {
   deleteManagedFolder: PropTypes.func.isRequired,
   getManagedFolderLinks: PropTypes.func.isRequired,
   createManagedFolderLink: PropTypes.func.isRequired,
-  updateManagedFolderLink: PropTypes.func.isRequired,
   deleteManagedFolderLink: PropTypes.func.isRequired,
   addManagedFolderMembers: PropTypes.func.isRequired,
   removeManagedFolderMember: PropTypes.func.isRequired,

@@ -124,6 +124,9 @@ const Main = ({
               label="Category"
               defaultSelected={moveCategory ? { value: moveCategory.name, key: moveCategory.id } : null}
               handleChange={(item) => setMoveCategory({ id: item.key, name: item.value })}
+              searchable
+              searchPlaceholder="Search categories"
+              emptyText="No categories available"
             />
             <ConfirmationButtons
               handleCancel={() => setShareToMove(null)}
